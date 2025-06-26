@@ -7,7 +7,7 @@ export default function Home() {
     <div className="d-flex flex-column justify-content-center align-items-center text-center vh-100">
       {/* Profile Image */}
       <img
-        src="/images/profile.jpeg"
+        src= {process.env.PUBLIC_URL + "/images/profile.jpeg"}
         alt="my profile picture"
         className="rounded-circle mb-4"
         style={{ width: '200px', height: '200px', objectFit: 'cover' }}

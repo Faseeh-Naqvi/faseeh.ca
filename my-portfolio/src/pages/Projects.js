@@ -117,7 +117,7 @@ const MediaItem = ({ item }) => {
   return (
     <div style={{ height: MEDIA_HEIGHT, overflow: "hidden" }}>
       <img
-        src={item.src}
+        src={process.env.PUBLIC_URL + item.src}
         className="d-block w-100"
         style={{ objectFit: "cover", height: "100%" }}
         alt="project media"

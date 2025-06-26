@@ -1,5 +1,5 @@
 import React from 'react';
-import 'bootstrap/dist/js/bootstrap.bundle.min';
+
 import './About.css';
 
 export default function About() {
@@ -105,7 +105,7 @@ export default function About() {
               className={`carousel-item ${idx === 0 ? 'active' : ''}`}
             >
               <img
-                src={src}
+                src={process.env.PUBLIC_URL + src}
                 alt={`Scrapbook ${idx + 1}`}
                 className={`scrapbook-img ${rotations[idx % rotations.length]}`}
               />

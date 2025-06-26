@@ -110,7 +110,7 @@ export default function Experience() {
           {/* Logo */}
           <div className="me-4" style={{ flex: "0 0 200px" }}>
             <img
-              src={exp.logo}
+              src={process.env.PUBLIC_URL+ exp.logo}
               alt={`${exp.company} logo`}
               className="img-fluid"
               style={{  }}

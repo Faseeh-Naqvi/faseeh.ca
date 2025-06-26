@@ -59,9 +59,9 @@ export default function Education() {
       {education.map((ed, idx) => (
         <div key={idx} className="d-flex mb-5">
           {/* ---- Logo ---- */}
-          <div className="me-4" style={{ flex: '0 0 120px' }}>
+          <div className="me-4" style={{ flex: '0 0 200px' }}>
             <img
-              src={ed.logo}
+              src={process.env.PUBLIC_URL+  ed.logo}
               alt={`${ed.institution} logo`}
               className="img-fluid"
             />
