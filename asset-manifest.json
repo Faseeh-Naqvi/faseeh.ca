@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/faseeh.ca/static/css/main.bb4ba25d.css",
-    "main.js": "/faseeh.ca/static/js/main.1a5c3c4e.js",
-    "index.html": "/faseeh.ca/index.html",
-    "main.bb4ba25d.css.map": "/faseeh.ca/static/css/main.bb4ba25d.css.map",
-    "main.1a5c3c4e.js.map": "/faseeh.ca/static/js/main.1a5c3c4e.js.map"
+    "main.css": "./static/css/main.bb4ba25d.css",
+    "main.js": "./static/js/main.f86099c7.js",
+    "index.html": "./index.html",
+    "main.bb4ba25d.css.map": "./static/css/main.bb4ba25d.css.map",
+    "main.f86099c7.js.map": "./static/js/main.f86099c7.js.map"
   },
   "entrypoints": [
     "static/css/main.bb4ba25d.css",
-    "static/js/main.1a5c3c4e.js"
+    "static/js/main.f86099c7.js"
   ]
 }
