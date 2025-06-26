@@ -1,5 +1,9 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap/dist/js/bootstrap.bundle.min';
+
+
+import 'bootstrap/js/dist/collapse';   // for navbar toggler
+import 'bootstrap/js/dist/carousel';   // for your scrapbook + project carousels
+
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
