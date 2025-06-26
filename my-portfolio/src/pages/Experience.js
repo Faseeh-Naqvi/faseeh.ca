@@ -1,136 +1,120 @@
-import React from "react";
+// src/pages/Experience.js
+import React from 'react';
 
 const experience = [
-  // 1 - Deep full-stack & geospatial work on a 30 k-line codebase
   {
-    company: "Geo-Notebook",
-    logo: "/images/logos/geo.png",
-    role: "Full-Stack Software Developer",
-    dates: "May 2024 – Present",
+    company: 'Geo-Notebook',
+    logo: '/images/logos/geo.png',
+    role: 'Full-Stack Software Developer',
+    dates: 'May 2024 – Present',
     bullets: [
-      "Developed of a geospatial web app funded by the Canadian Geological Foundation to analyse planetary-impact data.",
-      "Upgraded a 30k-line Angular/TypeScript codebase (v12 → v18), replacing legacy map tools with Google Maps JS API + ArcGIS.",
-      "Integrated the app with a Heroku-hosted PostgreSQL database by building API connections and populating sample data, enabling scalable testing and map-based crater event visualization",
-      "Enhanced the frontend experience with Angular Material and RxJS: added marker clustering, reset buttons, loading states, and responsive result cards",
+      'Built a geospatial web app for the Canadian Geological Foundation to analyse impact data.',
+      'Upgraded a 30 k-line Angular/TypeScript codebase (v12 → v18), integrating Google Maps JS API & ArcGIS.',
+      'Connected to a Heroku-hosted PostgreSQL database via a custom API for scalable testing & visualization.',
+      'Enhanced UX with Angular Material, adding marker clustering, reset buttons, loading states, & responsive cards.',
     ],
   },
-
-  // 2 - Production SaaS platform with live integrations and hard SLAs
   {
-    company: "Flyer Canada",
-    logo: "/images/logos/fc.jpg",
-    role: "Software Developer",
-    dates: "Feb 2025 – Present",
+    company: 'Flyer Canada',
+    logo: '/images/logos/fc.jpg',
+    role: 'Software Developer',
+    dates: 'Feb 2025 – Present',
     bullets: [
-      "Delivered a secure real-time order-tracking platform for 10 000+ businesses, cutting support tickets by 30 %.",
-      "Integrated Monday.com GraphQL API with Make.com webhooks and javascript, automating end-to-end status updates.",
-      
+      'Delivered a real-time order-tracking platform for 10 000+ businesses, reducing support tickets by 30 %.',
+      'Automated Monday.com GraphQL & Make.com webhooks with JavaScript for seamless status updates.',
     ],
   },
-
-  // 3 - Data-engineering heavy Python CLI & infrastructure
   {
-    company: "Carolinian Canada Coalition",
-    logo: "/images/logos/carolinian.png",
-    role: "Data Automation & Web Development Intern",
-    dates: "Jan 2024 – Apr 2024",
+    company: 'Carolinian Canada Coalition',
+    logo: '/images/logos/carolinian.png',
+    role: 'Data Automation & Web Dev Intern',
+    dates: 'Jan 2024 – Apr 2024',
     bullets: [
-      "Developed a Python CLI Facebook Data Parser for semi-structured data formats (ex. YAML, JSON) with hash-based duplication protection.",
-      "Automated the extraction and analysis of 23,798+ lines of post data, Used to generate insights for a major scientific journal.",
-      "Refactored and maintained 109+responsive web-pages using Javascript, Bootstrap, HTML/CSS, PHP, Drupal 10, and Twig, strictly following WCAG guidelines",
-      "Configured and managed a custom Linux-based development environment with Ubuntu v22, Docker v20, Composer, and Lando",
+      'Built a Python CLI Facebook Data Parser with hash-based duplicate protection for YAML/JSON inputs.',
+      'Parsed & analysed 23 798+ posts, generating insights for a major scientific journal.',
+      'Refactored 109+ responsive pages in JavaScript, Bootstrap, PHP & Twig to meet WCAG accessibility.',
+      'Managed a custom Ubuntu v22/Docker/Lando environment for team-wide consistency.',
     ],
   },
-
-  // 4 - Drupal migration & accessibility work
   {
-    company: "Thaqlain Muslim Association",
-    logo: "/images/logos/tma.webp",
-    role: "Dir Events & Social Media Marketing",
-    dates: "Oct 2024 – Dec 2024",
+    company: 'Thaqlain Muslim Association',
+    logo: '/images/logos/tma.webp',
+    role: 'Director of Events & Social Media Marketing',
+    dates: 'Oct 2024 – Dec 2024',
     bullets: [
-    "Negotiated a record-breaking $315 event sponsorship deal—15× previous funding—by coordinating with external vendors and building strategic partnerships with restaurants across London.",
-    "Designed and implemented an Instagram-focused event-marketing strategy using analytics to optimise posts, reaching 12 400+ views and boosting engagement by 152 %.",
-  ],
-  },
-  {
-    company: "Western Univerity",
-    logo: "/images/logos/western.svg",
-    role: "Web Designer",
-    dates: "May 2024 – Aug 2024",
-    bullets: [
-      "Developed of a geospatial web app funded by the Canadian Geological Foundation to analyse planetary-impact data.",
-      
+      'Secured a $315 000 sponsorship — 15× previous funding — by negotiating with restaurants & vendors.',
+      'Designed an Instagram-first strategy using analytics to boost engagement 152 % (12.4 k views).',
     ],
   },
-  // 5 - Freelance agency work (shows initiative & breadth)
   {
-    company: "FasTech",
-    logo: "/images/logos/fastech.png",
-    role: "Founder & Web Developer",
-    dates: "Jun 2023 – Jun 2024",
+    company: 'FasTech',
+    logo: '/images/logos/fastech.png',
+    role: 'Founder & Web Developer',
+    dates: 'Jun 2023 – Jun 2024',
     bullets: [
-      "Bootstrapped a freelance web-dev business, delivering eight client sites with React, WordPress, and Shopify.",
+      'Bootstrapped a freelance agency, delivering 8 client sites with React, WordPress & Shopify.',
     ],
   },
-  // — Marketing & outreach work
-{
-  company: "BrainSTEM Alliance",
-  logo: "/images/logos/brain.webp",   // add logo to public/images/logos
-  role: "Marketing Specialist",
-  dates: "Jul 2023 – Aug 2023",
-  bullets: [
-    "Optimized email campaigns with Canva-designed visuals and personalized content, driving higher open- and click-through rates, and boosting engagement.",
-    "Praised by supervisors for data-driven YAMM + Excel templates that improved project outcomes.",
-  ],
-},
-
-// — STEM education & public speaking
-{
-  company: "University of Toronto (AIS Outreach)",
-  logo: "/images/logos/uft.svg",        // add logo to public/images/logos
-  role: "Volunteer Educator",
-  dates: "Oct 2021 – May 2022",
-  bullets: [
-    "Co-designed and delivered an interactive Grade-8 lesson on Artificial Intelligence & Space, translating complex ML and astronomy topics into hands-on activities.",
-    "Researched AI sub-fields (automation, machine learning, NLP, computer vision) and cosmology, then simplified concepts to improve peer understanding and student engagement.",
-    "Led a live Q&A session, honing science-communication skills by answering student questions in clear, accessible language. ",
-  ],
-},
-
+  {
+    company: 'BrainSTEM Alliance',
+    logo: '/images/logos/brain.webp',
+    role: 'Marketing Specialist',
+    dates: 'Jul 2023 – Aug 2023',
+    bullets: [
+      'Optimized email campaigns with Canva-designed visuals, boosting open/click rates.',
+      'Built YAMM + Excel templates to drive data-informed project improvements.',
+    ],
+  },
+  {
+    company: 'U of T AIS Outreach',
+    logo: '/images/logos/uft.svg',
+    role: 'Volunteer Educator',
+    dates: 'Oct 2021 – May 2022',
+    bullets: [
+      'Co-designed & delivered an interactive Grade 8 AI & Space lesson with hands-on activities.',
+      'Simplified ML, NLP, & cosmology concepts for student Q&A in clear, accessible language.',
+    ],
+  },
 ];
 
 export default function Experience() {
   return (
     <div className="container py-5">
       <h1 className="fw-bold mb-4">Experience</h1>
-
-      {experience.map((exp, idx) => (
-        <div key={idx} className="d-flex mb-5">
-          {/* Logo */}
-          <div className="me-4" style={{ flex: "0 0 200px" }}>
-            <img
-              src={process.env.PUBLIC_URL+ exp.logo}
-              alt={`${exp.company} logo`}
-              className="img-fluid"
-              style={{  }}
-            />
+      <div className="row g-4">
+        {experience.map((exp, idx) => (
+          <div key={idx} className="col-12 col-lg-6">
+            <div className="card  h-100 shadow-sm">
+              <div className="row  g-0 align-items-start">
+                {/* Logo */}
+                <div className="col-4 bg-success col-sm-3 rounded text-center">
+                  <img
+                    src={process.env.PUBLIC_URL + exp.logo}
+                    alt={`${exp.company} logo`}
+                    className="img-fluid p-3"
+                  />
+                </div>
+                {/* Details */}
+                <div className="col-8 col-sm-9">
+                  <div className="card-body">
+                    <h5 className="card-title">
+                      {exp.role} @ {exp.company}
+                    </h5>
+                    <small className="text-muted mb-3 d-block">
+                      {exp.dates}
+                    </small>
+                    <ul className="mb-0">
+                      {exp.bullets.map((b, i) => (
+                        <li key={i}>{b}</li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-
-          {/* Details */}
-          <div>
-            <h5 className="mb-1">
-              {exp.role} @ {exp.company}
-            </h5>
-            <small className="text-muted mb-2 d-block">{exp.dates}</small>
-            <ul className="mb-0">
-              {exp.bullets.map((b, i2) => (
-                <li key={i2}>{b}</li>
-              ))}
-            </ul>
-          </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   );
 }
