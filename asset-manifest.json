@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.css": "/my-portfolio/static/css/main.bb4ba25d.css",
-    "main.js": "/my-portfolio/static/js/main.a1e6525b.js",
-    "index.html": "/my-portfolio/index.html",
-    "main.bb4ba25d.css.map": "/my-portfolio/static/css/main.bb4ba25d.css.map",
-    "main.a1e6525b.js.map": "/my-portfolio/static/js/main.a1e6525b.js.map"
+    "main.css": "/faseeh.ca/static/css/main.bb4ba25d.css",
+    "main.js": "/faseeh.ca/static/js/main.a1e6525b.js",
+    "index.html": "/faseeh.ca/index.html",
+    "main.bb4ba25d.css.map": "/faseeh.ca/static/css/main.bb4ba25d.css.map",
+    "main.a1e6525b.js.map": "/faseeh.ca/static/js/main.a1e6525b.js.map"
   },
   "entrypoints": [
     "static/css/main.bb4ba25d.css",
