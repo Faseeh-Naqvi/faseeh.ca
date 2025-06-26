@@ -22,7 +22,7 @@ function App() {
           </button>
           <div className="collapse navbar-collapse" id="navMenu">
             <ul className="navbar-nav ms-auto">
-              {['About','Projects','Experience','Education','Businesses','Awards','Contact'].map(page => (
+              {['About','Projects','Experience','Education','Businesses','Contact'].map(page => (
                 <li className="nav-item" key={page}>
                   <NavLink
                     className="nav-link"
@@ -44,7 +44,7 @@ function App() {
         <Route path="/projects" element={<Projects/>}/>
         <Route path="/experience" element={<Experience/>}/>
         <Route path="/education" element={<Education/>}/>
-        <Route path="/business" element={<Business/>}/>
+        <Route path="/businesses" element={<Business/>}/>
         <Route path="/awards" element={<Awards/>}/>
         <Route path="/contact" element={<Contact/>}/>
       </Routes>

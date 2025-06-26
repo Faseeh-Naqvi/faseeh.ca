@@ -11,3 +11,56 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+:root {
+  /* Light matte-green minimalism */
+  --bs-body-bg:      #aaebb0; /* pale mint */
+  --bs-body-color:   #2E3E2E; /* dark moss */
+  --bs-primary:      #A8D5BA; /* soft seafoam */
+  --bs-secondary:    #B8E0C9; /* very light sage */
+  --bs-success:      #AED9A5; /* muted spring green */
+  --bs-info:         #C4E8C3; /* pastel green */
+  --bs-warning:      #DFF2D8; /* light chartreuse */
+  --bs-danger:       #8FBF8F; /* grayish green */
+  --bs-light:        #FFFFFF; /* clean white */
+  --bs-dark:         #668C66; /* medium forest */
+}
+
+/* apply overall background & text */
+body {
+  background-color: var(--bs-body-bg) !important;
+  color:            var(--bs-body-color) !important;
+}
+
+/* cards blend in */
+.card {
+  background-color: var(--bs-light) !important;
+  color:            var(--bs-body-color) !important;
+  border:           none !important;
+}
+
+/* outline-dark buttons → use dark moss */
+.btn-outline-dark {
+  border-color: var(--bs-body-color) !important;
+  color:        var(--bs-body-color) !important;
+}
+.btn-outline-dark:hover {
+  background-color: var(--bs-body-color) !important;
+  color:            var(--bs-light) !important;
+}
+
+/* outline-primary buttons → seafoam */
+.btn-outline-primary {
+  border-color: var(--bs-primary) !important;
+  color:        var(--bs-primary) !important;
+}
+.btn-outline-primary:hover {
+  background-color: var(--bs-primary) !important;
+  color:            var(--bs-light) !important;
+}
+
+/* keep carousel bg transparent */
+.carousel,
+.carousel-inner,
+.carousel-item {
+  background-color: transparent !important;
+}

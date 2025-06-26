@@ -1,0 +1,51 @@
+/* Make the carousel-inner a visible, overflow-visible flex container */
+.scrapbook-carousel .carousel-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: visible;      
+}
+
+/* Base slide style: all slides participate in layout */
+.scrapbook-carousel .carousel-item {
+  position: relative;
+  flex: 0 0 auto;         
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+  width: 260px;          
+  margin: 0 -80px;        
+  opacity: 0.5;           
+  transition: opacity 0.5s, transform 0.5s;
+}
+
+/* Bring the active slide forward and full opacity */
+.scrapbook-carousel .carousel-item.active {
+  margin: 0;              
+  opacity: 1;
+  z-index: 2;             
+}
+
+/* Scrapbook photo style */
+.scrapbook-img {
+  max-height: 260px;
+  border: 4px solid #f0f0f0;
+  box-shadow: 4px 4px 10px rgba(0,0,0,0.2);
+}
+
+/* Random rotations (as before) */
+.rot-1 { transform: rotate(-6deg); }
+.rot-2 { transform: rotate(4deg); }
+.rot-3 { transform: rotate(-3deg); }
+.rot-4 { transform: rotate(5deg); }
+.rot-5 { transform: rotate(-2deg); }
+.rot-6 { transform: rotate(3deg); }
+.rot-7 { transform: rotate(-4deg); }
+.rot-8 { transform: rotate(2deg); }
+
+/* Controls styling (unchanged) */
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  background-color: rgba(0,0,0,0.5);
+  border-radius: 50%;
+}
