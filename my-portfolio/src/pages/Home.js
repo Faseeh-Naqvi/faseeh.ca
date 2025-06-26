@@ -8,13 +8,13 @@ export default function Home() {
       {/* Profile Image */}
       <img
         src="/images/profile.jpeg"
-        alt="Syed Naqvi"
+        alt="my profile picture"
         className="rounded-circle mb-4"
         style={{ width: '200px', height: '200px', objectFit: 'cover' }}
       />
 
       {/* Name */}
-      <h1 className="display-1 fw-bold mb-2">Syed Naqvi</h1>
+      <h1 className="display-1 fw-bold mb-2">Syed Faseeh Hayder Naqvi</h1>
       <p className="fs-4 mb-4 text-secondary">
         3rd-year Computer Science Student & Software Developer
       </p>
