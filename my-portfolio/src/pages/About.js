@@ -22,9 +22,10 @@ export default function About() {
     'The Art of War – Sun Tzu',
   ];
   const wantToRead = [
-    'Influence, The Psychology of Persuasion – Dr. Robert Cialdini',
     'Amusing Ourselves to Death: Public Discourse ... – Neil Postman',
     'Letting Go: The Pathway of Surrender – MD/PHD. David R. Hawkins',
+    'Influence, The Psychology of Persuasion – Dr. Robert Cialdini',
+    
   ];
 
   return (
@@ -38,7 +39,7 @@ export default function About() {
         Lately I’ve been diving into <em>Stoicism</em>, Eastern philosophy, and how
         social media rewires our brains. When I’m not coding, you’ll find me watching
         videos on psychology, history, religion, marketing, astronomy, or global
-        business trends — I’m always up for a good conversation!
+        business trends. I’m always up for a good conversation!
       </p>
 
       {/* ---------- Interests ---------- */}
@@ -47,50 +48,9 @@ export default function About() {
         <p>
           Emerging tech &amp; AI · Psychology · History · Religion · Marketing · Astronomy · Business ·
           Meditation · Stoicism · Geopolitics · Stocks &amp; Global Markets ·
-          Social-media neuroscience · The ever-shifting humour culture on the internet… and whatever niche interests <i>you</i> bring to the table.
+          Social-media neuroscience · The ever-shifting humour culture on the internet, and many more. Love talking to people about their niche interests!
         </p>
       </div>
-
-      {/* ---------- Fun Facts ---------- */}
-      <div className="mb-5">
-        <h2 className="h4 fw-semibold mb-3">Fun Facts</h2>
-        <ul className="list-unstyled">
-          <li>🎤 <strong>Public-speaking addict —</strong> on stage since Grade 3 assemblies; most recently a packed lecture-hall tech talk. My style is laid-back and conversational.</li>
-          <li>🎬 <strong>Content-creation geek —</strong> wrote & directed Western TMA videos (12.4 k views, +152 % engagement). Been filming comedy shorts since the Vine days … they’re slowly getting funnier.</li>
-          <li>📺 <strong>Tiny YouTuber —</strong> ~40 subs, 24 k+ views (mostly tech; planning to branch out).</li>
-          <li>📝 <strong>Journaler —</strong> my notebook is a sketch-filled scrapbook. Great for reminiscing; highly recommended.</li>
-        </ul>
-      </div>
-
-      {/* ---------- Reading Corner ---------- */}
-      <div className="mb-5">
-        <h2 className="h4 fw-semibold mb-3">Reading Corner</h2>
-        <div className="card shadow-sm">
-          <div className="card-body">
-            <div className="row">
-              {/* Currently Reading */}
-              <div className="col-md-6 mb-3 mb-md-0">
-                <h5 className="card-title">Currently Reading</h5>
-                <ul className="mb-0">
-                  {currentlyReading.map((book, i) => (
-                    <li key={i}>{book}</li>
-                  ))}
-                </ul>
-              </div>
-              {/* Want to Read */}
-              <div className="col-md-6">
-                <h5 className="card-title">Want to Read</h5>
-                <ul className="mb-0">
-                  {wantToRead.map((book, i) => (
-                    <li key={i}>{book}</li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
       {/* ---------- Photo Scrapbook ---------- */}
       <h2 className="h4 fw-semibold mb-3">Photo Scrapbook</h2>
       <div
@@ -130,6 +90,48 @@ export default function About() {
           <span className="carousel-control-next-icon" aria-hidden="true" />
         </button>
       </div>
+
+      {/* ---------- Fun Facts ---------- */}
+      <div className="mb-5">
+        <h2 className="h4 fw-semibold mb-3">Fun Facts</h2>
+        <ul className="list-unstyled">
+          <li>🎤 <strong>Public-speaking addict —</strong> on stage since Grade 3 assemblies; most recently a packed lecture-hall presentation. My style is laid-back and conversational. I also love pitching, Shark Tank is a family favorite.</li>
+          <li>🎬 <strong>Content-creation geek —</strong> wrote & directed Western TMA videos (12.4 k views, +152 % engagement). Been filming comedy videos since the Vine days (they were not funny). I like to think I have slowly been getting better. Obsessed with the art of storytelling, regardless of medium</li>
+          <li>📺 <strong>Tiny YouTuber —</strong> ~40 subs, 24 k+ views (mostly tech; planning to branch out into other interests).</li>
+          <li>📝 <strong>Journaler —</strong> my notebook is a sketch-filled scrapbook. Started first year. Great for reminiscing; highly recommended.</li>
+        </ul>
+      </div>
+
+      {/* ---------- Reading Corner ---------- */}
+      <div className="mb-5">
+        <h2 className="h4 fw-semibold mb-3">Reading Corner</h2>
+        <div className="card shadow-sm">
+          <div className="card-body">
+            <div className="row">
+              {/* Currently Reading */}
+              <div className="col-md-6 mb-3 mb-md-0">
+                <h5 className="card-title">Currently Reading</h5>
+                <ul className="mb-0">
+                  {currentlyReading.map((book, i) => (
+                    <li key={i}>{book}</li>
+                  ))}
+                </ul>
+              </div>
+              {/* Want to Read */}
+              <div className="col-md-6">
+                <h5 className="card-title">Want to Read</h5>
+                <ul className="mb-0">
+                  {wantToRead.map((book, i) => (
+                    <li key={i}>{book}</li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      
     </div>
   );
 }

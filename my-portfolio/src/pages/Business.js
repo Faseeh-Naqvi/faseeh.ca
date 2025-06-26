@@ -5,7 +5,7 @@ const businesses = [
 	{
 		name: 'AI Automation Agency',
 		status: 'Stealth - Market Research',
-		note: 'in the works, building AI automation solutions for businesses',
+		note: 'In the works, building custom AI automation solutions for businesses',
 		links: [],
 	},
 	{
@@ -17,27 +17,27 @@ const businesses = [
 	{
 		name: 'Silo (name TBD)',
 		status: 'Stealth - Market Research',
-		note: 'Shhh… we’re s-till in the lab',
+		note: 'Shhh… we’re still in the lab',
 		links: [],
 	},
 	{
 		name: 'FasTech.dev',
 
 		status: 'Active',
-		note: 'Still building the future (very fast) | Learnt that it is neccessary to put yourself out there, especially when you have a good product.',
+		note: 'Thought of the company name in grade 9 for a school project (faseeh + Fast + Tech = FasTech) | Learnt that it is neccessary to put yourself out there, especially when you have a good product',
 		links: [{ url: 'https://fastech.dev', icon: <FaGlobe /> },{url: 'https://www.linkedin.com/company/fastech-developers/', icon: <FaLinkedin /> }],
 	},
 	{
 		name: 'Mustang Tutors',
 
 		status: 'Attempted',
-		note: 'Learnt that cold outreach is a must starting off, also that you need to move fast before the spark dies out.',
+		note: 'Learnt that cold outreach is a must starting off, also that you need to move fast before the spark dies out',
 		links: [{ url: 'https://www.instagram.com/mustangtutors/', icon: <FaInstagram /> }],
 	},
 	{
 		name: 'Brainrot App',
 		status: 'Paused',
-		note: 'Learnt that you need to focus on the core product and get it out rather than trying to add every feature under the sun before release.',
+		note: 'Learnt that you need to focus on the core product and get it out rather than trying to add every feature under the sun before release',
 		links: [],
 	},
 	{
@@ -63,14 +63,14 @@ const businesses = [
 		alias: 'Shums',
 
 		status: 'Attempted',
-		note: 'Learned clothing wont sell itself',
+		note: 'Learnt that clothing wont sell itself',
 		links: [{ url: 'https://shums.creator-spring.com', icon: <FaGlobe /> }],
 	},
 	{
 		name: 'SFHN Food Drive (non-profit)',
 		alias: 'SFHN',
 		status: 'Attempted',
-		note: 'Tried starting this when I was 14. Learnt that you have to have a clear plan and team to execute a non-profit effectively.',
+		note: 'Tried starting this when I was 14. Learnt that you have to have a clear plan and a team that believes in the mission to execute a non-profit effectively',
 		links: [],
 	},
 ];
