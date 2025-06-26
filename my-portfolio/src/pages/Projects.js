@@ -47,7 +47,7 @@ const projects = [
   },
   {
     id: "cyderapp",
-    title: "Cyder App Prototype (IveyHacks 2023 – 2nd place)",
+    title: "🥈 Cyder App Prototype (IveyHacks 2023 – 2nd place)",
     description: "Award winning, Privacy‑first data sharing prototype built in 24 h.",
     media: [
       { type: "image", src: "/images/projects/cyderApp/cyder0.png" },
@@ -56,7 +56,7 @@ const projects = [
       { type: "image", src: "/images/projects/cyderApp/cyder3.png" },
       { type: "image", src: "/images/projects/cyderApp/cyder4.png" },
     ],
-    link: "https://www.ivey.uwo.ca/news/news-ivey/2023/march/new-ivey-hackathon-allows-students-to-build-a-real-life-data-privacy-solution/null",
+    link: "https://www.ivey.uwo.ca/news/news-ivey/2023/march/new-ivey-hackathon-allows-students-to-build-a-real-life-data-privacy-solution/",
     featured: false,
   },
   {
