@@ -6,103 +6,123 @@ import './ResumeGraveyard.css';
 const oldResumes = [
   {
     id: 1,
-    year: '2023 Feb',
-    ripText: 'R.I.P. Early Attempt v1.0',
-    description: 'The humble beginnings',
+    year: '2018 Lost',
+    ripText: 'Where did it go???',
+    description: 'Grade 8 resume assignment, lost to time. It was so empty...',
     details: '',
-    pdfPath: '/old-resumes/2023_02_early_version.pdf',
-    isGhost: false
+    pdfPath: null,
+    isGhost: true
   },
   {
     id: 2,
-    year: '2023 May',
-    ripText: 'R.I.P. Email Filename Era',
-    description: 'The organizational skills phase',
+    year: '2019 Origin',
+    ripText: 'R.I.P. The Original',
+    description: 'Where it all began, civics and careers grade 10',
+    details: '',
+    pdfPath: '/old-resumes/2022_01_original_version.pdf',
+    isGhost: false
+  },
+  {
+    id: 3,
+    year: '2023 Feb',
+    ripText: 'R.I.P. testing the waters',
+    description: 'Unsure what I was doing here tbh',
     details: '',
     pdfPath: '/old-resumes/2023_05_email_version.pdf',
     isGhost: false
   },
   {
-    id: 3,
+    id: 4,
+    year: '2023 May',
+    ripText: 'R.I.P. Fresh out of high school',
+    description: 'Tried so hard to make it work',
+    details: '',
+    pdfPath: '/old-resumes/2023_02_early_version.pdf',
+    isGhost: false
+  },
+  {
+    id: 5,
     year: '2023 Summer',
     ripText: 'R.I.P. Summer Update v2.0',
-    description: 'The getting serious revision',
+    description: 'Getting more serious',
     details: '',
     pdfPath: '/old-resumes/2023_06_summer_version.pdf',
     isGhost: false
   },
   {
-    id: 4,
+    id: 6,
     year: '2024 Jan',
-    ripText: 'R.I.P. The Dreaded Copy',
-    description: 'The (2) incident',
+    ripText: 'R.I.P. Special Hackathon Edition',
+    description: 'First of the coloured resume phase, fun crossword on the back',
     details: '',
-    pdfPath: '/old-resumes/2024_01_copy_version.pdf',
+    pdfPath: '/old-resumes/2024_01_first_colored_resume.pdf',
     isGhost: false
   },
   {
-    id: 5,
+    id: 7,
+    year: '2024 Feb',
+    ripText: 'R.I.P. Post Hackathon Inspiration',
+    description: 'Removed crossword after hackathon feedback😅',
+    details: '',
+    pdfPath: '/old-resumes/2024_02_copy_version.pdf',
+    isGhost: false
+  },
+  {
+    id: 8,
     year: '2024 Spring',
     ripText: 'R.I.P. Spring Refresh v3.0',
-    description: 'The new season update',
+    description: 'Tried my best to add more metrics',
     details: '',
     pdfPath: '/old-resumes/2024_03_spring_update.pdf',
     isGhost: false
   },
   {
-    id: 6,
-    year: '2024 Job Hunt',
+    id: 9,
+    year: '2024 Winter',
     ripText: 'R.I.P. Job Market Special',
-    description: 'The optimize for ATS version',
+    description: 'Finally conformed to a resume template',
     details: '',
     pdfPath: '/old-resumes/2024_06_job_hunt.pdf',
     isGhost: false
   },
+
   {
-    id: 7,
-    year: '2024 DTP',
-    ripText: 'R.I.P. DTP Application',
-    description: 'The tailored application masterpiece',
-    details: '',
-    pdfPath: '/old-resumes/2024_06_DTP_application.pdf',
-    isGhost: false
-  },
-  {
-    id: 8,
-    year: '2024 Timestamp',
-    ripText: 'R.I.P. The Timestamp Version',
-    description: 'The never lose track again era',
+    id: 10,
+    year: '2024 Winter',
+    ripText: 'R.I.P. GPT Wrapper Project Resume',
+    description: 'Tried to use OpenAI API for a cool project. Added to resume while still in progress',
     details: '',
     pdfPath: '/old-resumes/2024_06_timestamp_version.pdf',
     isGhost: false
   },
   {
-    id: 9,
+    id: 12,
     year: '2024 Summer',
     ripText: 'R.I.P. Summer Polish v4.0',
-    description: 'The final form delusion',
+    description: 'Finally got some real experience',
     details: '',
     pdfPath: '/old-resumes/2024_08_summer_polish.pdf',
     isGhost: false
   },
   {
-    id: 10,
+    id: 13,
     year: '2025 New Year',
-    ripText: 'R.I.P. New Year Attempt',
-    description: 'The resolution revision',
+    ripText: 'R.I.P. Extra Extra Curricular',
+    description: 'Added extra curricular activities',
     details: '',
     pdfPath: '/old-resumes/2025_06_new_year_attempt.pdf',
     isGhost: false
-  },
-  {
-    id: 11,
-    year: 'The Lost One',
-    ripText: 'R.I.P. The Original Sin',
-    description: 'The first attempt that shall not be named',
-    details: '',
-    pdfPath: null,
-    isGhost: true
   }
+//  ,
+//   {
+//     id: 13,
+//     year: 'The Lost One',
+//     ripText: 'R.I.P. The Corrupted',
+//     description: 'Too cursed to exist',
+//     details: '',
+//     pdfPath: null,
+//     isGhost: true
+//   }
 ];
 
 const ResumeGraveyard = ({ isOpen, onClose }) => {
@@ -115,11 +135,20 @@ const ResumeGraveyard = ({ isOpen, onClose }) => {
     if (isOpen) {
       // Small delay to ensure the component is rendered
       setTimeout(() => {
-        window.scrollTo({
-          top: 0,
-          behavior: 'smooth'
-        });
-      }, 100);
+        const graveyardElement = document.querySelector('.resume-graveyard');
+        if (graveyardElement) {
+          graveyardElement.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        } else {
+          // Fallback to scrolling to top
+          window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+          });
+        }
+      }, 150);
     }
   }, [isOpen]);
 
