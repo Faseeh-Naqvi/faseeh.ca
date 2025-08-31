@@ -8,11 +8,12 @@ import {
   Button,
   Ratio,
 } from "react-bootstrap";
+import "./Projects.css";
 
 /* ------------------------------------------------------------------ */
 /* CONFIG                                                              */
 /* ------------------------------------------------------------------ */
-const MEDIA_HEIGHT = 400;           // one place to tweak slide height
+const MEDIA_HEIGHT = 400; // Used for video container height
 const AUTO_SLIDE_MS = 3000;         // nested-carousel autoplay
 
 /* ------------------------------------------------------------------ */
@@ -114,24 +115,25 @@ const projects = [
 const MediaItem = ({ item }) => {
   if (item.type === "video") {
     return (
-      <div style={{ height: MEDIA_HEIGHT, overflow: "hidden" }}>
-        <Ratio aspectRatio="16x9" style={{ height: "100%" }} className="rounded-xl">
+      <div style={{ height: MEDIA_HEIGHT, display: "flex", alignItems: "center", justifyContent: "center", background: "#f3f6fa" }}>
+        <Ratio aspectRatio="16x9" style={{ width: "100%", maxWidth: 600, height: "100%" }}>
           <iframe
             title="Project Video"
             src={`${item.src}?rel=0&modestbranding=1&playsinline=1`}
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowFullScreen
+            style={{ borderRadius: "1rem", width: "100%", height: "100%", background: "#fff" }}
           />
         </Ratio>
       </div>
     );
   }
   return (
-    <div style={{ height: MEDIA_HEIGHT, overflow: "hidden" }}>
+    <div style={{ height: MEDIA_HEIGHT, display: "flex", alignItems: "center", justifyContent: "center", background: "#f3f6fa" }}>
       <img
         src={process.env.PUBLIC_URL + item.src}
-        className="d-block w-100"
-        style={{ objectFit: "cover", height: "100%" }}
+        className="d-block"
+        style={{ objectFit: "contain", maxHeight: 380, maxWidth: "100%", borderRadius: "1rem", background: "#fff", boxShadow: "0 2px 12px 0 rgba(30,41,59,0.10)" }}
         alt="project media"
       />
     </div>
@@ -142,42 +144,41 @@ const ProjectCard = ({ project }) => {
   const [autoInterval, setAutoInterval] = useState(AUTO_SLIDE_MS);
   const innerRef = useRef(null);
 
-  /* stop inner auto-play on any user interaction */
+  // Stop auto-play on any user interaction
   const stopAuto = () => autoInterval && setAutoInterval(null);
   const handleSelect = () => stopAuto();
-  const handleClick  = () => {
-    innerRef.current?.next?.();     // advance inner carousel
+  const handleClick = () => {
+    innerRef.current?.next?.();
     stopAuto();
   };
 
   const firstVideo = project.media.find((m) => m.type === "video");
 
   return (
-    <Card className="border-0 shadow-sm h-100 overflow-hidden">
-      <Carousel
-        ref={innerRef}
-        interval={autoInterval}
-        controls={project.media.length > 1}
-        indicators={project.media.length > 1}
-        onSelect={handleSelect}
-        onClick={handleClick}
-      >
-        {project.media.map((m, idx) => (
-          <Carousel.Item key={idx}>
-            <MediaItem item={m} />
-          </Carousel.Item>
-        ))}
-      </Carousel>
-
+    <Card className="project-card h-100">
+      <div className="project-carousel position-relative">
+        <Carousel
+          ref={innerRef}
+          interval={autoInterval}
+          controls={project.media.length > 1}
+          indicators={project.media.length > 1}
+          onSelect={handleSelect}
+          onClick={handleClick}
+        >
+          {project.media.map((m, idx) => (
+            <Carousel.Item key={idx}>
+              <MediaItem item={m} />
+            </Carousel.Item>
+          ))}
+        </Carousel>
+      </div>
       <Card.Body className="d-flex flex-column">
-        <Card.Title className="fw-semibold text-xl mb-2">
+        <Card.Title className="card-title mb-2">
           {project.title}
         </Card.Title>
-
-        <Card.Text className="text-muted mb-3" style={{ minHeight: "4rem" }}>
+        <Card.Text className="card-text mb-3" style={{ minHeight: "4rem" }}>
           {project.description}
         </Card.Text>
-
         <div className="mt-auto d-flex gap-2 flex-wrap">
           {project.link && (
             <Button
@@ -185,7 +186,7 @@ const ProjectCard = ({ project }) => {
               target="_blank"
               rel="noreferrer"
               variant="outline-dark"
-              className="rounded-pill px-3 py-1"
+              className="btn"
             >
               View Project
             </Button>
@@ -196,7 +197,7 @@ const ProjectCard = ({ project }) => {
               target="_blank"
               rel="noreferrer"
               variant="outline-primary"
-              className="rounded-pill px-3 py-1"
+              className="btn"
             >
               View Video
             </Button>
@@ -223,71 +224,56 @@ const ProjectsPage = () => {
     setHeroIdx((i) => (i === heroCount - 1 ? 0 : i + 1));
 
   return (
-    <Container fluid="lg" className="py-5">
-      {/* FEATURED SHOWCASE ------------------------------------------------ */}
-      <Row className="justify-content-center mb-5 position-relative">
-        <Col xs={12} md={10} lg={8} className="px-0 position-relative">
-          <Carousel
-            activeIndex={heroIdx}
-            onSelect={setHeroIdx}
-            interval={null}
-            controls={false}
-            indicators={false}
-            className="shadow-lg rounded-4 overflow-hidden"
-          >
-            {featuredProjects.map((project) => (
-              <Carousel.Item key={project.id}>
-                <ProjectCard project={project} />
-              </Carousel.Item>
-            ))}
-          </Carousel>
-
-          {/* OUTSIDE ARROWS ------------------------------------------------ */}
-          <Button
-            variant="light"
-            onClick={prevHero}
-            className="shadow rounded-circle d-flex align-items-center justify-content-center position-absolute"
-            style={{
-              width: "3.5rem",
-              height: "3.5rem",
-              fontSize: "1.5rem",
-              top: "50%",
-              left: "-2.5rem",          // pushes outside card
-              transform: "translateY(-50%)",
-              zIndex: 2,
-            }}
-          >
-            ‹
-          </Button>
-
-          <Button
-            variant="light"
-            onClick={nextHero}
-            className="shadow rounded-circle d-flex align-items-center justify-content-center position-absolute"
-            style={{
-              width: "3.5rem",
-              height: "3.5rem",
-              fontSize: "1.5rem",
-              top: "50%",
-              right: "-2.5rem",         // pushes outside card
-              transform: "translateY(-50%)",
-              zIndex: 2,
-            }}
-          >
-            ›
-          </Button>
-        </Col>
-      </Row>
-
-      {/* ALL PROJECTS ----------------------------------------------------- */}
-      <Row className="g-4">
-        {projects.map((project) => (
-          <Col key={project.id} xs={12} sm={6} lg={4}>
-            <ProjectCard project={project} />
+    <div className="projects-section">
+      <Container fluid="lg" className="py-5">
+        {/* FEATURED SHOWCASE ------------------------------------------------ */}
+        <Row className="justify-content-center mb-5 position-relative">
+          <Col xs={12} md={10} lg={8} className="px-0 position-relative">
+            <div className="project-carousel position-relative">
+              <Carousel
+                activeIndex={heroIdx}
+                onSelect={setHeroIdx}
+                interval={null}
+                controls={false}
+                indicators={false}
+                className="shadow-lg rounded-4 overflow-hidden"
+              >
+                {featuredProjects.map((project) => (
+                  <Carousel.Item key={project.id}>
+                    <ProjectCard project={project} />
+                  </Carousel.Item>
+                ))}
+              </Carousel>
+              {/* Sleek outside arrows */}
+              <button
+                className="project-carousel-arrow left"
+                onClick={prevHero}
+                aria-label="Previous project"
+                type="button"
+              >
+                &#8249;
+              </button>
+              <button
+                className="project-carousel-arrow right"
+                onClick={nextHero}
+                aria-label="Next project"
+                type="button"
+              >
+                &#8250;
+              </button>
+            </div>
           </Col>
-        ))}
-      </Row>
-    </Container>
+        </Row>
+        {/* ALL PROJECTS ----------------------------------------------------- */}
+        <Row className="g-4">
+          {projects.map((project) => (
+            <Col key={project.id} xs={12} sm={6} lg={4}>
+              <ProjectCard project={project} />
+            </Col>
+          ))}
+        </Row>
+      </Container>
+    </div>
   );
 };
 
