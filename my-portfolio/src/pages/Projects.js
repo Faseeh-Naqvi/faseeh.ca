@@ -81,7 +81,7 @@ const projects = [
       { type: "image", src: "/images/projects/impact-earth/impact3.png" },
       { type: "image", src: "/images/projects/impact-earth/impact4.png" },
     ],
-    link: "http://geonotebook.ca",
+    link: "https://impactearth.herokuapp.com/marketing",
     featured: true,
   },
   {
