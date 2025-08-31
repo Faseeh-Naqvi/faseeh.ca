@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import {
   Container,
   Row,
@@ -6,15 +6,14 @@ import {
   Carousel,
   Card,
   Button,
-  Ratio,
+  Modal,
 } from "react-bootstrap";
 import "./Projects.css";
 
 /* ------------------------------------------------------------------ */
 /* CONFIG                                                              */
 /* ------------------------------------------------------------------ */
-const MEDIA_HEIGHT = 400; // Used for video container height
-const AUTO_SLIDE_MS = 3000;         // nested-carousel autoplay
+// Configuration removed as we're using iMessage-style gallery instead
 
 /* ------------------------------------------------------------------ */
 /* DATA – ADD/EDIT PROJECTS HERE                                       */
@@ -112,99 +111,192 @@ const projects = [
 /* ------------------------------------------------------------------ */
 /* PRESENTATION COMPONENTS                                             */
 /* ------------------------------------------------------------------ */
-const MediaItem = ({ item }) => {
-  if (item.type === "video") {
+
+// iMessage-style overlapping thumbnail gallery
+const MediaGallery = ({ media, onImageClick }) => {
+  const handleThumbnailClick = (index) => {
+    onImageClick(index);
+  };
+
+  const createThumbnail = (item, index) => {
+    if (item.type === "video") {
+      // For videos, we'll show a play icon over a placeholder
+      return (
+        <div
+          key={index}
+          className="media-thumbnail video-thumbnail"
+          onClick={() => handleThumbnailClick(index)}
+          style={{
+            background: `linear-gradient(45deg, var(--bs-primary), var(--bs-secondary))`,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            fontSize: '2rem',
+            color: 'white'
+          }}
+        >
+          📹
+        </div>
+      );
+    }
+    
     return (
-      <div style={{ height: MEDIA_HEIGHT, display: "flex", alignItems: "center", justifyContent: "center", background: "#f3f6fa" }}>
-        <Ratio aspectRatio="16x9" style={{ width: "100%", maxWidth: 600, height: "100%" }}>
-          <iframe
-            title="Project Video"
-            src={`${item.src}?rel=0&modestbranding=1&playsinline=1`}
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-            style={{ borderRadius: "1rem", width: "100%", height: "100%", background: "#fff" }}
-          />
-        </Ratio>
-      </div>
-    );
-  }
-  return (
-    <div style={{ height: MEDIA_HEIGHT, display: "flex", alignItems: "center", justifyContent: "center", background: "#f3f6fa" }}>
       <img
+        key={index}
         src={process.env.PUBLIC_URL + item.src}
-        className="d-block"
-        style={{ objectFit: "contain", maxHeight: 380, maxWidth: "100%", borderRadius: "1rem", background: "#fff", boxShadow: "0 2px 12px 0 rgba(30,41,59,0.10)" }}
-        alt="project media"
+        className="media-thumbnail"
+        alt={`Project media ${index + 1}`}
+        onClick={() => handleThumbnailClick(index)}
       />
+    );
+  };
+
+  return (
+    <div className="imessage-gallery">
+      {media.slice(0, 5).map((item, index) => createThumbnail(item, index))}
+      {media.length > 5 && (
+        <div
+          className="media-thumbnail"
+          onClick={() => handleThumbnailClick(0)}
+          style={{
+            background: 'rgba(46, 62, 46, 0.8)',
+            color: 'white',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            fontSize: '1rem',
+            fontWeight: 'bold',
+            transform: 'rotate(-2deg) translateX(100px) translateY(-5px)',
+            zIndex: 6
+          }}
+        >
+          +{media.length - 4}
+        </div>
+      )}
     </div>
   );
 };
 
-const ProjectCard = ({ project }) => {
-  const [autoInterval, setAutoInterval] = useState(AUTO_SLIDE_MS);
-  const innerRef = useRef(null);
+// Modal component for maximized media view
+const MediaModal = ({ show, onHide, media, initialIndex }) => {
+  const [activeIndex, setActiveIndex] = useState(initialIndex || 0);
 
-  // Stop auto-play on any user interaction
-  const stopAuto = () => autoInterval && setAutoInterval(null);
-  const handleSelect = () => stopAuto();
-  const handleClick = () => {
-    innerRef.current?.next?.();
-    stopAuto();
+  const renderMediaItem = (item) => {
+    if (item.type === "video") {
+      return (
+        <div style={{ height: "70vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
+          <iframe
+            src={`${item.src}?rel=0&modestbranding=1&playsinline=1`}
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+            style={{ width: "100%", height: "100%", border: "none", borderRadius: "8px" }}
+            title="Project Video"
+          />
+        </div>
+      );
+    }
+    
+    return (
+      <img
+        src={process.env.PUBLIC_URL + item.src}
+        alt="Project media"
+        style={{ width: "100%", height: "70vh", objectFit: "contain" }}
+      />
+    );
+  };
+
+  return (
+    <Modal
+      show={show}
+      onHide={onHide}
+      size="xl"
+      centered
+      className="project-modal"
+    >
+      <button
+        className="close-modal"
+        onClick={onHide}
+        aria-label="Close modal"
+      >
+        ×
+      </button>
+      <Modal.Body>
+        <Carousel
+          activeIndex={activeIndex}
+          onSelect={setActiveIndex}
+          controls={media.length > 1}
+          indicators={media.length > 1}
+        >
+          {media.map((item, index) => (
+            <Carousel.Item key={index}>
+              {renderMediaItem(item)}
+            </Carousel.Item>
+          ))}
+        </Carousel>
+      </Modal.Body>
+    </Modal>
+  );
+};
+
+const ProjectCard = ({ project }) => {
+  const [showModal, setShowModal] = useState(false);
+  const [modalStartIndex, setModalStartIndex] = useState(0);
+
+  const handleImageClick = (index) => {
+    setModalStartIndex(index);
+    setShowModal(true);
   };
 
   const firstVideo = project.media.find((m) => m.type === "video");
 
   return (
-    <Card className="project-card h-100">
-      <div className="project-carousel position-relative">
-        <Carousel
-          ref={innerRef}
-          interval={autoInterval}
-          controls={project.media.length > 1}
-          indicators={project.media.length > 1}
-          onSelect={handleSelect}
-          onClick={handleClick}
-        >
-          {project.media.map((m, idx) => (
-            <Carousel.Item key={idx}>
-              <MediaItem item={m} />
-            </Carousel.Item>
-          ))}
-        </Carousel>
-      </div>
-      <Card.Body className="d-flex flex-column">
-        <Card.Title className="card-title mb-2">
-          {project.title}
-        </Card.Title>
-        <Card.Text className="card-text mb-3" style={{ minHeight: "4rem" }}>
-          {project.description}
-        </Card.Text>
-        <div className="mt-auto d-flex gap-2 flex-wrap">
-          {project.link && (
-            <Button
-              href={project.link}
-              target="_blank"
-              rel="noreferrer"
-              variant="outline-dark"
-              className="btn"
-            >
-              View Project
-            </Button>
-          )}
-          {firstVideo && (
-            <Button
-              href={firstVideo.src}
-              target="_blank"
-              rel="noreferrer"
-              variant="outline-primary"
-              className="btn"
-            >
-              View Video
-            </Button>
-          )}
-        </div>
-      </Card.Body>
-    </Card>
+    <>
+      <Card className="project-card h-100">
+        <MediaGallery 
+          media={project.media} 
+          onImageClick={handleImageClick}
+        />
+        <Card.Body className="d-flex flex-column">
+          <Card.Title className="card-title mb-2">
+            {project.title}
+          </Card.Title>
+          <Card.Text className="card-text mb-3" style={{ minHeight: "3rem" }}>
+            {project.description}
+          </Card.Text>
+          <div className="mt-auto d-flex gap-2 flex-wrap">
+            {project.link && (
+              <Button
+                href={project.link}
+                target="_blank"
+                rel="noreferrer"
+                variant="outline-dark"
+                className="btn"
+              >
+                View Project
+              </Button>
+            )}
+            {firstVideo && (
+              <Button
+                href={firstVideo.src}
+                target="_blank"
+                rel="noreferrer"
+                variant="outline-primary"
+                className="btn"
+              >
+                View Video
+              </Button>
+            )}
+          </div>
+        </Card.Body>
+      </Card>
+      
+      <MediaModal
+        show={showModal}
+        onHide={() => setShowModal(false)}
+        media={project.media}
+        initialIndex={modalStartIndex}
+      />
+    </>
   );
 };
 
@@ -214,57 +306,29 @@ const ProjectCard = ({ project }) => {
 const ProjectsPage = () => {
   const featuredProjects = projects.filter((p) => p.featured);
 
-  /* control the *outer* showcase carousel with index state */
-  const [heroIdx, setHeroIdx] = useState(0);
-  const heroCount = featuredProjects.length;
-
-  const prevHero = () =>
-    setHeroIdx((i) => (i === 0 ? heroCount - 1 : i - 1));
-  const nextHero = () =>
-    setHeroIdx((i) => (i === heroCount - 1 ? 0 : i + 1));
-
   return (
     <div className="projects-section">
       <Container fluid="lg" className="py-5">
         {/* FEATURED SHOWCASE ------------------------------------------------ */}
-        <Row className="justify-content-center mb-5 position-relative">
-          <Col xs={12} md={10} lg={8} className="px-0 position-relative">
-            <div className="project-carousel position-relative">
-              <Carousel
-                activeIndex={heroIdx}
-                onSelect={setHeroIdx}
-                interval={null}
-                controls={false}
-                indicators={false}
-                className="shadow-lg rounded-4 overflow-hidden"
-              >
-                {featuredProjects.map((project) => (
-                  <Carousel.Item key={project.id}>
-                    <ProjectCard project={project} />
-                  </Carousel.Item>
-                ))}
-              </Carousel>
-              {/* Sleek outside arrows */}
-              <button
-                className="project-carousel-arrow left"
-                onClick={prevHero}
-                aria-label="Previous project"
-                type="button"
-              >
-                &#8249;
-              </button>
-              <button
-                className="project-carousel-arrow right"
-                onClick={nextHero}
-                aria-label="Next project"
-                type="button"
-              >
-                &#8250;
-              </button>
-            </div>
-          </Col>
-        </Row>
+        {featuredProjects.length > 0 && (
+          <div className="featured-showcase">
+            <h2 className="text-center mb-4" style={{ color: 'var(--bs-body-color)', fontWeight: '700' }}>
+              Featured Projects
+            </h2>
+            <Row className="justify-content-center">
+              {featuredProjects.slice(0, 1).map((project) => (
+                <Col key={project.id} xs={12} md={10} lg={8}>
+                  <ProjectCard project={project} />
+                </Col>
+              ))}
+            </Row>
+          </div>
+        )}
+        
         {/* ALL PROJECTS ----------------------------------------------------- */}
+        <h2 className="text-center mb-4" style={{ color: 'var(--bs-body-color)', fontWeight: '700' }}>
+          All Projects
+        </h2>
         <Row className="g-4">
           {projects.map((project) => (
             <Col key={project.id} xs={12} sm={6} lg={4}>
