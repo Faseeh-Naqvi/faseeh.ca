@@ -34,6 +34,18 @@ const projects = [
     featured: true,
   },
   {
+    id: "qr",
+    title: "Flyer Canada QR Code Tracker",
+    description: "real-time QR creation & analytics platform (React/Node/Express, MongoDB, JWT) with a scan-location heatmap, device-mix chart, and time-series trends that live-update via SSE/WebSockets",
+    media: [
+      { type: "image", src: "/images/projects/qrCode/Screenshot from 2025-08-24 21-33-16.png" },
+      { type: "image", src: "/images/projects/qrCode/Screenshot from 2025-08-24 21-34-19.png"}
+      
+    ],
+    link: "https://devpost.com/software/attentify",
+    featured: true,
+  },
+  {
     id: "clocky",
     title: "Clocky",
     description: "Dynamic web clock that changes background based on geolocation & sunrise/sunset API data.",
