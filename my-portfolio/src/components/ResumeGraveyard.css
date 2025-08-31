@@ -1,0 +1,258 @@
+/* Resume Graveyard Game Styles */
+
+.resume-graveyard {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  min-height: 100vh;
+  position: relative;
+  overflow: hidden;
+  color: #e0e6ed;
+  padding: 2rem 0;
+}
+
+/* Animated background elements */
+.graveyard-bg::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+.graveyard-title {
+  font-family: 'Creepster', cursive;
+  font-size: 3rem;
+  text-align: center;
+  color: #e0e6ed;
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+  margin-bottom: 1rem;
+  animation: glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+  from { text-shadow: 0 0 20px rgba(255, 255, 255, 0.3); }
+  to { text-shadow: 0 0 30px rgba(255, 255, 255, 0.6), 0 0 40px rgba(120, 119, 198, 0.4); }
+}
+
+.graveyard-subtitle {
+  text-align: center;
+  font-size: 1.2rem;
+  color: #a0a6b0;
+  margin-bottom: 3rem;
+}
+
+.tombstone-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 2rem;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.tombstone {
+  background: linear-gradient(145deg, #2a2a3e, #1f1f35);
+  border-radius: 50px 50px 10px 10px;
+  padding: 1.5rem 1rem;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  border: 2px solid #3a3a5e;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+  min-height: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.tombstone::before {
+  content: '🪦';
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 2rem;
+  z-index: 1;
+}
+
+.tombstone:hover {
+  transform: translateY(-10px) scale(1.05);
+  box-shadow: 0 15px 40px rgba(120, 119, 198, 0.3);
+  border-color: #7877c6;
+  background: linear-gradient(145deg, #3a3a5e, #2a2a4e);
+}
+
+.tombstone:hover::before {
+  animation: wiggle 0.5s ease-in-out;
+}
+
+@keyframes wiggle {
+  0%, 100% { transform: translateX(-50%) rotate(0deg); }
+  25% { transform: translateX(-50%) rotate(-5deg); }
+  75% { transform: translateX(-50%) rotate(5deg); }
+}
+
+.tombstone-year {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #e0e6ed;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.tombstone-rip {
+  font-size: 0.8rem;
+  color: #8a8fa0;
+  font-style: italic;
+  margin-bottom: 0.5rem;
+}
+
+.tombstone-description {
+  font-size: 0.9rem;
+  color: #b0b6c0;
+  line-height: 1.4;
+}
+
+.ghost-resume {
+  opacity: 0.7;
+  animation: ghostFloat 3s ease-in-out infinite;
+}
+
+@keyframes ghostFloat {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-15px); }
+}
+
+.resume-modal {
+  background: rgba(0, 0, 0, 0.9);
+}
+
+.resume-modal .modal-content {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  border: 2px solid #7877c6;
+  border-radius: 15px;
+  color: #e0e6ed;
+}
+
+.resume-modal .modal-header {
+  border-bottom: 1px solid #3a3a5e;
+  background: linear-gradient(90deg, #7877c6, #8a8fa0);
+  color: white;
+}
+
+.resume-modal .modal-body {
+  padding: 2rem;
+}
+
+.resume-preview {
+  background: white;
+  padding: 2rem;
+  border-radius: 10px;
+  color: #333;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+.close-graveyard {
+  position: fixed;
+  top: 2rem;
+  right: 2rem;
+  background: rgba(120, 119, 198, 0.8);
+  border: none;
+  border-radius: 50%;
+  width: 3rem;
+  height: 3rem;
+  color: white;
+  font-size: 1.5rem;
+  cursor: pointer;
+  z-index: 1000;
+  transition: all 0.3s ease;
+}
+
+.close-graveyard:hover {
+  background: rgba(120, 119, 198, 1);
+  transform: scale(1.1);
+}
+
+/* Floating particles effect */
+.particle {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 50%;
+  animation: floatUp 8s infinite linear;
+}
+
+@keyframes floatUp {
+  0% {
+    transform: translateY(100vh) translateX(0px);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-100px) translateX(100px);
+    opacity: 0;
+  }
+}
+
+.particle:nth-child(odd) {
+  animation-delay: -2s;
+  animation-duration: 10s;
+}
+
+.particle:nth-child(even) {
+  animation-delay: -4s;
+  animation-duration: 12s;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .graveyard-title {
+    font-size: 2rem;
+  }
+  
+  .tombstone-grid {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1.5rem;
+    padding: 0 1rem;
+  }
+  
+  .tombstone {
+    min-height: 150px;
+    padding: 1rem 0.5rem;
+  }
+}
+
+/* PDF iframe styling for better display */
+.resume-modal .modal-content {
+  max-width: 95vw !important;
+  max-height: 95vh !important;
+}
+
+.resume-modal .modal-body {
+  max-height: 80vh !important;
+  overflow-y: auto;
+}
+
+.resume-modal iframe {
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
