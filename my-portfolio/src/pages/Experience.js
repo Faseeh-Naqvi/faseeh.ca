@@ -3,10 +3,19 @@ import React from 'react';
 
 const experience = [
   {
+    company: 'EMRC Lab',
+    logo: '/images/logos/emrc_lab_logo.jpeg',
+    role: 'Software Developer',
+    dates: 'Sep 2025 – Present',
+    bullets: [
+      'C, arduino, Azure, HTML, CSS, JS, Django',
+    ],
+  },
+  {
     company: 'Geo-Notebook',
     logo: '/images/logos/geo.png',
     role: 'Full-Stack Software Developer',
-    dates: 'May 2024 – Present',
+    dates: 'May 2024 – Aug 2025',
     bullets: [
       'Built a geospatial web app for the Canadian Geological Foundation to analyse impact data.',
       'Upgraded a 30 k-line Angular/TypeScript codebase (v12 → v18), integrating Google Maps JS API & ArcGIS.',
@@ -19,9 +28,10 @@ const experience = [
     logo: '/images/logos/fc.jpg',
     role: 'Software Developer',
     dates: 'Feb 2025 – Present',
-    bullets: [
-      'Delivered a real-time order-tracking platform for 10 000+ businesses, reducing support tickets by 30 %.',
-      'Automated Monday.com GraphQL & Make.com webhooks with JavaScript for seamless status updates.',
+bullets: [
+      'Delivered a secure, real-time order tracking platform used by over 10,000+ businesses nationwide, reducing client support tickets by 30% by integrating Monday.com’s API with Make.com webhooks and automating live order status updates.',
+      'Developed a QR-code analytics SaaS platform (React/Node.js/Express, MongoDB, JWT) featuring a scan location heatmap, device type chart, and a time-based trends graph, that auto-refresh live via WebSockets/Server-Sent Events.',
+      'Built end-to-end QR creation and management solution with custom frames, colors, and logo; generated PNG/SVG plus a short tracking URL; editable redirect and CSV export; and multi-QR management support.',
     ],
   },
   {
