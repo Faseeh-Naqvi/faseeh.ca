@@ -20,7 +20,7 @@ export default function Home() {
         {/* Name */}
         <h1 className="display-1 fw-bold mb-2">Syed Faseeh Hayder Naqvi</h1>
         <p className="fs-4 mb-4 text-secondary">
-          3rd-year Computer Science Student & Software Developer
+          4th-year Computer Science Student & Software Developer
         </p>
 
         {/* Big Icon Links */}
@@ -62,14 +62,14 @@ export default function Home() {
             onClick={() => setShowGraveyard(true)}
             style={{ 
               fontSize: '1.1rem',
-              background: 'linear-gradient(135deg, #1a1a2e 0%, #16213e 100%)',
-              color: '#e0e6ed',
-              border: '2px solid #7877c6',
+              background: 'linear-gradient(135deg, #4a6b4a 0%, #2d4a2d 100%)',
+              color: '#f0f7f0',
+              border: '2px solid #8fbc8f',
               transition: 'all 0.3s ease'
             }}
             onMouseOver={(e) => {
               e.target.style.transform = 'scale(1.05)';
-              e.target.style.boxShadow = '0 8px 25px rgba(120, 119, 198, 0.4)';
+              e.target.style.boxShadow = '0 8px 25px rgba(143, 188, 143, 0.4)';
             }}
             onMouseOut={(e) => {
               e.target.style.transform = 'scale(1)';

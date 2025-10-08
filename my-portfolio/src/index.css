@@ -12,17 +12,17 @@ code {
     monospace;
 }
 :root {
-  /* Light matte-green minimalism */
-  --bs-body-bg:      #aaebb0; /* pale mint */
-  --bs-body-color:   #2E3E2E; /* dark moss */
-  --bs-primary:      #A8D5BA; /* soft seafoam */
-  --bs-secondary:    #B8E0C9; /* very light sage */
-  --bs-success:      #AED9A5; /* muted spring green */
-  --bs-info:         #C4E8C3; /* pastel green */
-  --bs-warning:      #DFF2D8; /* light chartreuse */
-  --bs-danger:       #8FBF8F; /* grayish green */
-  --bs-light:        #FFFFFF; /* clean white */
-  --bs-dark:         #668C66; /* medium forest */
+  /* Sophisticated pastel green theme */
+  --bs-body-bg:      #f0f7f0; /* very light sage background */
+  --bs-body-color:   #2d4a2d; /* deep forest green text */
+  --bs-primary:      #8fbc8f; /* soft sage green */
+  --bs-secondary:    #b8d4b8; /* light mint */
+  --bs-success:      #9bcf9b; /* gentle spring green */
+  --bs-info:         #a8d5a8; /* soft pastel green */
+  --bs-warning:      #d4e8d4; /* pale green */
+  --bs-danger:       #7a9f7a; /* muted forest green */
+  --bs-light:        #ffffff; /* clean white */
+  --bs-dark:         #4a6b4a; /* medium forest green */
 }
 
 /* apply overall background & text */
