@@ -49,11 +49,11 @@ export default function Home() {
         {/* Resume Buttons */}
         <div className="d-flex flex-column flex-sm-row gap-3 align-items-center">
           <a
-            href="/Syed_Naqvi.pdf"
+            href="my-portfolio/public/Syed_Naqvi.pdf"
             className="btn btn-lg btn-outline-secondary rounded-pill px-5"
             download
             style={{ fontSize: '1.25rem' }}
-          >
+          >a
             Download Resume
           </a>
           
