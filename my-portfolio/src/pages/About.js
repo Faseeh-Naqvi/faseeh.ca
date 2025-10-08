@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 import './About.css';
 
@@ -27,6 +28,16 @@ export default function About() {
     'Influence, The Psychology of Persuasion – Dr. Robert Cialdini',
     
   ];
+  const haveRead = [
+    'The Alchemist – Paulo Coelho',
+    'Meditations – Marcus Aurelius',
+    'Brave New World – Aldous Huxley',
+    'Life of Pi – Yann Martel',
+    'The little prince – Antoine de Saint-Exupéry',
+    'The autobiography of malcolm x - malcolm x and alex haley',
+    'Flowers for Algernon - Daniel Keyes',
+
+  ];
 
   return (
     <div className="container py-5">
@@ -34,9 +45,9 @@ export default function About() {
 
       {/* ---------- Intro ---------- */}
       <p className="fs-lg">
-        I’m a third-year Computer Science student at Western University who
-        <strong> loves reading, learning random things, and chasing creative sparks</strong>.
-        Lately I’ve been diving into <em>Stoicism</em>, Eastern philosophy, and how
+        I’m a fourth-year Computer Science student at Western University who
+        <strong> loves reading, learning, and chasing creative sparks</strong>.
+        I consider myself entrepreneurial, please get in touch if you are working on something cool! Lately I’ve been diving into <em>Stoicism</em>, Eastern philosophy, and how
         social media rewires our brains. When I’m not coding, you’ll find me watching
         videos on psychology, history, religion, marketing, astronomy, or global
         business trends. I’m always up for a good conversation!
@@ -97,8 +108,8 @@ export default function About() {
         <ul className="list-unstyled">
           <li>🎤 <strong>Public-speaking addict —</strong> on stage since Grade 3 assemblies; most recently a packed lecture-hall presentation. My style is laid-back and conversational. I also love pitching, Shark Tank is a family favorite.</li>
           <li>🎬 <strong>Content-creation geek —</strong> wrote & directed Western TMA videos (12.4 k views, +152 % engagement). Been filming comedy videos since the Vine days (they were not funny). I like to think I have slowly been getting better. Obsessed with the art of storytelling, regardless of medium</li>
-          <li>📺 <strong>Tiny YouTuber —</strong> ~40 subs, 24 k+ views (mostly tech; planning to branch out into other interests).</li>
-          <li>📝 <strong>Journaler —</strong> my notebook is a sketch-filled scrapbook. Started first year. Great for reminiscing; highly recommended.</li>
+          <li>🏦 <strong>Entrepreneur—</strong> Tried (and failed) many <Link to="/business">businesses</Link> Will keep working on cool things regardless!</li>
+          <li>📝 <strong>Journaler —</strong> my notebook is a sketch-filled scrapbook. Started first year. Great for reminiscing and untangling the brain; highly recommended.</li>
         </ul>
       </div>
 
@@ -109,7 +120,7 @@ export default function About() {
           <div className="card-body">
             <div className="row">
               {/* Currently Reading */}
-              <div className="col-md-6 mb-3 mb-md-0">
+              <div className="col-md-4 mb-3 mb-md-0">
                 <h5 className="card-title">Currently Reading</h5>
                 <ul className="mb-0">
                   {currentlyReading.map((book, i) => (
@@ -118,13 +129,25 @@ export default function About() {
                 </ul>
               </div>
               {/* Want to Read */}
-              <div className="col-md-6">
+              <div className="col-md-4 mb-3 mb-md-0">
                 <h5 className="card-title">Want to Read</h5>
                 <ul className="mb-0">
                   {wantToRead.map((book, i) => (
                     <li key={i}>{book}</li>
                   ))}
                 </ul>
+              </div>
+              {/* Have Read */}
+              <div className="col-md-4">
+                <h5 className="card-title">Books I enjoyed</h5>
+                <ul className="mb-2">
+                  {haveRead.map((book, i) => (
+                    <li key={i}>{book}</li>
+                  ))}
+                </ul>
+                <small className="text-muted fst-italic">
+                  💬 I'd love to discuss any of these with you!
+                </small>
               </div>
             </div>
           </div>
