@@ -53,7 +53,7 @@ export default function Home() {
             className="btn btn-lg btn-outline-secondary rounded-pill px-5"
             download
             style={{ fontSize: '1.25rem' }}
-          >a
+          >
             Download Resume
           </a>
           
