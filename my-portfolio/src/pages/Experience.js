@@ -8,7 +8,8 @@ const experience = [
     role: 'Software Developer',
     dates: 'Sep 2025 – Present',
     bullets: [
-      'C, arduino, Azure, HTML, CSS, JS, Django',
+      'Managed full-stack maintenance of a smart traffic-monitoring IoT',
+'Implemented a custom server API to replace client-side log parsing, enabling reliable real-time device status; increased capacity from 100 messages to effectively unbounded with load scaling to O(devices)'
     ],
   },
   {

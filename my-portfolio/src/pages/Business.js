@@ -1,25 +1,38 @@
 import React from 'react';
 import { FaGlobe, FaInstagram, FaYoutube, FaLinkedin } from 'react-icons/fa';
-
+//Status: active, paused, stealth, attempted
 const businesses = [
 	{
-		name: 'AI Automation Agency',
-		status: 'Stealth - Market Research',
-		note: 'In the works, building custom AI automation solutions for businesses',
-		links: [],
-	},
-	{
-		name: 'Sigfig AI Security Services',
-		status: 'Stealth - Active Development',
-		note: 'Helping businesses secure lost revenue using AI',
+		name: 'Pharmacy software',
+		status: 'paused',
+		note: 'Stopped after marketing logistics were too tricky. May pickup again.',
 		links: [],
 	},
 	{
 		name: 'Silo (name TBD)',
 		status: 'Stealth - Market Research',
-		note: 'Shhh… we’re still in the lab',
+		note: 'working on taking the research in-person',
 		links: [],
 	},
+	{
+		name: 'AI content sponsorship platform',
+		status: 'attempted',
+		note: 'This specific niche is already saturated, but the idea of AI-generated content sponsorships is still very promising',
+		links: [],
+	},
+	{
+		name: 'AI Automation Agency',
+		status: 'attempted',
+		note: 'Became too saturated to be scalable with so many people offering similar services',
+		links: [],
+	},
+	{
+		name: 'Sigfig AI Security Services',
+		status: 'paused',
+		note: 'Helping businesses secure lost revenue using AI',
+		links: [],
+	},
+	
 	{
 		name: 'FasTech.dev',
 
@@ -40,6 +53,7 @@ const businesses = [
 		note: 'Learnt that you need to focus on the core product and get it out rather than trying to add every feature under the sun before release',
 		links: [],
 	},
+	
 	{
 		name: 'Bob Clothing',
 		alias: 'Bob',

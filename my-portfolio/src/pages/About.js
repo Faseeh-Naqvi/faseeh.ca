@@ -21,8 +21,12 @@ export default function About() {
   /* ---------- Reading Lists (update any time) ---------- */
   const currentlyReading = [
     'The Art of War – Sun Tzu',
+    'The lantern of the path',
+    '1001 nights'
+
   ];
   const wantToRead = [
+
     'Amusing Ourselves to Death: Public Discourse ... – Neil Postman',
     'Letting Go: The Pathway of Surrender – MD/PHD. David R. Hawkins',
     'Influence, The Psychology of Persuasion – Dr. Robert Cialdini',
@@ -108,7 +112,7 @@ export default function About() {
         <ul className="list-unstyled">
           <li>🎤 <strong>Public-speaking addict —</strong> on stage since Grade 3 assemblies; most recently a packed lecture-hall presentation. My style is laid-back and conversational. I also love pitching, Shark Tank is a family favorite.</li>
           <li>🎬 <strong>Content-creation geek —</strong> wrote & directed Western TMA videos (12.4 k views, +152 % engagement). Been filming comedy videos since the Vine days (they were not funny). I like to think I have slowly been getting better. Obsessed with the art of storytelling, regardless of medium</li>
-          <li>🏦 <strong>Entrepreneur—</strong> Tried (and failed) many <Link to="/business">businesses</Link> Will keep working on cool things regardless!</li>
+          <li>🏦 <strong>Entrepreneur—</strong> tried (and failed) many <Link to="/business">businesses</Link> Will keep working on cool things regardless!</li>
           <li>📝 <strong>Journaler —</strong> my notebook is a sketch-filled scrapbook. Started first year. Great for reminiscing and untangling the brain; highly recommended.</li>
         </ul>
       </div>
