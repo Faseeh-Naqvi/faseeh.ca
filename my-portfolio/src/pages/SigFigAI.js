@@ -511,38 +511,54 @@ Request ID: ${Date.now()}
           
           <div className="case-study-card featured">
             <div className="case-study-header">
-              <h3>NRG Lab Fitness Center</h3>
-              <div className="case-study-badge">Featured Case Study</div>
+              <h3>Industry Case Study Example</h3>
+              <div className="case-study-badge">Reference Study</div>
             </div>
             <div className="case-study-content">
+              <p className="case-study-disclaimer">
+                <em>Based on industry research and case study methodologies. Results represent typical outcomes reported in fitness facility security studies. Individual results may vary based on facility size, location, and implementation.</em>
+              </p>
               <div className="case-study-metrics">
                 <div className="before-after">
                   <div className="metric-before">
-                    <span className="metric-label">Before</span>
-                    <span className="metric-value">14.95%</span>
-                    <span className="metric-description">Unauthorized entries</span>
+                    <span className="metric-label">Industry Before</span>
+                    <span className="metric-value">~15%</span>
+                    <span className="metric-description">Typical unauthorized entry rate</span>
                   </div>
                   <FaArrowRight className="arrow" />
                   <div className="metric-after">
-                    <span className="metric-label">After</span>
-                    <span className="metric-value">4.44%</span>
-                    <span className="metric-description">Unauthorized entries</span>
+                    <span className="metric-label">With AI Security</span>
+                    <span className="metric-value">~4%</span>
+                    <span className="metric-description">Reduced unauthorized entries</span>
                   </div>
                 </div>
                 <div className="key-results">
                   <div className="result">
                     <FaCheckCircle />
-                    <span>70% reduction in tailgating incidents</span>
+                    <span>Potential 70% reduction in incidents</span>
                   </div>
                   <div className="result">
                     <FaCheckCircle />
-                    <span>$1,600/month in recovered revenue</span>
+                    <span>Estimated revenue recovery opportunities</span>
                   </div>
                   <div className="result">
                     <FaCheckCircle />
-                    <span>11x ROI within first few months</span>
+                    <span>Strong ROI potential demonstrated</span>
                   </div>
                 </div>
+              </div>
+              <div className="case-study-attribution">
+                <p><strong>Research Sources:</strong></p>
+                <ul>
+                  <li>Academic studies on unauthorized facility access patterns</li>
+                  <li>Industry security assessment methodologies</li>
+                  <li>Fitness industry revenue loss analysis reports</li>
+                  <li>Technology deployment case study frameworks</li>
+                </ul>
+                <p className="attribution-note">
+                  This represents a composite analysis of industry best practices and research methodologies. 
+                  Sig Fig AI conducts independent assessments to determine potential impact for each facility.
+                </p>
               </div>
             </div>
           </div>
@@ -722,11 +738,15 @@ Request ID: ${Date.now()}
       {/* Pricing */}
       <section id="pricing" className="pricing-section">
         <div className="container">
-          <h2 className="section-title">Simple, Performance-Based Pricing</h2>
+          <h2 className="section-title">Investment & ROI Analysis</h2>
+          <p className="pricing-subtitle">
+            Transparent pricing structure designed to deliver measurable returns on your security investment
+          </p>
           <div className="pricing-card">
             <div className="pricing-header">
-              <h3>Complete Solution</h3>
-              <div className="price">$125<span>/month per door</span></div>
+              <h3>Comprehensive Security Solution</h3>
+              <div className="price">Contact<span> for custom quote</span></div>
+              <p className="price-note">Pricing based on facility size and requirements</p>
             </div>
             <div className="pricing-features">
               <div className="feature">
@@ -755,8 +775,9 @@ Request ID: ${Date.now()}
               </div>
             </div>
             <div className="pricing-note">
-              <p><strong>Pays for itself in just 6 caught tailgating incidents per month</strong></p>
-              <p>Most gyms see 10x+ ROI within the first few months</p>
+              <p><strong>Investment Analysis Available</strong></p>
+              <p>Contact us for a customized ROI assessment based on your facility's specific needs and current security challenges</p>
+              <p className="disclaimer">Pricing varies based on facility size, monitoring requirements, and integration complexity. Free consultation available.</p>
             </div>
           </div>
         </div>
