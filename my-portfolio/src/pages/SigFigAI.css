@@ -1215,10 +1215,36 @@
   letter-spacing: 0.5px;
 }
 
-/* Case Studies Section - Darker Theme */
+/* Case Studies Section - Fixed Darker Theme */
 .case-studies-section {
   padding: 5rem 0;
   background: var(--dark-color);
+  position: relative;
+  overflow: hidden;
+}
+
+.case-studies-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 15% 25%, rgba(102, 126, 234, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 85% 75%, rgba(240, 147, 251, 0.1) 0%, transparent 50%);
+  z-index: 1;
+}
+
+.case-studies-section .container {
+  position: relative;
+  z-index: 2;
+}
+
+.case-studies-section .section-title {
+  color: white;
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  margin-bottom: 3rem;
 }
 
 .case-study-card {
@@ -1231,6 +1257,12 @@
   border: 1px solid rgba(148, 163, 184, 0.2);
   opacity: 0;
   transform: translateY(30px);
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.case-study-card p {
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 1.6;
 }
 
 .case-study-card.featured {
@@ -1247,7 +1279,8 @@
 .case-study-header h3 {
   font-size: 1.5rem;
   font-weight: 600;
-  color: var(--text-primary);
+  color: white;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
 .case-study-badge {
@@ -1257,6 +1290,7 @@
   border-radius: 50px;
   font-size: 0.9rem;
   font-weight: 600;
+  box-shadow: 0 2px 8px rgba(34, 197, 94, 0.3);
 }
 
 .before-after {
@@ -1271,22 +1305,34 @@
   text-align: center;
   padding: 1.5rem;
   border-radius: var(--border-radius);
-  background: #f8fafc;
+  background: rgba(30, 41, 59, 0.8);
+  backdrop-filter: blur(var(--blur-amount));
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  min-width: 150px;
+}
+
+.metric-before {
+  border-left: 3px solid var(--danger-color);
+}
+
+.metric-after {
+  border-left: 3px solid var(--success-color);
 }
 
 .metric-label {
   display: block;
   font-size: 0.9rem;
-  color: var(--text-secondary);
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 0.5rem;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  margin-bottom: 0.5rem;
 }
 
 .metric-value {
-  display: block;
-  font-size: 2.5rem;
+  font-size: 2rem;
   font-weight: 700;
+  color: white;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
   margin-bottom: 0.5rem;
 }
 
@@ -1319,6 +1365,7 @@
   align-items: center;
   gap: 0.5rem;
   font-weight: 500;
+  color: rgba(255, 255, 255, 0.9);
 }
 
 .result svg {
@@ -1333,7 +1380,8 @@
   text-align: center;
   font-size: 2rem;
   margin-bottom: 2rem;
-  color: var(--text-primary);
+  color: white;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
 .stats-grid {
@@ -1363,10 +1411,36 @@
   color: var(--text-secondary);
 }
 
-/* How It Works Section */
+/* How It Works Section - Fixed Styling */
 .how-it-works-section {
   padding: 5rem 0;
-  background: #f8fafc;
+  background: var(--darker-color);
+  position: relative;
+  overflow: hidden;
+}
+
+.how-it-works-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 25% 25%, rgba(102, 126, 234, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 75% 75%, rgba(240, 147, 251, 0.1) 0%, transparent 50%);
+  z-index: 1;
+}
+
+.how-it-works-section .container {
+  position: relative;
+  z-index: 2;
+}
+
+.how-it-works-section .section-title {
+  color: white;
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  margin-bottom: 3rem;
 }
 
 .steps-container {
@@ -1411,18 +1485,45 @@
   font-size: 1.2rem;
   font-weight: 600;
   margin-bottom: 1rem;
-  color: var(--text-primary);
+  color: white;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
 .step-card p {
-  color: var(--text-secondary);
+  color: rgba(255, 255, 255, 0.9);
   line-height: 1.6;
 }
 
-/* Pricing Section - Darker Theme */
+/* Pricing Section - Fixed Darker Theme */
 .pricing-section {
   padding: 5rem 0;
   background: var(--darker-color);
+  position: relative;
+  overflow: hidden;
+}
+
+.pricing-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 30% 30%, rgba(102, 126, 234, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 70% 70%, rgba(240, 147, 251, 0.1) 0%, transparent 50%);
+  z-index: 1;
+}
+
+.pricing-section .container {
+  position: relative;
+  z-index: 2;
+}
+
+.pricing-section .section-title {
+  color: white;
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  margin-bottom: 3rem;
 }
 
 .pricing-card {
