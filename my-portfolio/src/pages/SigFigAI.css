@@ -9,6 +9,9 @@
 .pricing-features .feature {
   color: var(--text-primary);
 }
+.pricing-features .pricing-note{
+  color: var(--light-color);
+}
 
 /* Enhanced CSS Variables - Darker Theme */
 :root {
