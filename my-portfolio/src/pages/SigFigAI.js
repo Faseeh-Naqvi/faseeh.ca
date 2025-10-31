@@ -521,15 +521,15 @@ Request ID: ${Date.now()}
               <div className="case-study-metrics">
                 <div className="before-after">
                   <div className="metric-before">
-                    <span className="metric-label">Industry Before</span>
-                    <span className="metric-value">~15%</span>
-                    <span className="metric-description">Typical unauthorized entry rate</span>
+                    <span className="metric-label">Traditional Security</span>
+                    <span className="metric-value">8-12 min</span>
+                    <span className="metric-description">Average incident detection time</span>
                   </div>
                   <FaArrowRight className="arrow" />
                   <div className="metric-after">
-                    <span className="metric-label">With AI Security</span>
-                    <span className="metric-value">~4%</span>
-                    <span className="metric-description">Reduced unauthorized entries</span>
+                    <span className="metric-label">AI-Powered Security</span>
+                    <span className="metric-value">&lt;30 sec</span>
+                    <span className="metric-description">Real-time detection & alerts</span>
                   </div>
                 </div>
                 <div className="key-results">
@@ -539,11 +539,11 @@ Request ID: ${Date.now()}
                   </div>
                   <div className="result">
                     <FaCheckCircle />
-                    <span>Estimated revenue recovery opportunities</span>
+                    <span>24/7 continuous monitoring coverage</span>
                   </div>
                   <div className="result">
                     <FaCheckCircle />
-                    <span>Strong ROI potential demonstrated</span>
+                    <span>Automated alert system integration</span>
                   </div>
                 </div>
               </div>
@@ -567,19 +567,19 @@ Request ID: ${Date.now()}
             <h3>Industry Statistics</h3>
             <div className="stats-grid">
               <div className="industry-stat">
-                <span className="stat-number">1,700+</span>
-                <span className="stat-label">Fitness facilities in Ontario</span>
+                <span className="stat-number">800+</span>
+                <span className="stat-label">Fitness facilities in GTA</span>
               </div>
               <div className="industry-stat">
-                <span className="stat-number">50,000+</span>
-                <span className="stat-label">Gyms across North America</span>
+                <span className="stat-number">2,500+</span>
+                <span className="stat-label">Health clubs across Canada</span>
               </div>
               <div className="industry-stat">
                 <span className="stat-number">24/7</span>
-                <span className="stat-label">Operating model growing rapidly</span>
+                <span className="stat-label">Operating model rapidly expanding</span>
               </div>
               <div className="industry-stat">
-                <span className="stat-number">$40-60</span>
+                <span className="stat-number">$45-75</span>
                 <span className="stat-label">Average monthly membership (CAD)</span>
               </div>
             </div>
@@ -820,7 +820,7 @@ Request ID: ${Date.now()}
                 </div>
                 <div className="contact-item">
                   <FaMapMarkerAlt />
-                  <span>London, Ontario</span>
+                  <span>Toronto, Ontario</span>
                 </div>
               </div>
             </div>
