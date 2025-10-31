@@ -292,9 +292,9 @@ Request ID: ${Date.now()}
                 <FaRocket />
                 Get Free Assessment
               </button>
-              <button className="btn-secondary" onClick={() => scrollToSection('case-studies')}>
+              <button className="btn-secondary" onClick={() => scrollToSection('research-link')}>
                 <FaPlay />
-                See Case Studies
+                See Research Report
               </button>
             </div>
           </div>
@@ -504,83 +504,62 @@ Request ID: ${Date.now()}
         </div>
       </section>
 
-      {/* Case Studies */}
-      <section id="case-studies" className="case-studies-section">
+      {/* Research Link Section */}
+      <section id="research-link" className="research-link-section">
         <div className="container">
-          <h2 className="section-title">Real Results from Real Gyms</h2>
-          
-          <div className="case-study-card featured">
-            <div className="case-study-header">
-              <h3>Industry Case Study Example</h3>
-              <div className="case-study-badge">Reference Study</div>
-            </div>
-            <div className="case-study-content">
-              <p className="case-study-disclaimer">
-                <em>Based on industry research and case study methodologies. Results represent typical outcomes reported in fitness facility security studies. Individual results may vary based on facility size, location, and implementation.</em>
-              </p>
-              <div className="case-study-metrics">
-                <div className="before-after">
-                  <div className="metric-before">
-                    <span className="metric-label">Traditional Security</span>
-                    <span className="metric-value">8-12 min</span>
-                    <span className="metric-description">Average incident detection time</span>
-                  </div>
-                  <FaArrowRight className="arrow" />
-                  <div className="metric-after">
-                    <span className="metric-label">AI-Powered Security</span>
-                    <span className="metric-value">&lt;30 sec</span>
-                    <span className="metric-description">Real-time detection & alerts</span>
-                  </div>
-                </div>
-                <div className="key-results">
-                  <div className="result">
-                    <FaCheckCircle />
-                    <span>Potential 70% reduction in incidents</span>
-                  </div>
-                  <div className="result">
-                    <FaCheckCircle />
-                    <span>24/7 continuous monitoring coverage</span>
-                  </div>
-                  <div className="result">
-                    <FaCheckCircle />
-                    <span>Automated alert system integration</span>
-                  </div>
-                </div>
+          <h2 className="section-title">Comprehensive Research & Analysis</h2>
+          <div className="research-card">
+            <div className="research-content">
+              <div className="research-icon">
+                <FaFilePdf />
               </div>
-              <div className="case-study-attribution">
-                <p><strong>Research Sources:</strong></p>
-                <ul>
-                  <li>Academic studies on unauthorized facility access patterns</li>
-                  <li>Industry security assessment methodologies</li>
-                  <li>Fitness industry revenue loss analysis reports</li>
-                  <li>Technology deployment case study frameworks</li>
-                </ul>
-                <p className="attribution-note">
-                  This represents a composite analysis of industry best practices and research methodologies. 
-                  Sig Fig AI conducts independent assessments to determine potential impact for each facility.
+              <div className="research-info">
+                <h3>Industry Research Report</h3>
+                <p>
+                  Access our comprehensive analysis of gym security challenges, IoT solutions, 
+                  and revenue impact assessment. This detailed report includes market research, 
+                  technology analysis, and implementation frameworks.
                 </p>
-              </div>
-            </div>
-          </div>
-
-          <div className="industry-stats">
-            <h3>Industry Statistics</h3>
-            <div className="stats-grid">
-              <div className="industry-stat">
-                <span className="stat-number">800+</span>
-                <span className="stat-label">Fitness facilities in GTA</span>
-              </div>
-              <div className="industry-stat">
-                <span className="stat-number">2,500+</span>
-                <span className="stat-label">Health clubs across Canada</span>
-              </div>
-              <div className="industry-stat">
-                <span className="stat-number">24/7</span>
-                <span className="stat-label">Operating model rapidly expanding</span>
-              </div>
-              <div className="industry-stat">
-                <span className="stat-number">$45-75</span>
-                <span className="stat-label">Average monthly membership (CAD)</span>
+                <div className="research-highlights">
+                  <div className="highlight">
+                    <FaCheckCircle />
+                    <span>Market analysis and opportunity assessment</span>
+                  </div>
+                  <div className="highlight">
+                    <FaCheckCircle />
+                    <span>Technology implementation strategies</span>
+                  </div>
+                  <div className="highlight">
+                    <FaCheckCircle />
+                    <span>ROI calculation methodologies</span>
+                  </div>
+                  <div className="highlight">
+                    <FaCheckCircle />
+                    <span>Industry best practices and frameworks</span>
+                  </div>
+                </div>
+                <div className="research-actions">
+                  <a 
+                    href="/Preventing Revenue Loss and Boosting Gym Profits with SigFig AI.pdf" 
+                    className="btn-primary research-btn"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <FaDownload />
+                    Download Research Report
+                  </a>
+                  <a 
+                    href="#contact" 
+                    className="btn-secondary research-btn"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      scrollToSection('contact');
+                    }}
+                  >
+                    <FaRocket />
+                    Request Consultation
+                  </a>
+                </div>
               </div>
             </div>
           </div>
@@ -982,7 +961,7 @@ Request ID: ${Date.now()}
               <ul>
                 <li><a href="#features">Features</a></li>
                 <li><a href="#metrics">Metrics</a></li>
-                <li><a href="#case-studies">Case Studies</a></li>
+                <li><a href="#research-link">Research</a></li>
                 <li><a href="#contact">Contact</a></li>
               </ul>
             </div>
