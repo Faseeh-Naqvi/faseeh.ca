@@ -976,6 +976,11 @@ Request ID: ${Date.now()}
           
           <div className="footer-bottom">
             <p>&copy; 2025 Sig Fig AI. All rights reserved. | Developed by Western University students.</p>
+            <div className="portfolio-link">
+              <Link to="/" className="back-to-portfolio">
+                ← Back to Developer Portfolio
+              </Link>
+            </div>
           </div>
         </div>
       </footer>

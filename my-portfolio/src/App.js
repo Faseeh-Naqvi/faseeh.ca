@@ -1,5 +1,5 @@
 import React from 'react';
-import { Routes, Route, NavLink } from 'react-router-dom';
+import { Routes, Route, NavLink, useLocation } from 'react-router-dom';
 
 import Home       from './pages/Home';
 import About      from './pages/About';
@@ -12,32 +12,38 @@ import Contact    from './pages/Contact';
 import SigFigAI   from './pages/SigFigAI';
 
 function App() {
+  const location = useLocation();
+  const isStandalonePage = location.pathname === '/sigfig-ai';
+
   return (
     <>
-      <nav className="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
-        <div className="container">
-          <NavLink className="navbar-brand fw-bold" to="/">Syed Naqvi</NavLink>
-          <button className="navbar-toggler" type="button"
-                  data-bs-toggle="collapse" data-bs-target="#navMenu">
-            <span className="navbar-toggler-icon"/>
-          </button>
-          <div className="collapse navbar-collapse" id="navMenu">
-            <ul className="navbar-nav ms-auto">
-              {['About','Projects','Experience','Education','Businesses','Contact'].map(page => (
-                <li className="nav-item" key={page}>
-                  <NavLink
-                    className="nav-link"
-                    to={`/${page.toLowerCase()}`}
-                    activeclassname="active"
-                  >
-                    {page}
-                  </NavLink>
-                </li>
-              ))}
-            </ul>
+      {/* Only show navbar for non-standalone pages */}
+      {!isStandalonePage && (
+        <nav className="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+          <div className="container">
+            <NavLink className="navbar-brand fw-bold" to="/">Syed Naqvi</NavLink>
+            <button className="navbar-toggler" type="button"
+                    data-bs-toggle="collapse" data-bs-target="#navMenu">
+              <span className="navbar-toggler-icon"/>
+            </button>
+            <div className="collapse navbar-collapse" id="navMenu">
+              <ul className="navbar-nav ms-auto">
+                {['About','Projects','Experience','Education','Businesses','Contact'].map(page => (
+                  <li className="nav-item" key={page}>
+                    <NavLink
+                      className="nav-link"
+                      to={`/${page.toLowerCase()}`}
+                      activeclassname="active"
+                    >
+                      {page}
+                    </NavLink>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
-        </div>
-      </nav>
+        </nav>
+      )}
 
       <Routes>
         <Route path="/" element={<Home/>}/>
