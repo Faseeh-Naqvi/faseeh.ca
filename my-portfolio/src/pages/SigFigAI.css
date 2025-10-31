@@ -6,6 +6,9 @@
   overflow-x: hidden;
   position: relative;
 }
+.pricing-features .feature {
+  color: var(--text-primary);
+}
 
 /* Enhanced CSS Variables - Darker Theme */
 :root {
