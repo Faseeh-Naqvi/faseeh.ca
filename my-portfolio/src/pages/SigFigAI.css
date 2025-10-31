@@ -7,7 +7,7 @@
   position: relative;
 }
 
-/* Enhanced CSS Variables */
+/* Enhanced CSS Variables - Darker Theme */
 :root {
   --primary-color: #6366f1;
   --secondary-color: #8b5cf6;
@@ -15,25 +15,48 @@
   --success-color: #10b981;
   --warning-color: #f59e0b;
   --danger-color: #ef4444;
-  --dark-color: #0f172a;
-  --light-color: #f8fafc;
-  --text-primary: #0f172a;
-  --text-secondary: #64748b;
+  --dark-color: #0a0f1c;
+  --darker-color: #050815;
+  --light-color: #1e293b;
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
   --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   --gradient-secondary: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
   --gradient-accent: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-  --gradient-dark: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+  --gradient-dark: linear-gradient(135deg, #0a0f1c 0%, #1e293b 100%);
+  --gradient-darker: linear-gradient(135deg, #050815 0%, #0a0f1c 100%);
   --gradient-mesh: conic-gradient(from 0deg at 50% 50%, #667eea 0deg, #764ba2 60deg, #f093fb 120deg, #f5576c 180deg, #4facfe 240deg, #00f2fe 300deg, #667eea 360deg);
-  --shadow-light: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  --shadow-medium: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-  --shadow-heavy: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-  --shadow-glow: 0 0 40px rgba(102, 126, 234, 0.3);
-  --shadow-glow-accent: 0 0 60px rgba(79, 172, 254, 0.4);
-  --glass-bg: rgba(255, 255, 255, 0.1);
-  --glass-border: rgba(255, 255, 255, 0.2);
+  --rainbow-gradient: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #feca57, #ff9ff3, #f38ba8, #a8e6cf);
+  --shadow-light: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+  --shadow-medium: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.2);
+  --shadow-heavy: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  --shadow-glow: 0 0 40px rgba(102, 126, 234, 0.4);
+  --shadow-glow-accent: 0 0 60px rgba(79, 172, 254, 0.5);
+  --glass-bg: rgba(30, 41, 59, 0.3);
+  --glass-border: rgba(148, 163, 184, 0.2);
   --blur-amount: 20px;
   --border-radius: 16px;
   --border-radius-lg: 24px;
+}
+
+/* Rainbow Text Animation */
+.rainbow-text {
+  background: var(--rainbow-gradient);
+  background-size: 400% 400%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: rainbowMove 3s ease-in-out infinite;
+  font-weight: 900;
+}
+
+@keyframes rainbowMove {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
 }
 
 /* Animated Background Elements */
@@ -97,10 +120,10 @@
   background: linear-gradient(45deg, rgba(16, 185, 129, 0.3), rgba(6, 182, 212, 0.3));
 }
 
-/* PDF Section */
+/* PDF Section - Darker Theme */
 .pdf-section {
   padding: 6rem 0;
-  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  background: var(--gradient-dark);
   position: relative;
   overflow: hidden;
 }
@@ -113,8 +136,8 @@
   right: 0;
   bottom: 0;
   background: 
-    radial-gradient(circle at 15% 25%, rgba(102, 126, 234, 0.05) 0%, transparent 50%),
-    radial-gradient(circle at 85% 75%, rgba(240, 147, 251, 0.05) 0%, transparent 50%);
+    radial-gradient(circle at 15% 25%, rgba(102, 126, 234, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 85% 75%, rgba(240, 147, 251, 0.1) 0%, transparent 50%);
   z-index: 1;
 }
 
@@ -189,14 +212,15 @@
 }
 
 .pdf-mockup {
-  background: white;
+  background: rgba(30, 41, 59, 0.8);
+  backdrop-filter: blur(var(--blur-amount));
   border-radius: var(--border-radius-lg);
   box-shadow: var(--shadow-heavy);
   width: 350px;
   padding: 1.5rem;
   transform: perspective(1000px) rotateY(-5deg) rotateX(2deg);
   transition: all 0.3s ease;
-  border: 1px solid #e2e8f0;
+  border: 1px solid rgba(148, 163, 184, 0.2);
 }
 
 .pdf-mockup:hover {
@@ -210,7 +234,7 @@
   align-items: center;
   margin-bottom: 1.5rem;
   padding-bottom: 1rem;
-  border-bottom: 2px solid #f1f5f9;
+  border-bottom: 2px solid rgba(148, 163, 184, 0.2);
 }
 
 .pdf-title {
@@ -246,7 +270,7 @@
 .pdf-meta span {
   font-size: 0.8rem;
   color: var(--text-secondary);
-  background: #f1f5f9;
+  background: rgba(148, 163, 184, 0.2);
   padding: 0.25rem 0.5rem;
   border-radius: 4px;
 }
@@ -494,10 +518,10 @@
   padding: 0 20px;
 }
 
-/* Enhanced Hero Section */
+/* Enhanced Hero Section - Darker Theme */
 .hero-section {
   min-height: 100vh;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: var(--gradient-darker);
   display: flex;
   align-items: center;
   padding: 2rem 0;
@@ -744,10 +768,10 @@
   animation-delay: -2.6s;
 }
 
-/* Problem Section */
+/* Problem Section - Darker Theme */
 .problem-section {
   padding: 5rem 0;
-  background: white;
+  background: var(--darker-color);
 }
 
 .problem-grid {
@@ -758,11 +782,13 @@
 }
 
 .problem-card {
-  background: white;
+  background: rgba(30, 41, 59, 0.8);
+  backdrop-filter: blur(var(--blur-amount));
   padding: 2rem;
   border-radius: var(--border-radius-lg);
   border-left: 4px solid var(--danger-color);
   box-shadow: var(--shadow-light);
+  border: 1px solid rgba(148, 163, 184, 0.2);
   transition: all 0.3s ease;
 }
 
@@ -831,10 +857,10 @@
   margin-bottom: 1rem;
 }
 
-/* Enhanced Features Section */
+/* Enhanced Features Section - Darker Theme */
 .features-section {
   padding: 6rem 0;
-  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  background: var(--gradient-dark);
   position: relative;
 }
 
@@ -846,8 +872,8 @@
   right: 0;
   bottom: 0;
   background: 
-    radial-gradient(circle at 10% 20%, rgba(102, 126, 234, 0.05) 0%, transparent 50%),
-    radial-gradient(circle at 90% 80%, rgba(79, 172, 254, 0.05) 0%, transparent 50%);
+    radial-gradient(circle at 10% 20%, rgba(102, 126, 234, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 90% 80%, rgba(79, 172, 254, 0.1) 0%, transparent 50%);
   z-index: 1;
 }
 
@@ -860,11 +886,11 @@
 }
 
 .feature-card {
-  background: var(--glass-bg);
+  background: rgba(30, 41, 59, 0.4);
   backdrop-filter: blur(var(--blur-amount));
   padding: 2.5rem;
   border-radius: var(--border-radius-lg);
-  border: 1px solid var(--glass-border);
+  border: 1px solid rgba(148, 163, 184, 0.2);
   transition: all 0.4s ease;
   position: relative;
   overflow: hidden;
@@ -910,7 +936,8 @@
 .feature-card:hover {
   transform: translateY(-10px) scale(1.02);
   box-shadow: var(--shadow-glow);
-  background: rgba(255, 255, 255, 0.15);
+  background: rgba(30, 41, 59, 0.6);
+  border-color: rgba(148, 163, 184, 0.3);
 }
 
 .feature-icon {
@@ -969,10 +996,10 @@
   z-index: 2;
 }
 
-/* Enhanced Metrics Section */
+/* Enhanced Metrics Section - Darker Theme */
 .metrics-section {
   padding: 6rem 0;
-  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+  background: var(--gradient-darker);
   color: white;
   position: relative;
   overflow: hidden;
@@ -1188,19 +1215,20 @@
   letter-spacing: 0.5px;
 }
 
-/* Case Studies Section */
+/* Case Studies Section - Darker Theme */
 .case-studies-section {
   padding: 5rem 0;
-  background: white;
+  background: var(--dark-color);
 }
 
 .case-study-card {
-  background: white;
+  background: rgba(30, 41, 59, 0.8);
+  backdrop-filter: blur(var(--blur-amount));
   border-radius: var(--border-radius-lg);
   box-shadow: var(--shadow-medium);
   padding: 2rem;
   margin-bottom: 3rem;
-  border: 1px solid #e2e8f0;
+  border: 1px solid rgba(148, 163, 184, 0.2);
   opacity: 0;
   transform: translateY(30px);
 }
@@ -1348,10 +1376,12 @@
 }
 
 .step-card {
-  background: white;
+  background: rgba(30, 41, 59, 0.8);
+  backdrop-filter: blur(var(--blur-amount));
   padding: 2rem;
   border-radius: var(--border-radius-lg);
   box-shadow: var(--shadow-light);
+  border: 1px solid rgba(148, 163, 184, 0.2);
   text-align: center;
   transition: all 0.3s ease;
   opacity: 0;
@@ -1389,20 +1419,21 @@
   line-height: 1.6;
 }
 
-/* Pricing Section */
+/* Pricing Section - Darker Theme */
 .pricing-section {
   padding: 5rem 0;
-  background: white;
+  background: var(--darker-color);
 }
 
 .pricing-card {
   max-width: 500px;
   margin: 0 auto;
-  background: white;
+  background: rgba(30, 41, 59, 0.8);
+  backdrop-filter: blur(var(--blur-amount));
   border-radius: var(--border-radius-lg);
   box-shadow: var(--shadow-medium);
   overflow: hidden;
-  border: 1px solid #e2e8f0;
+  border: 1px solid rgba(148, 163, 184, 0.2);
 }
 
 .pricing-header {
@@ -1866,4 +1897,105 @@
     min-height: auto;
     padding: 4rem 0 2rem;
   }
+}
+
+/* Security Form Enhancements */
+.form-group input.error,
+.form-group select.error,
+.form-group textarea.error {
+  border-color: var(--danger-color);
+  background: rgba(239, 68, 68, 0.1);
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.2);
+}
+
+.error-text {
+  display: block;
+  color: var(--danger-color);
+  font-size: 0.875rem;
+  margin-top: 0.5rem;
+  padding-left: 0.5rem;
+  animation: fadeIn 0.3s ease;
+}
+
+/* Captcha Styling */
+.captcha-group {
+  background: rgba(30, 41, 59, 0.6);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: var(--border-radius);
+  padding: 1.5rem;
+  margin: 1.5rem 0;
+  backdrop-filter: blur(10px);
+}
+
+.captcha-label {
+  display: block;
+  color: white;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  font-size: 1.1rem;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.captcha-group input {
+  max-width: 120px;
+  text-align: center;
+  font-weight: 600;
+  font-size: 1.1rem;
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid rgba(79, 172, 254, 0.3);
+}
+
+.captcha-group input:focus {
+  border-color: #4facfe;
+  background: rgba(255, 255, 255, 0.15);
+}
+
+/* Form Errors */
+.form-errors {
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid var(--danger-color);
+  border-radius: var(--border-radius);
+  padding: 1rem;
+  margin: 1rem 0;
+  color: white;
+  animation: slideInUp 0.3s ease;
+}
+
+.form-errors p {
+  margin: 0 0 0.5rem 0;
+  font-weight: 600;
+  color: var(--danger-color);
+}
+
+.form-errors ul {
+  margin: 0;
+  padding-left: 1.5rem;
+  list-style-type: disc;
+}
+
+.form-errors li {
+  margin: 0.25rem 0;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* Honeypot - completely hidden */
+.honeypot {
+  position: absolute !important;
+  left: -9999px !important;
+  width: 1px !important;
+  height: 1px !important;
+  overflow: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+/* Enhanced animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
 }

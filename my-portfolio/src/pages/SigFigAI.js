@@ -34,10 +34,44 @@ const SigFigAI = () => {
     phone: '',
     gym: '',
     hours: '',
-    message: ''
+    message: '',
+    captcha: '',
+    honeypot: '' // Anti-spam honeypot field
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [captchaQuestion, setCaptchaQuestion] = useState({ question: '', answer: 0 });
+  const [formErrors, setFormErrors] = useState({});
+
+  // Generate random math captcha
+  const generateCaptcha = () => {
+    const num1 = Math.floor(Math.random() * 10) + 1;
+    const num2 = Math.floor(Math.random() * 10) + 1;
+    const operators = ['+', '-'];
+    const operator = operators[Math.floor(Math.random() * operators.length)];
+    
+    let answer;
+    let question;
+    
+    if (operator === '+') {
+      answer = num1 + num2;
+      question = `What is ${num1} + ${num2}?`;
+    } else {
+      // Ensure positive result for subtraction
+      const larger = Math.max(num1, num2);
+      const smaller = Math.min(num1, num2);
+      answer = larger - smaller;
+      question = `What is ${larger} - ${smaller}?`;
+    }
+    
+    setCaptchaQuestion({ question, answer });
+  };
+
+  // Initialize captcha on component mount
+  useEffect(() => {
+    generateCaptcha();
+  }, []);
+  
   const [submitMessage, setSubmitMessage] = useState('');
 
   // Create floating particles
@@ -62,28 +96,118 @@ const SigFigAI = () => {
       ...formData,
       [e.target.name]: e.target.value
     });
+    
+    // Clear field-specific errors when user starts typing
+    if (formErrors[e.target.name]) {
+      setFormErrors({
+        ...formErrors,
+        [e.target.name]: ''
+      });
+    }
+  };
+
+  // Validate form data
+  const validateForm = () => {
+    const errors = {};
+    
+    // Basic validation
+    if (!formData.name.trim()) errors.name = 'Name is required';
+    if (!formData.email.trim()) errors.email = 'Email is required';
+    if (!formData.gym.trim()) errors.gym = 'Gym name is required';
+    if (!formData.message.trim()) errors.message = 'Message is required';
+    
+    // Email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (formData.email && !emailRegex.test(formData.email)) {
+      errors.email = 'Please enter a valid email address';
+    }
+    
+    // Captcha validation
+    const userAnswer = parseInt(formData.captcha);
+    if (!userAnswer || userAnswer !== captchaQuestion.answer) {
+      errors.captcha = 'Please solve the math problem correctly';
+    }
+    
+    // Honeypot check (should be empty)
+    if (formData.honeypot.trim()) {
+      errors.honeypot = 'Bot detected';
+      return errors; // Early return if bot detected
+    }
+    
+    return errors;
+  };
+
+  // Obfuscate email to prevent scraping
+  const getSecureMailto = () => {
+    const emailParts = ['faseehnaq', 'gmail', 'com'];
+    return emailParts.join('@').replace('@gmail@', '@gmail.');
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setFormErrors({});
     
-    // Simulate form submission
-    setTimeout(() => {
-      setSubmitMessage('Thank you! We\'ll be in touch within 24 hours to discuss your security needs.');
+    // Validate form
+    const errors = validateForm();
+    if (Object.keys(errors).length > 0) {
+      setFormErrors(errors);
       setIsSubmitting(false);
+      generateCaptcha(); // Generate new captcha on failed attempt
+      return;
+    }
+    
+    // Additional delay to deter bots
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    
+    // Create mailto link for form submission
+    const subject = `[SIG FIG AI] Security Assessment Request - ${formData.gym}`;
+    const body = `
+SECURITY ASSESSMENT REQUEST
+Generated: ${new Date().toLocaleString()}
+
+Contact Information:
+• Name: ${formData.name}
+• Email: ${formData.email}
+• Phone: ${formData.phone || 'Not provided'}
+
+Business Details:
+• Gym Name: ${formData.gym}
+• Operating Hours: ${formData.hours || 'Not specified'}
+
+Message:
+${formData.message}
+
+---
+This inquiry was securely submitted through the Sig Fig AI landing page.
+Request ID: ${Date.now()}
+    `.trim();
+    
+    const secureEmail = getSecureMailto();
+    const mailtoLink = `mailto:${secureEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    
+    // Open mailto link
+    window.location.href = mailtoLink;
+    
+    // Reset form after successful submission
+    setTimeout(() => {
       setFormData({
         name: '',
         email: '',
         phone: '',
         gym: '',
         hours: '',
-        message: ''
+        message: '',
+        captcha: '',
+        honeypot: ''
       });
+      setIsSubmitting(false);
+      generateCaptcha(); // Generate new captcha
+      setSubmitMessage('Thank you! Your email client should open with the message prepared. Please send the email to complete your inquiry.');
       
       // Clear success message after 5 seconds
       setTimeout(() => setSubmitMessage(''), 5000);
-    }, 2000);
+    }, 1000);
   };
 
   const scrollToSection = (sectionId) => {
@@ -142,7 +266,7 @@ const SigFigAI = () => {
               <span>Cutting-Edge IoT Security Solutions</span>
             </div>
             <h1 className="hero-title">
-              Stop Revenue Loss with <span className="gradient-text">AI-Powered</span> Gym Security
+              Stop Revenue Loss with <span className="rainbow-text">AI-Powered</span> Gym Security
             </h1>
             <p className="hero-subtitle">
               Prevent unauthorized entries and recover thousands in lost revenue with our 24/7 tailgating detection system. 
@@ -150,16 +274,16 @@ const SigFigAI = () => {
             </p>
             <div className="hero-stats">
               <div className="stat">
-                <span className="stat-number">99.9%</span>
-                <span className="stat-label">Detection Accuracy</span>
-              </div>
-              <div className="stat">
                 <span className="stat-number">$1,600+</span>
                 <span className="stat-label">Avg Monthly Recovery</span>
               </div>
               <div className="stat">
                 <span className="stat-number">70%</span>
                 <span className="stat-label">Reduction in Tailgating</span>
+              </div>
+              <div className="stat">
+                <span className="stat-number">24/7</span>
+                <span className="stat-label">Monitoring</span>
               </div>
             </div>
             <div className="hero-buttons">
@@ -247,7 +371,7 @@ const SigFigAI = () => {
               </div>
               <h3>AI-Powered Detection</h3>
               <p>Advanced computer vision compares card scans to detected faces in real-time, 
-                 flagging discrepancies with 99.9% accuracy.</p>
+                 flagging discrepancies to prevent unauthorized access.</p>
             </div>
             
             <div className="feature-card">
@@ -578,7 +702,7 @@ const SigFigAI = () => {
               <div className="step-content">
                 <h3>Smart Comparison</h3>
                 <p>Our AI compares the number of card scans to detected faces, flagging 
-                   discrepancies instantly with 99.9% accuracy.</p>
+                   discrepancies instantly for review.</p>
               </div>
             </div>
             
@@ -669,10 +793,6 @@ const SigFigAI = () => {
 
               <div className="contact-details">
                 <div className="contact-item">
-                  <FaEnvelope />
-                  <span>hello@sigfigai.com</span>
-                </div>
-                <div className="contact-item">
                   <FaPhone />
                   <span>Available 24/7</span>
                 </div>
@@ -692,8 +812,10 @@ const SigFigAI = () => {
                     placeholder="Your Name"
                     value={formData.name}
                     onChange={handleInputChange}
+                    className={formErrors.name ? 'error' : ''}
                     required
                   />
+                  {formErrors.name && <span className="error-text">{formErrors.name}</span>}
                 </div>
                 <div className="form-group">
                   <input
@@ -702,8 +824,10 @@ const SigFigAI = () => {
                     placeholder="Email Address"
                     value={formData.email}
                     onChange={handleInputChange}
+                    className={formErrors.email ? 'error' : ''}
                     required
                   />
+                  {formErrors.email && <span className="error-text">{formErrors.email}</span>}
                 </div>
                 <div className="form-group">
                   <input
@@ -721,8 +845,10 @@ const SigFigAI = () => {
                     placeholder="Gym Name"
                     value={formData.gym}
                     onChange={handleInputChange}
+                    className={formErrors.gym ? 'error' : ''}
                     required
                   />
+                  {formErrors.gym && <span className="error-text">{formErrors.gym}</span>}
                 </div>
                 <div className="form-group">
                   <select
@@ -745,8 +871,53 @@ const SigFigAI = () => {
                     rows="4"
                     value={formData.message}
                     onChange={handleInputChange}
+                    className={formErrors.message ? 'error' : ''}
                   ></textarea>
+                  {formErrors.message && <span className="error-text">{formErrors.message}</span>}
                 </div>
+                
+                {/* Honeypot field - hidden from users */}
+                <div className="honeypot" style={{ display: 'none' }}>
+                  <input
+                    type="text"
+                    name="honeypot"
+                    value={formData.honeypot}
+                    onChange={handleInputChange}
+                    tabIndex="-1"
+                    autoComplete="off"
+                  />
+                </div>
+                
+                {/* Math Captcha */}
+                <div className="form-group captcha-group">
+                  <label className="captcha-label">
+                    Security Check: {captchaQuestion.question}
+                  </label>
+                  <input
+                    type="number"
+                    name="captcha"
+                    placeholder="Enter your answer"
+                    value={formData.captcha}
+                    onChange={handleInputChange}
+                    className={formErrors.captcha ? 'error' : ''}
+                    required
+                  />
+                  {formErrors.captcha && <span className="error-text">{formErrors.captcha}</span>}
+                </div>
+                
+                {/* Display validation errors */}
+                {Object.keys(formErrors).length > 0 && (
+                  <div className="form-errors">
+                    <p>Please correct the following errors:</p>
+                    <ul>
+                      {Object.entries(formErrors).map(([field, error]) => (
+                        field !== 'honeypot' && (
+                          <li key={field}>{error}</li>
+                        )
+                      ))}
+                    </ul>
+                  </div>
+                )}
                 <button type="submit" className="btn-submit" disabled={isSubmitting}>
                   {isSubmitting ? (
                     <>
@@ -797,7 +968,6 @@ const SigFigAI = () => {
             <div className="footer-section">
               <h4>Contact Info</h4>
               <div className="footer-contact">
-                <div><FaEnvelope /> hello@sigfigai.com</div>
                 <div><FaPhone /> Available 24/7</div>
                 <div><FaMapMarkerAlt /> London, ON</div>
               </div>
