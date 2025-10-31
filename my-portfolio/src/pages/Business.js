@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { FaGlobe, FaInstagram, FaYoutube, FaLinkedin } from 'react-icons/fa';
 //Status: active, paused, stealth, attempted
 const businesses = [
@@ -29,8 +30,8 @@ const businesses = [
 	{
 		name: 'Sigfig AI Security Services',
 		status: 'paused',
-		note: 'Helping businesses secure lost revenue using AI',
-		links: [],
+		note: 'AI-powered tailgating detection for gyms. Preventing revenue loss and improving security with 24/7 monitoring.',
+		links: [{ url: '/sigfig-ai', icon: <FaGlobe />, internal: true }],
 	},
 	
 	{
@@ -133,18 +134,29 @@ export default function Businesses() {
 								{/* Links */}
 								{b.links.length > 0 && (
 									<div className="d-flex flex-wrap gap-2">
-										{b.links.map((l, k) => (
-											<a
-												key={k}
-												href={l.url}
-												className="btn btn-outline-primary btn-sm rounded-pill d-flex align-items-center"
-												target="_blank"
-												rel="noopener noreferrer"
-											>
-												<span className="me-1">{l.icon}</span>
-												Visit
-											</a>
-										))}
+										{b.links.map((l, k) => 
+											l.internal ? (
+												<Link
+													key={k}
+													to={l.url}
+													className="btn btn-outline-primary btn-sm rounded-pill d-flex align-items-center"
+												>
+													<span className="me-1">{l.icon}</span>
+													View Details
+												</Link>
+											) : (
+												<a
+													key={k}
+													href={l.url}
+													className="btn btn-outline-primary btn-sm rounded-pill d-flex align-items-center"
+													target="_blank"
+													rel="noopener noreferrer"
+												>
+													<span className="me-1">{l.icon}</span>
+													Visit
+												</a>
+											)
+										)}
 									</div>
 								)}
 							</div>

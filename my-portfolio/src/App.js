@@ -9,6 +9,7 @@ import Education  from './pages/Education';
 import Business from './pages/Business';
 import Awards     from './pages/Awards';
 import Contact    from './pages/Contact';
+import SigFigAI   from './pages/SigFigAI';
 
 function App() {
   return (
@@ -47,6 +48,7 @@ function App() {
         <Route path="/businesses" element={<Business/>}/>
         <Route path="/awards" element={<Awards/>}/>
         <Route path="/contact" element={<Contact/>}/>
+        <Route path="/sigfig-ai" element={<SigFigAI/>}/>
       </Routes>
     </>
   );
