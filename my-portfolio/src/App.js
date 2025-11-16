@@ -57,7 +57,7 @@ function App() {
         <Route path="/contact" element={<Contact/>}/>
         <Route path="/sigfig-ai" element={<SigFigAI/>}/>
         {/* Secret route not linked in navbar */}
-        <Route path="/__faseeh" element={<FaseehDashboard/>}/>
+        <Route path="/faseehDASHLetsLockInBro" element={<FaseehDashboard/>}/>
       </Routes>
     </>
   );
