@@ -4,6 +4,18 @@ import { FaGlobe, FaInstagram, FaYoutube, FaLinkedin } from 'react-icons/fa';
 //Status: active, paused, stealth, attempted
 const businesses = [
 	{
+		name: 'Ai-Psych-Marketing tool',
+		status: 'Stealth - Market Research',
+		note: 'Trying to bridge the gap between psychology and marketing using AI. Really combining many of my interests together.',
+		links: [],
+	},
+	{
+		name: 'Custom Microcontroller',
+		status: 'Stealth - Market Research',
+		note: 'Working on finding a niche to work into',
+		links: [],
+	},
+	{
 		name: 'Pharmacy software',
 		status: 'paused',
 		note: 'Stopped after marketing logistics were too tricky. May pickup again.',
@@ -11,14 +23,14 @@ const businesses = [
 	},
 	{
 		name: 'Silo (name TBD)',
-		status: 'Stealth - Market Research',
+		status: 'Paused',
 		note: 'working on taking the research in-person',
 		links: [],
 	},
 	{
 		name: 'AI content sponsorship platform',
 		status: 'attempted',
-		note: 'This specific niche is already saturated, but the idea of AI-generated content sponsorships is still very promising',
+		note: 'This specific niche is already saturated. There have been companies since 2019. The idea of AI-generated content sponsorships is still very promising',
 		links: [],
 	},
 	{
@@ -37,7 +49,7 @@ const businesses = [
 	{
 		name: 'FasTech.dev',
 
-		status: 'Active',
+		status: 'Paused',
 		note: 'Thought of the company name in grade 9 for a school project (faseeh + Fast + Tech = FasTech) | Learnt that it is neccessary to put yourself out there, especially when you have a good product',
 		links: [{ url: 'https://fastech.dev', icon: <FaGlobe /> },{url: 'https://www.linkedin.com/company/fastech-developers/', icon: <FaLinkedin /> }],
 	},
@@ -111,6 +123,135 @@ export default function Businesses() {
 	return (
 		<div className="container py-5">
 			<h1 className="fw-bold mb-4 text-center">Businesses & Ventures</h1>
+
+			{/* Scoreboard & Stats */}
+			{(() => {
+				const normalized = businesses.map((b) => {
+					const status = (b.status || '').toLowerCase();
+					const name = (b.name || '').toLowerCase();
+					const success = status.includes('active');
+					const failure = status.includes('attempted');
+					const midwayNames = [
+						'fastech.dev',
+						'sigfig ai security services',
+						'brainrot app',
+					];
+					const midway = midwayNames.some((m) => name.includes(m));
+					const paused = status.includes('paused');
+					const stealth = status.includes('stealth');
+					return { ...b, success, failure, midway, paused, stealth };
+				});
+
+				const total = normalized.length;
+				const successCount = normalized.filter((x) => x.success).length; // expected 0 for now
+				const failureCount = normalized.filter((x) => x.failure).length;
+				const midwayExclusive = normalized.filter((x) => x.midway && !x.success && !x.failure).length;
+				const pausedCount = normalized.filter((x) => x.paused).length;
+				const stealthCount = normalized.filter((x) => x.stealth).length;
+				const otherCount = Math.max(
+					0,
+					total - (successCount + failureCount + midwayExclusive + pausedCount + stealthCount)
+				);
+				const pct = (n) => (total ? Math.round((n / total) * 100) : 0);
+
+				return (
+					<>
+						<div className="row g-4 align-items-stretch mb-4">
+							{/* Scoreboard */}
+							<div className="col-md-4">
+								<div className="card h-100 text-center shadow-sm">
+									<div className="card-body">
+										<h6 className="text-uppercase text-muted mb-2">Successes</h6>
+										<div className="display-4 fw-bold text-success">{successCount}</div>
+										<small className="text-muted">Currently no winners</small>
+									</div>
+								</div>
+							</div>
+							<div className="col-md-4">
+								<div className="card h-100 text-center shadow-sm">
+									<div className="card-body">
+										<h6 className="text-uppercase text-muted mb-2">Failures</h6>
+										<div className="display-4 fw-bold text-danger">{failureCount}</div>
+										<small className="text-muted">Counted as “Attempted”</small>
+									</div>
+								</div>
+							</div>
+							<div className="col-md-4">
+								<div className="card h-100 text-center shadow-sm">
+									<div className="card-body">
+										<h6 className="text-uppercase text-muted mb-2">Midway</h6>
+										<div className="display-4 fw-bold text-primary">{midwayExclusive}</div>
+										<small className="text-muted">FasTech.dev, Sigfig AI, Brainrot</small>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						{/* Graphs & Statistics */}
+						<div className="card shadow-sm mb-4">
+							<div className="card-body">
+								<h5 className="card-title mb-3">Graphs & Statistics</h5>
+								<div className="row g-3 align-items-center">
+									<div className="col-lg-7">
+										<p className="mb-1 text-muted">Category Distribution</p>
+										<div className="progress" role="progressbar" aria-label="Category Distribution" aria-valuemin="0" aria-valuemax="100">
+											{successCount > 0 && (
+												<div className="progress-bar bg-success" style={{ width: `${pct(successCount)}%` }} title={`Success ${pct(successCount)}%`}></div>
+											)}
+											{midwayExclusive > 0 && (
+												<div className="progress-bar bg-primary" style={{ width: `${pct(midwayExclusive)}%` }} title={`Midway ${pct(midwayExclusive)}%`}></div>
+											)}
+											{failureCount > 0 && (
+												<div className="progress-bar bg-danger" style={{ width: `${pct(failureCount)}%` }} title={`Failures ${pct(failureCount)}%`}></div>
+											)}
+											{pausedCount > 0 && (
+												<div className="progress-bar bg-warning" style={{ width: `${pct(pausedCount)}%` }} title={`Paused ${pct(pausedCount)}%`}></div>
+											)}
+											{stealthCount > 0 && (
+												<div className="progress-bar bg-info" style={{ width: `${pct(stealthCount)}%` }} title={`Stealth ${pct(stealthCount)}%`}></div>
+											)}
+											{otherCount > 0 && (
+												<div className="progress-bar bg-secondary" style={{ width: `${pct(otherCount)}%` }} title={`Other ${pct(otherCount)}%`}></div>
+											)}
+										</div>
+
+										<p className="mt-3 mb-1 text-muted">Win/Loss Bar</p>
+										<div className="progress" role="progressbar" aria-label="Wins vs Losses" aria-valuemin="0" aria-valuemax="100">
+											<div className="progress-bar bg-success" style={{ width: `${pct(successCount)}%` }} title={`Wins ${pct(successCount)}%`}></div>
+											<div className="progress-bar bg-danger" style={{ width: `${pct(failureCount)}%` }} title={`Losses ${pct(failureCount)}%`}>
+											</div>
+											<div className="progress-bar bg-primary" style={{ width: `${pct(midwayExclusive)}%` }} title={`Midway ${pct(midwayExclusive)}%`}>
+											</div>
+											<div className="progress-bar bg-secondary" style={{ width: `${pct(total - (successCount + failureCount + midwayExclusive))}%` }} title={`Other ${pct(total - (successCount + failureCount + midwayExclusive))}%`}>
+											</div>
+										</div>
+									</div>
+									<div className="col-lg-5">
+										<ul className="list-group list-group-flush">
+											<li className="list-group-item d-flex justify-content-between align-items-center">
+												<span>Total ventures</span>
+												<strong>{total}</strong>
+											</li>
+											<li className="list-group-item d-flex justify-content-between align-items-center">
+												<span>Success rate</span>
+												<strong>{pct(successCount)}%</strong>
+											</li>
+											<li className="list-group-item d-flex justify-content-between align-items-center">
+												<span>Failure rate</span>
+												<strong>{pct(failureCount)}%</strong>
+											</li>
+											<li className="list-group-item d-flex justify-content-between align-items-center">
+												<span>Midway (contenders)</span>
+												<strong>{midwayExclusive}</strong>
+											</li>
+										</ul>
+									</div>
+								</div>
+							</div>
+						</div>
+					</>
+				);
+			})()}
 
 			<div className="row g-4">
 				{businesses.map((b, i) => (
