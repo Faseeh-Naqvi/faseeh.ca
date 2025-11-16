@@ -22,7 +22,7 @@ export default function About() {
   const currentlyReading = [
     'The Art of War – Sun Tzu',
     'The lantern of the path',
-    '1001 nights'
+    
 
   ];
   const wantToRead = [
@@ -50,7 +50,7 @@ export default function About() {
       {/* ---------- Intro ---------- */}
       <p className="fs-lg">
         I’m a fourth-year Computer Science student at Western University who
-        <strong> loves reading, learning, and chasing creative sparks</strong>.
+        <strong> loves reading, learning, and problem solving</strong>.
         I consider myself entrepreneurial, please get in touch if you are working on something cool! Lately I’ve been diving into <em>Stoicism</em>, Eastern philosophy, and how
         social media rewires our brains. When I’m not coding, you’ll find me watching
         videos on psychology, history, religion, marketing, astronomy, or global
@@ -61,7 +61,7 @@ export default function About() {
       <div className="mb-5">
         <h2 className="h4 fw-semibold mb-3">What I’m into right now</h2>
         <p>
-          Emerging tech &amp; AI · Psychology · History · Religion · Marketing · Astronomy · Business ·
+          Emerging tech &amp; AI · Psychology · History · Cybersecurity · Religion · Marketing · Astronomy · Business ·
           Meditation · Stoicism · Geopolitics · Stocks &amp; Global Markets ·
           Social-media neuroscience · The ever-shifting humour culture on the internet, and many more. Love talking to people about their niche interests!
         </p>
@@ -110,9 +110,9 @@ export default function About() {
       <div className="mb-5">
         <h2 className="h4 fw-semibold mb-3">Fun Facts</h2>
         <ul className="list-unstyled">
-          <li>🎤 <strong>Public-speaking addict —</strong> on stage since Grade 3 assemblies; most recently a packed lecture-hall presentation. My style is laid-back and conversational. I also love pitching, Shark Tank is a family favorite.</li>
+          <li>🎤 <strong>Public-speaking —</strong> on stage since Grade 3 assemblies; I enjoy public speaking. My style is laid-back and conversational. I also love pitching, Shark Tank is a family favorite.</li>
           <li>🎬 <strong>Content-creation geek —</strong> wrote & directed Western TMA videos (12.4 k views, +152 % engagement). Been filming comedy videos since the Vine days (they were not funny). I like to think I have slowly been getting better. Obsessed with the art of storytelling, regardless of medium</li>
-          <li>🏦 <strong>Entrepreneur—</strong> tried (and failed) many <Link to="/businesses">businesses</Link> Will keep working on cool things regardless!</li>
+          <li>🏦 <strong>Entrepreneur—</strong> tried (and failed) many <Link to="/businesses">businesses</Link> I will keep working on solving unique problems!</li>
           <li>📝 <strong>Journaler —</strong> my notebook is a sketch-filled scrapbook. Started first year. Great for reminiscing and untangling the brain; highly recommended.</li>
         </ul>
       </div>
@@ -123,24 +123,6 @@ export default function About() {
         <div className="card shadow-sm">
           <div className="card-body">
             <div className="row">
-              {/* Currently Reading */}
-              <div className="col-md-4 mb-3 mb-md-0">
-                <h5 className="card-title">Currently Reading</h5>
-                <ul className="mb-0">
-                  {currentlyReading.map((book, i) => (
-                    <li key={i}>{book}</li>
-                  ))}
-                </ul>
-              </div>
-              {/* Want to Read */}
-              <div className="col-md-4 mb-3 mb-md-0">
-                <h5 className="card-title">Want to Read</h5>
-                <ul className="mb-0">
-                  {wantToRead.map((book, i) => (
-                    <li key={i}>{book}</li>
-                  ))}
-                </ul>
-              </div>
               {/* Have Read */}
               <div className="col-md-4">
                 <h5 className="card-title">Books I enjoyed</h5>
@@ -152,6 +134,25 @@ export default function About() {
                 <small className="text-muted fst-italic">
                   💬 I'd love to discuss any of these with you!
                 </small>
+              </div>
+              
+              {/* Want to Read */}
+              <div className="col-md-4 mb-3 mb-md-0">
+                <h5 className="card-title">Want to Read</h5>
+                <ul className="mb-0">
+                  {wantToRead.map((book, i) => (
+                    <li key={i}>{book}</li>
+                  ))}
+                </ul>
+              </div>
+              {/* Currently Reading */}
+              <div className="col-md-4 mb-3 mb-md-0">
+                <h5 className="card-title">Currently Reading</h5>
+                <ul className="mb-0">
+                  {currentlyReading.map((book, i) => (
+                    <li key={i}>{book}</li>
+                  ))}
+                </ul>
               </div>
             </div>
           </div>
