@@ -145,12 +145,12 @@ export default function Businesses() {
 				const total = normalized.length;
 				const successCount = normalized.filter((x) => x.success).length; // expected 0 for now
 				const failureCount = normalized.filter((x) => x.failure).length;
-				const midwayExclusive = normalized.filter((x) => x.midway && !x.success && !x.failure).length;
-				const pausedCount = normalized.filter((x) => x.paused).length;
+				// Midway now includes all paused + named midway, excluding wins/failures
+				const midwayCount = normalized.filter((x) => (x.paused || x.midway) && !x.success && !x.failure).length;
 				const stealthCount = normalized.filter((x) => x.stealth).length;
 				const otherCount = Math.max(
 					0,
-					total - (successCount + failureCount + midwayExclusive + pausedCount + stealthCount)
+					total - (successCount + failureCount + midwayCount + stealthCount)
 				);
 				const pct = (n) => (total ? Math.round((n / total) * 100) : 0);
 
@@ -180,75 +180,14 @@ export default function Businesses() {
 								<div className="card h-100 text-center shadow-sm">
 									<div className="card-body">
 										<h6 className="text-uppercase text-muted mb-2">Midway</h6>
-										<div className="display-4 fw-bold text-primary">{midwayExclusive}</div>
-										<small className="text-muted">FasTech.dev, Sigfig AI, Brainrot</small>
+										<div className="display-4 fw-bold text-primary">{midwayCount}</div>
+										<small className="text-muted">Paused ventures count as midway</small>
 									</div>
 								</div>
 							</div>
 						</div>
 
-						{/* Graphs & Statistics */}
-						<div className="card shadow-sm mb-4">
-							<div className="card-body">
-								<h5 className="card-title mb-3">Graphs & Statistics</h5>
-								<div className="row g-3 align-items-center">
-									<div className="col-lg-7">
-										<p className="mb-1 text-muted">Category Distribution</p>
-										<div className="progress" role="progressbar" aria-label="Category Distribution" aria-valuemin="0" aria-valuemax="100">
-											{successCount > 0 && (
-												<div className="progress-bar bg-success" style={{ width: `${pct(successCount)}%` }} title={`Success ${pct(successCount)}%`}></div>
-											)}
-											{midwayExclusive > 0 && (
-												<div className="progress-bar bg-primary" style={{ width: `${pct(midwayExclusive)}%` }} title={`Midway ${pct(midwayExclusive)}%`}></div>
-											)}
-											{failureCount > 0 && (
-												<div className="progress-bar bg-danger" style={{ width: `${pct(failureCount)}%` }} title={`Failures ${pct(failureCount)}%`}></div>
-											)}
-											{pausedCount > 0 && (
-												<div className="progress-bar bg-warning" style={{ width: `${pct(pausedCount)}%` }} title={`Paused ${pct(pausedCount)}%`}></div>
-											)}
-											{stealthCount > 0 && (
-												<div className="progress-bar bg-info" style={{ width: `${pct(stealthCount)}%` }} title={`Stealth ${pct(stealthCount)}%`}></div>
-											)}
-											{otherCount > 0 && (
-												<div className="progress-bar bg-secondary" style={{ width: `${pct(otherCount)}%` }} title={`Other ${pct(otherCount)}%`}></div>
-											)}
-										</div>
 
-										<p className="mt-3 mb-1 text-muted">Win/Loss Bar</p>
-										<div className="progress" role="progressbar" aria-label="Wins vs Losses" aria-valuemin="0" aria-valuemax="100">
-											<div className="progress-bar bg-success" style={{ width: `${pct(successCount)}%` }} title={`Wins ${pct(successCount)}%`}></div>
-											<div className="progress-bar bg-danger" style={{ width: `${pct(failureCount)}%` }} title={`Losses ${pct(failureCount)}%`}>
-											</div>
-											<div className="progress-bar bg-primary" style={{ width: `${pct(midwayExclusive)}%` }} title={`Midway ${pct(midwayExclusive)}%`}>
-											</div>
-											<div className="progress-bar bg-secondary" style={{ width: `${pct(total - (successCount + failureCount + midwayExclusive))}%` }} title={`Other ${pct(total - (successCount + failureCount + midwayExclusive))}%`}>
-											</div>
-										</div>
-									</div>
-									<div className="col-lg-5">
-										<ul className="list-group list-group-flush">
-											<li className="list-group-item d-flex justify-content-between align-items-center">
-												<span>Total ventures</span>
-												<strong>{total}</strong>
-											</li>
-											<li className="list-group-item d-flex justify-content-between align-items-center">
-												<span>Success rate</span>
-												<strong>{pct(successCount)}%</strong>
-											</li>
-											<li className="list-group-item d-flex justify-content-between align-items-center">
-												<span>Failure rate</span>
-												<strong>{pct(failureCount)}%</strong>
-											</li>
-											<li className="list-group-item d-flex justify-content-between align-items-center">
-												<span>Midway (contenders)</span>
-												<strong>{midwayExclusive}</strong>
-											</li>
-										</ul>
-									</div>
-								</div>
-							</div>
-						</div>
 					</>
 				);
 			})()}
