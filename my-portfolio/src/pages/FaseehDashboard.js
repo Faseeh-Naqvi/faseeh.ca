@@ -18,8 +18,6 @@ const LS_KEYS = {
   tasks: 'faseeh.tasks.v1',           // habit templates
   quotes: 'faseeh.quotes.v1',
   entries: 'faseeh.entries.v1',       // map date -> entry {todos, completions, ratings}
-  photos: 'faseeh.photos.v1',         // array of data URLs
-  defaultTodos: 'faseeh.defaultTodos.v1', // array of {id, text, due}
   visionStart: 'faseeh.visionStart.v1',   // ISO date string
 };
 
@@ -66,12 +64,12 @@ const TODAY_QUOTES = [
 ];
 
 const DEFAULT_HABITS = [
-  { id: 'thyroid', label: 'Thyroid meds' },
-  { id: 'fajr', label: 'Fajr' },
-  { id: 'dhuhr', label: 'Dhuhr' },
-  { id: 'asr', label: 'Asr' },
-  { id: 'maghrib', label: 'Maghrib' },
-  { id: 'isha', label: 'Isha' },
+  { id: 'thyroid', label: 'Thyroid meds', spiritual: false },
+  { id: 'fajr', label: 'Fajr', spiritual: true },
+  { id: 'dhuhr', label: 'Dhuhr', spiritual: true },
+  { id: 'asr', label: 'Asr', spiritual: true },
+  { id: 'maghrib', label: 'Maghrib', spiritual: true },
+  { id: 'isha', label: 'Isha', spiritual: true },
 ];
 
 const TODAY_FAMILY = [
@@ -127,14 +125,10 @@ function DashboardInner() {
       return raw ? JSON.parse(raw) : {};
     } catch { return {}; }
   });
-  const [photos, setPhotos] = useState(() => {
-    try { const raw = localStorage.getItem(LS_KEYS.photos); return raw ? JSON.parse(raw) : []; } catch { return []; }
-  });
+  // Background photos removed per request
   // Family stories hardcoded
   const family = TODAY_FAMILY;
-  const [defaultTodos, setDefaultTodos] = useState(() => {
-    try { const raw = localStorage.getItem(LS_KEYS.defaultTodos); return raw ? JSON.parse(raw) : []; } catch { return []; }
-  });
+  // Default todos removed per request; seed none
   const [visionStart, setVisionStart] = useState(() => {
     const raw = localStorage.getItem(LS_KEYS.visionStart);
     if (raw) return raw;
@@ -143,10 +137,10 @@ function DashboardInner() {
     return today;
   });
   const dateKey = todayKey();
-  // Seed entry for today using default todos if not existing
+  // Seed entry for today without default todos
   let entry = entries[dateKey] || {};
   if (!entries[dateKey]) {
-    entry = { ...entry, todos: defaultTodos.map(dt => ({ id: crypto.randomUUID(), text: dt.text, done: false, due: dt.due || '' })) };
+    entry = { ...entry, todos: [] };
     const seeded = { ...entries, [dateKey]: entry };
     setEntries(seeded);
     localStorage.setItem(LS_KEYS.entries, JSON.stringify(seeded));
@@ -305,23 +299,16 @@ function DashboardInner() {
   const [overlayShown, setOverlayShown] = useState(overlayOptions.map(o=>o.id));
   const toggleOverlay = (id) => setOverlayShown(prev => prev.includes(id) ? prev.filter(x=>x!==id) : [...prev, id]);
 
-  // Timer
-  const [timerMs, setTimerMs] = useState(() => {
-    const raw = localStorage.getItem(LS_KEYS.timer);
-    return raw ? Number(raw) : 0;
-  });
-  const [timerRunning, setTimerRunning] = useState(false);
+  // Keyboard delete for selected block
   useEffect(() => {
-    localStorage.setItem(LS_KEYS.timer, String(timerMs));
-  }, [timerMs]);
-  useEffect(() => {
-    if (!timerRunning) return;
-    const startedAt = performance.now();
-    const id = requestAnimationFrame(function tick(t) {
-      setTimerMs(prev => prev + (t - startedAt));
-    });
-    return () => cancelAnimationFrame(id);
-  }, [timerRunning]);
+    const onKey = (e) => {
+      if ((e.key === 'Delete' || e.key === 'Backspace') && selectedBlockId) {
+        deleteBlock(selectedBlockId);
+      }
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [selectedBlockId, blocks]);
 
   // Save helpers
   const persistEntries = (next) => {
@@ -335,17 +322,19 @@ function DashboardInner() {
 
   // Habits completion
   const completions = entry.completions || {}; // {habitId: true}
-  const doneCount = habits.filter(h => completions[h.id]).length;
-  const totalHabits = habits.length || 1;
+  const doneCountSpiritual = habits.filter(h => (h.spiritual ?? true) && completions[h.id]).length;
+  const totalSpiritual = Math.max(1, habits.filter(h=> (h.spiritual ?? true)).length);
 
   // To-Dos (free tasks)
-  const todos = entry.todos || []; // [{id,text,done,due}]
+  const todos = entry.todos || []; // [{id,text,done,due,category,effortMin}]
   const todoDone = todos.filter(t => t.done).length;
   const totalTodos = Math.max(1, todos.length);
 
   // Scores
-  const autoSpirituality = Math.round((doneCount / totalHabits) * 10);
-  const autoProductivity = Math.round((todoDone / totalTodos) * 10);
+  const autoSpirituality = Math.round((doneCountSpiritual / totalSpiritual) * 10);
+  const totalEffort = todos.reduce((s,t)=> s + Math.max(0, Number(t.effortMin||0)), 0) || 1;
+  const weightedDone = todos.reduce((s,t)=> s + (t.done ? Math.max(0, Number(t.effortMin||0)) : 0), 0);
+  const autoProductivity = Math.round((weightedDone / totalEffort) * 10);
   const spirituality = entry.spirituality ?? autoSpirituality;
   const productivity = entry.productivity ?? autoProductivity;
   const mood = entry.mood || { happy: 0, energized: 0, calm: 0, social: 0 }; // -5..+5
@@ -355,12 +344,10 @@ function DashboardInner() {
   // History arrays (last 30 days)
   const histSpirituality = historyKeys.map(k => entries[k]?.spirituality ?? 0);
   const histProductivity = historyKeys.map(k => entries[k]?.productivity ?? 0);
-  const histMood = historyKeys.map(k => {
+  const histMoodDelta = historyKeys.map(k => {
     const m = entries[k]?.mood || { happy:0, energized:0, calm:0, social:0 };
-    // convert -5..+5 to 0..10 and average
-    const vals = [m.happy, m.energized, m.calm, m.social].map(v => ((v + 5) / 10) * 10);
-    const avg = Math.round(vals.reduce((a,b)=>a+b,0) / vals.length);
-    return avg;
+    const avg = ([m.happy, m.energized, m.calm, m.social].reduce((a,b)=>a+b,0) / 4);
+    return avg; // -5..+5 baseline 0
   });
   // Weights for composite productivity score
   const WEIGHTS = { tasks: 0.45, habits: 0.25, blocks: 0.20, focus: 0.10 };
@@ -387,15 +374,15 @@ function DashboardInner() {
   // Composite productivity score (0-100) including time-block productivity
   // Focus hours: manual input or derived from 'work' blocks
   const useTrackerFocus = !!(entry.useTrackerFocus);
-  const workBlockMinutes = (entries[dateKey]?.timeBlocks || []).filter(b=>b.category==='work').reduce((s,b)=> s + Math.max(0,(b.endMin-b.startMin)), 0);
+  const workBlockMinutes = (entries[dateKey]?.timeBlocks || []).filter(b=>b.category==='work'||b.category==='study').reduce((s,b)=> s + Math.max(0,(b.endMin-b.startMin)), 0);
   const focusHours = useTrackerFocus ? (workBlockMinutes/60) : (entry.focusHoursManual || 0);
   const todaysBlocks = (entries[dateKey]?.timeBlocks) || [];
   const blocksTotalMin = todaysBlocks.reduce((s,b)=> s + Math.max(0,(b.endMin-b.startMin)), 0);
   const blocksAvgProd10 = blocksTotalMin ? (
-    todaysBlocks.reduce((s,b)=> s + Math.max(0,(b.endMin-b.startMin)) * (b.prod ?? 5), 0) / blocksTotalMin
+    todaysBlocks.reduce((s,b)=> s + Math.max(0,(b.endMin-b.startMin)) * ((b.prod ?? 0) + 5), 0) / blocksTotalMin
   ) : 0;
-  const tasksPct = (todoDone/Math.max(1,todos.length));
-  const habitsPct = (doneCount/totalHabits);
+  const tasksPct = (weightedDone/Math.max(1,totalEffort));
+  const habitsPct = (doneCountSpiritual/totalSpiritual);
   const blocksPct = (blocksAvgProd10/10);
   const focusPct = Math.min(focusHours/8, 1);
   const productivityScore = Math.round(
@@ -442,51 +429,18 @@ function DashboardInner() {
   // Todos
   const [todoText, setTodoText] = useState('');
   const [todoDue, setTodoDue] = useState(''); // HH:MM
+  const [todoCat, setTodoCat] = useState('work');
+  const [todoEffort, setTodoEffort] = useState(30);
   const addTodo = () => {
     const text = todoText.trim();
     if (!text) return;
     const id = crypto.randomUUID();
-    const next = [...todos, { id, text, done: false, due: todoDue }];
+    const next = [...todos, { id, text, done: false, due: todoDue, category: todoCat, effortMin: Number(todoEffort)||0 }];
     updateToday({ todos: next });
     setTodoText('');
     setTodoDue('');
+    setTodoEffort(30);
   };
-    // Default todo management
-    const [defaultText, setDefaultText] = useState('');
-    const [defaultDue, setDefaultDue] = useState('');
-    const addDefaultTodo = () => {
-      const text = defaultText.trim();
-      if (!text) return;
-      const id = crypto.randomUUID();
-      const next = [...defaultTodos, { id, text, due: defaultDue }];
-      setDefaultTodos(next);
-      localStorage.setItem(LS_KEYS.defaultTodos, JSON.stringify(next));
-      setDefaultText(''); setDefaultDue('');
-    };
-    const removeDefaultTodo = (id) => {
-      const next = defaultTodos.filter(t => t.id !== id);
-      setDefaultTodos(next);
-      localStorage.setItem(LS_KEYS.defaultTodos, JSON.stringify(next));
-    };
-
-    // Photo uploads & rotation
-    const [photoIndex, setPhotoIndex] = useState(0);
-    useEffect(() => {
-      if (!photos.length) return;
-      const id = setInterval(() => setPhotoIndex(i => (i + 1) % photos.length), 30000);
-      return () => clearInterval(id);
-    }, [photos]);
-    const onPhotoUpload = (e) => {
-      const files = Array.from(e.target.files || []);
-      if (!files.length) return;
-      const readers = files.map(f => new Promise(res => { const r = new FileReader(); r.onload = () => res(r.result); r.readAsDataURL(f); }));
-      Promise.all(readers).then(datas => {
-        const next = [...photos, ...datas];
-        setPhotos(next);
-        localStorage.setItem(LS_KEYS.photos, JSON.stringify(next));
-      });
-      e.target.value = '';
-    };
 
     // Family stories are hardcoded; no editor UI
     const [familyIndex, setFamilyIndex] = useState(0);
@@ -505,7 +459,6 @@ function DashboardInner() {
       setList(copy); localStorage.setItem(storageKey, JSON.stringify(copy));
     };
     const moveHabit = (id, dir) => moveItem(habits, setHabits, LS_KEYS.tasks, id, dir);
-    const moveDefaultTodo = (id, dir) => moveItem(defaultTodos, setDefaultTodos, LS_KEYS.defaultTodos, id, dir);
 
     // Vision dots (20 years)
     const startDate = new Date(visionStart);
@@ -537,7 +490,7 @@ function DashboardInner() {
   // Export / Import
   const onExport = () => {
     const payload = {
-      habits, entries, photos, defaultTodos, visionStart
+      habits, entries, visionStart
     };
     const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
@@ -554,8 +507,7 @@ function DashboardInner() {
       const obj = JSON.parse(txt);
       if (obj.habits) { setHabits(obj.habits); localStorage.setItem(LS_KEYS.tasks, JSON.stringify(obj.habits)); }
       if (obj.entries) { setEntries(obj.entries); localStorage.setItem(LS_KEYS.entries, JSON.stringify(obj.entries)); }
-      if (obj.photos) { setPhotos(obj.photos); localStorage.setItem(LS_KEYS.photos, JSON.stringify(obj.photos)); }
-      if (obj.defaultTodos) { setDefaultTodos(obj.defaultTodos); localStorage.setItem(LS_KEYS.defaultTodos, JSON.stringify(obj.defaultTodos)); }
+      // photos/defaultTodos removed per request; ignore if present
       if (obj.visionStart) { setVisionStart(obj.visionStart); localStorage.setItem(LS_KEYS.visionStart, obj.visionStart); }
     } catch (err) {
       console.error('Import failed', err);
@@ -565,7 +517,7 @@ function DashboardInner() {
   };
 
   return (
-    <div className="dashboard-wrapper" style={photos.length ? { backgroundImage: `url(${photos[photoIndex]})` } : {}}>
+    <div className="dashboard-wrapper">
       <div className="bg-overlay" />
       <SeasonalSnow date={now} />
       <div className="container py-4 position-relative">
@@ -638,39 +590,100 @@ function DashboardInner() {
         </div>
       </div>
 
-      {/* Habits and To-Dos */}
+      {/* Top: Schedule + To-Dos & Today's Breakdown */}
       <div className="row g-3 mb-3">
-        <div className="col-md-6">
+        <div className="col-lg-8">
+          {/* Shabih ur Raza Time Monitor (Vertical Day Schedule) */}
           <div className="card shadow-sm h-100">
             <div className="card-body">
-              <div className="d-flex align-items-baseline justify-content-between">
-                <h5 className="card-title mb-0">Daily Habits</h5>
-                <span className="badge bg-primary">{doneCount}/{totalHabits}</span>
+              <div className="d-flex align-items-baseline justify-content-between mb-2">
+                <h5 className="card-title mb-0">Shabih ur Raza Time Monitor</h5>
+                <div className="d-flex align-items-center gap-2 flex-wrap">
+                  <button className="btn btn-sm btn-outline-primary" onClick={()=>{
+                    const now = new Date();
+                    const mins = now.getHours()*60 + now.getMinutes();
+                    const start = snapMinutes(mins);
+                    const id = crypto.randomUUID();
+                    const newBlock = { id, startMin: start, endMin: Math.min(1440, start+60), label: 'Startup Work', category: 'work', prod: 0, feeling: '' };
+                    setBlocks([...(entry.timeBlocks||[]), newBlock]);
+                    setSelectedBlockId(id);
+                  }}>+ Startup Work 1h</button>
+                  <div className="form-check form-switch m-0">
+                    <input className="form-check-input" type="checkbox" id="snap15" checked={snapTo15} onChange={(e)=>setSnapTo15(e.target.checked)} />
+                    <label className="form-check-label" htmlFor="snap15">Snap 15m</label>
+                  </div>
+                  <span className="badge bg-secondary">Wasted: {Math.round(wastedMinutesToday/60)}h {wastedMinutesToday%60}m</span>
+                </div>
               </div>
-              <ul className="list-group list-group-flush mt-3">
-                {habits.map(h => (
-                  <li key={h.id} className="list-group-item d-flex justify-content-between align-items-center">
-                    <div className="form-check">
-                      <input className="form-check-input" type="checkbox" id={`h-${h.id}`} checked={!!completions[h.id]} onChange={() => toggleHabit(h.id)} />
-                      <label className="form-check-label" htmlFor={`h-${h.id}`}>{h.label}</label>
+              <div className="day-schedule" ref={scheduleRef} onMouseDown={onScheduleMouseDown}>
+                {Array.from({length:25}, (_,i)=> {
+                  const hour12 = ((i+11)%12)+1; const ampm = i<12?'AM':'PM';
+                  return (
+                    <div key={i} className="hour-row" style={{top: `${(i/24)*100}%`}}>
+                      <span className="hour-label">{hour12} {ampm}</span>
                     </div>
-                    <div className="btn-group btn-group-sm">
-                      <button className="btn btn-outline-secondary" onClick={()=>moveHabit(h.id,'up')} title="Up">↑</button>
-                      <button className="btn btn-outline-secondary" onClick={()=>moveHabit(h.id,'down')} title="Down">↓</button>
-                      <button className="btn btn-outline-danger" onClick={() => removeHabit(h.id)} title="Remove">×</button>
+                  );
+                })}
+                {blocks.map(b => {
+                  const top = (b.startMin/1440)*100;
+                  const height = ((b.endMin-b.startMin)/1440)*100;
+                  const cat = categoryById(b.category||'other');
+                  return (
+                    <div key={b.id} className={`vblock ${selectedBlockId===b.id?'selected':''}`} style={{top:`${top}%`, height:`${height}%`, background:cat.color}} onMouseDown={(e)=>onBlockMouseDown(e,b.id)}>
+                      <div className="handle top" onMouseDown={(e)=>onHandleMouseDown(e,b.id,'resizeL')} />
+                      <div className="label">{b.label}</div>
+                      <div className="handle bottom" onMouseDown={(e)=>onHandleMouseDown(e,b.id,'resizeR')} />
                     </div>
-                  </li>
-                ))}
-              </ul>
-              <div className="d-flex gap-2 mt-3">
-                <input className="form-control" placeholder="Add habit (e.g., Walk)" value={habitName} onChange={(e)=>setHabitName(e.target.value)} />
-                <button className="btn btn-outline-primary" onClick={addHabit}>Add</button>
+                  );
+                })}
               </div>
+              {selectedBlockId && (()=>{
+                const b = blocks.find(x=>x.id===selectedBlockId); if(!b) return null;
+                return (
+                  <div className="row g-3 mt-3">
+                    <div className="col-md-3">
+                      <label className="form-label">Label</label>
+                      <input className="form-control" value={b.label} onChange={(e)=>updateBlock(b.id,{label:e.target.value})} />
+                    </div>
+                    <div className="col-md-3">
+                      <label className="form-label">Category</label>
+                      <select className="form-select" value={b.category} onChange={(e)=>updateBlock(b.id,{category:e.target.value})}>
+                        {TIME_CATEGORIES.map(c=> <option key={c.id} value={c.id}>{c.label}</option>)}
+                      </select>
+                    </div>
+                    <div className="col-md-2">
+                      <label className="form-label">Start</label>
+                      <input className="form-control" type="time" value={`${String(Math.floor(b.startMin/60)).padStart(2,'0')}:${String(b.startMin%60).padStart(2,'0')}`} onChange={(e)=>{
+                        const [hh,mm]=e.target.value.split(':').map(Number); let mins=hh*60+mm; mins = snapMinutes(mins); updateBlock(b.id,{startMin: clamp(mins,0,Math.max(0,b.endMin-5))});
+                      }} />
+                    </div>
+                    <div className="col-md-2">
+                      <label className="form-label">End</label>
+                      <input className="form-control" type="time" value={`${String(Math.floor(b.endMin/60)).padStart(2,'0')}:${String(b.endMin%60).padStart(2,'0')}`} onChange={(e)=>{
+                        const [hh,mm]=e.target.value.split(':').map(Number); let mins=hh*60+mm; mins = snapMinutes(mins); updateBlock(b.id,{endMin: clamp(mins,Math.min(b.startMin+5,1435),1440)});
+                      }} />
+                    </div>
+                    <div className="col-md-2">
+                      <label className="form-label d-flex justify-content-between"><span>Productivity</span><strong>{b.prod}</strong></label>
+                      <input type="range" min={-5} max={5} value={b.prod} className="form-range" onChange={(e)=>updateBlock(b.id,{prod:Number(e.target.value)})} />
+                    </div>
+                    <div className="col-12">
+                      <label className="form-label">Feeling/Notes</label>
+                      <textarea className="form-control" rows={2} value={b.feeling} onChange={(e)=>updateBlock(b.id,{feeling:e.target.value})} />
+                    </div>
+                    <div className="col-12 d-flex justify-content-between">
+                      <div className="small text-muted">Duration: {minutesToLabel(b.endMin - b.startMin)} (hh:mm)</div>
+                      <button className="btn btn-outline-danger" onClick={()=>deleteBlock(b.id)}>Delete Block</button>
+                    </div>
+                  </div>
+                );
+              })()}
             </div>
           </div>
         </div>
-        <div className="col-md-6">
-          <div className="card shadow-sm h-100">
+        <div className="col-lg-4">
+          {/* To-Dos and Today Breakdown */}
+          <div className="card shadow-sm mb-3">
             <div className="card-body">
               <div className="d-flex align-items-baseline justify-content-between">
                 <h5 className="card-title mb-0">To‑Dos (Today)</h5>
@@ -686,50 +699,86 @@ function DashboardInner() {
                     } catch { return false; }
                   })();
                   return (
-                  <li key={t.id} className={`list-group-item d-flex justify-content-between align-items-center ${overdue ? 'overdue' : ''}`}>
-                    <div className="form-check">
-                      <input className="form-check-input" type="checkbox" id={`t-${t.id}`} checked={t.done} onChange={() => toggleTodo(t.id)} />
-                      <label className="form-check-label" htmlFor={`t-${t.id}`}>{t.text}{t.due && <span className="ms-2 badge bg-secondary">{t.due}</span>}</label>
+                  <li key={t.id} className={`list-group-item ${overdue ? 'overdue' : ''}`}>
+                    <div className="d-flex justify-content-between align-items-center">
+                      <div className="form-check">
+                        <input className="form-check-input" type="checkbox" id={`t-${t.id}`} checked={t.done} onChange={() => toggleTodo(t.id)} />
+                        <label className="form-check-label" htmlFor={`t-${t.id}`}>{t.text}{t.due && <span className="ms-2 badge bg-secondary">{t.due}</span>}</label>
+                      </div>
+                      <button className="btn btn-sm btn-outline-danger" onClick={() => removeTodo(t.id)}>Remove</button>
                     </div>
-                    <button className="btn btn-sm btn-outline-danger" onClick={() => removeTodo(t.id)}>Remove</button>
+                    <div className="d-flex gap-2 mt-2 align-items-center small">
+                      <select className="form-select form-select-sm" style={{maxWidth: '45%'}} value={t.category||'work'} onChange={(e)=>{
+                        const next = todos.map(x=> x.id===t.id? { ...x, category: e.target.value }: x); updateToday({ todos: next });
+                      }}>
+                        {TIME_CATEGORIES.map(c=> <option key={c.id} value={c.id}>{c.label}</option>)}
+                      </select>
+                      <input className="form-control form-control-sm" style={{maxWidth:'30%'}} type="number" min="0" step="5" value={t.effortMin||0} onChange={(e)=>{
+                        const next = todos.map(x=> x.id===t.id? { ...x, effortMin: Number(e.target.value||0) }: x); updateToday({ todos: next });
+                      }} />
+                      <span className="text-muted">min</span>
+                    </div>
                   </li>
                 );})}
               </ul>
               <div className="d-flex gap-2 mt-3">
-                <input className="form-control" style={{maxWidth:'40%'}} placeholder="Add task" value={todoText} onChange={(e)=>setTodoText(e.target.value)} />
-                <input className="form-control" style={{maxWidth:'25%'}} type="time" value={todoDue} onChange={(e)=>setTodoDue(e.target.value)} />
-                <button className="btn btn-outline-success" onClick={addTodo}>Add</button>
+                <input className="form-control" placeholder="Add task" value={todoText} onChange={(e)=>setTodoText(e.target.value)} />
+                <input className="form-control" type="time" value={todoDue} onChange={(e)=>setTodoDue(e.target.value)} />
+              </div>
+              <div className="d-flex gap-2 mt-2 align-items-center">
+                <select className="form-select" style={{maxWidth:'45%'}} value={todoCat} onChange={(e)=>setTodoCat(e.target.value)}>
+                  {TIME_CATEGORIES.map(c=> <option key={c.id} value={c.id}>{c.label}</option>)}
+                </select>
+                <input className="form-control" style={{maxWidth:'30%'}} type="number" min="0" step="5" value={todoEffort} onChange={(e)=>setTodoEffort(e.target.value)} />
+                <span className="text-muted small">min</span>
+                <button className="btn btn-outline-success ms-auto" onClick={addTodo}>Add</button>
               </div>
             </div>
           </div>
-        </div>
-      </div>
-
-      {/* Default Task Templates */}
-      <div className="card shadow-sm mb-3">
-        <div className="card-body">
-          <h5 className="card-title mb-2">Default Daily Tasks (Template)</h5>
-          <ul className="list-group list-group-flush mb-3">
-            {defaultTodos.map(dt => (
-              <li key={dt.id} className="list-group-item d-flex justify-content-between align-items-center">
-                <span>{dt.text}{dt.due && <span className="ms-2 badge bg-secondary">{dt.due}</span>}</span>
-                <div className="btn-group btn-group-sm">
-                  <button className="btn btn-outline-secondary" onClick={()=>moveDefaultTodo(dt.id,'up')}>↑</button>
-                  <button className="btn btn-outline-secondary" onClick={()=>moveDefaultTodo(dt.id,'down')}>↓</button>
-                  <button className="btn btn-outline-danger" onClick={()=>removeDefaultTodo(dt.id)}>×</button>
-                </div>
-              </li>
-            ))}
-            {defaultTodos.length === 0 && <li className="list-group-item text-muted">No default tasks set.</li>}
-          </ul>
-          <div className="d-flex gap-2">
-            <input className="form-control" placeholder="Task name" style={{maxWidth:'40%'}} value={defaultText} onChange={(e)=>setDefaultText(e.target.value)} />
-            <input className="form-control" type="time" style={{maxWidth:'25%'}} value={defaultDue} onChange={(e)=>setDefaultDue(e.target.value)} />
-            <button className="btn btn-outline-primary" onClick={addDefaultTodo}>Add Default</button>
+          <div className="card shadow-sm">
+            <div className="card-body">
+              <h6 className="mb-2">Today’s Breakdown</h6>
+              <Doughnut data={{
+                labels: Array.from(distributionToday.entries()).filter(([,v])=>v>0).map(([cat])=>categoryById(cat).label),
+                datasets:[{ data: Array.from(distributionToday.entries()).filter(([,v])=>v>0).map(([,mins])=>mins/60), backgroundColor: Array.from(distributionToday.entries()).filter(([,v])=>v>0).map(([cat])=>categoryById(cat).color) }]
+              }} options={{ plugins:{legend:{position:'bottom'}} }} />
+            </div>
           </div>
-          <div className="form-text mt-2">Defaults seed the day if not yet started.</div>
         </div>
-      </div>
+          </div>
+
+          {/* Habits */}
+          <div className="row g-3 mb-3">
+            <div className="col-md-6">
+              <div className="card shadow-sm h-100">
+                <div className="card-body">
+                  <div className="d-flex align-items-baseline justify-content-between">
+                    <h5 className="card-title mb-0">Daily Habits</h5>
+                    <span className="badge bg-primary">{doneCountSpiritual}/{totalSpiritual}</span>
+                  </div>
+                  <ul className="list-group list-group-flush mt-3">
+                    {habits.map(h => (
+                      <li key={h.id} className="list-group-item d-flex justify-content-between align-items-center">
+                        <div className="form-check">
+                          <input className="form-check-input" type="checkbox" id={`h-${h.id}`} checked={!!completions[h.id]} onChange={() => toggleHabit(h.id)} />
+                          <label className="form-check-label" htmlFor={`h-${h.id}`}>{h.label}</label>
+                        </div>
+                        <div className="btn-group btn-group-sm">
+                          <button className="btn btn-outline-secondary" onClick={()=>moveHabit(h.id,'up')} title="Up">↑</button>
+                          <button className="btn btn-outline-secondary" onClick={()=>moveHabit(h.id,'down')} title="Down">↓</button>
+                          <button className="btn btn-outline-danger" onClick={() => removeHabit(h.id)} title="Remove">×</button>
+                        </div>
+                      </li>
+                    ))}
+                  </ul>
+                  <div className="d-flex gap-2 mt-3">
+                    <input className="form-control" placeholder="Add habit (e.g., Walk)" value={habitName} onChange={(e)=>setHabitName(e.target.value)} />
+                    <button className="btn btn-outline-primary" onClick={addHabit}>Add</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
 
       {/* Ratings */}
       <div className="row g-3 mb-3">
@@ -788,115 +837,13 @@ function DashboardInner() {
               </div>
               <div className="d-flex align-items-center">
                 <span className="badge rounded-pill text-bg-warning text-dark">Mood</span>
-                <MiniLineChart data={histMood} color="#ffc107" />
+                <MiniLineChart data={histMoodDelta} color="#ffc107" />
               </div>
             </div>
           </div>
         </div>
       </div>
-
-      {/* Shabih ur Raza Time Monitor (Vertical Day Schedule) */}
-      <div className="card shadow-sm mb-3">
-        <div className="card-body">
-          <div className="d-flex align-items-baseline justify-content-between mb-2">
-            <h5 className="card-title mb-0">Shabih ur Raza Time Monitor</h5>
-            <div className="d-flex align-items-center gap-3">
-              <div className="form-check form-switch m-0">
-                <input className="form-check-input" type="checkbox" id="snap15" checked={snapTo15} onChange={(e)=>setSnapTo15(e.target.checked)} />
-                <label className="form-check-label" htmlFor="snap15">Snap 15m</label>
-              </div>
-              <span className="badge bg-secondary">Wasted today: {Math.round(wastedMinutesToday/60)}h {wastedMinutesToday%60}m</span>
-            </div>
-          </div>
-          <div className="day-schedule" ref={scheduleRef} onMouseDown={onScheduleMouseDown}>
-            {/* Hour rows with 12-hour labels */}
-            {Array.from({length:25}, (_,i)=> {
-              const hour12 = ((i+11)%12)+1; const ampm = i<12?'AM':'PM';
-              return (
-                <div key={i} className="hour-row" style={{top: `${(i/24)*100}%`}}>
-                  <span className="hour-label">{hour12} {ampm}</span>
-                </div>
-              );
-            })}
-            {/* Blocks */}
-            {blocks.map(b => {
-              const top = (b.startMin/1440)*100;
-              const height = ((b.endMin-b.startMin)/1440)*100;
-              const cat = categoryById(b.category||'other');
-              return (
-                <div key={b.id} className={`vblock ${selectedBlockId===b.id?'selected':''}`} style={{top:`${top}%`, height:`${height}%`, background:cat.color}} onMouseDown={(e)=>onBlockMouseDown(e,b.id)}>
-                  <div className="handle top" onMouseDown={(e)=>onHandleMouseDown(e,b.id,'resizeL')} />
-                  <div className="label">{b.label}</div>
-                  <div className="handle bottom" onMouseDown={(e)=>onHandleMouseDown(e,b.id,'resizeR')} />
-                </div>
-              );
-            })}
-          </div>
-
-          {/* Block Editor */}
-          {selectedBlockId && (()=>{
-            const b = blocks.find(x=>x.id===selectedBlockId); if(!b) return null;
-            return (
-              <div className="row g-3 mt-3">
-                <div className="col-md-3">
-                  <label className="form-label">Label</label>
-                  <input className="form-control" value={b.label} onChange={(e)=>updateBlock(b.id,{label:e.target.value})} />
-                </div>
-                <div className="col-md-3">
-                  <label className="form-label">Category</label>
-                  <select className="form-select" value={b.category} onChange={(e)=>updateBlock(b.id,{category:e.target.value})}>
-                    {TIME_CATEGORIES.map(c=> <option key={c.id} value={c.id}>{c.label}</option>)}
-                  </select>
-                </div>
-                <div className="col-md-2">
-                  <label className="form-label">Start</label>
-                  <input className="form-control" type="time" value={`${String(Math.floor(b.startMin/60)).padStart(2,'0')}:${String(b.startMin%60).padStart(2,'0')}`} onChange={(e)=>{
-                    const [hh,mm]=e.target.value.split(':').map(Number); let mins=hh*60+mm; mins = snapMinutes(mins); updateBlock(b.id,{startMin: clamp(mins,0,Math.max(0,b.endMin-5))});
-                  }} />
-                </div>
-                <div className="col-md-2">
-                  <label className="form-label">End</label>
-                  <input className="form-control" type="time" value={`${String(Math.floor(b.endMin/60)).padStart(2,'0')}:${String(b.endMin%60).padStart(2,'0')}`} onChange={(e)=>{
-                    const [hh,mm]=e.target.value.split(':').map(Number); let mins=hh*60+mm; mins = snapMinutes(mins); updateBlock(b.id,{endMin: clamp(mins,Math.min(b.startMin+5,1435),1440)});
-                  }} />
-                </div>
-                <div className="col-md-2">
-                  <label className="form-label d-flex justify-content-between"><span>Productivity</span><strong>{b.prod}</strong></label>
-                  <input type="range" min={0} max={10} value={b.prod} className="form-range" onChange={(e)=>updateBlock(b.id,{prod:Number(e.target.value)})} />
-                </div>
-                <div className="col-12">
-                  <label className="form-label">Feeling/Notes</label>
-                  <textarea className="form-control" rows={2} value={b.feeling} onChange={(e)=>updateBlock(b.id,{feeling:e.target.value})} />
-                </div>
-                <div className="col-12 d-flex justify-content-between">
-                  <div className="small text-muted">Duration: {minutesToLabel(b.endMin - b.startMin)} (hh:mm)</div>
-                  <button className="btn btn-outline-danger" onClick={()=>deleteBlock(b.id)}>Delete Block</button>
-                </div>
-              </div>
-            );
-          })()}
-
-          {/* Today distribution charts */}
-          <div className="row g-3 mt-3">
-            <div className="col-md-7">
-              <h6 className="mb-2">Category Distribution (Stacked)</h6>
-              <Bar data={{
-                labels: ['Today'],
-                datasets: Array.from(distributionToday.entries()).filter(([,v])=>v>0).map(([cat,mins])=>{
-                  const c = categoryById(cat); return { label: c.label, data: [mins/60], backgroundColor: c.color };
-                })
-              }} options={{ responsive:true, plugins:{legend:{position:'bottom'}}, scales:{ x:{ stacked:true, grid:{display:false}}, y:{ stacked:true, title:{display:true, text:'Hours'}, beginAtZero:true } } }} />
-            </div>
-            <div className="col-md-5">
-              <h6 className="mb-2">Today’s Breakdown</h6>
-              <Doughnut data={{
-                labels: Array.from(distributionToday.entries()).filter(([,v])=>v>0).map(([cat])=>categoryById(cat).label),
-                datasets:[{ data: Array.from(distributionToday.entries()).filter(([,v])=>v>0).map(([,mins])=>mins/60), backgroundColor: Array.from(distributionToday.entries()).filter(([,v])=>v>0).map(([cat])=>categoryById(cat).color) }]
-              }} options={{ plugins:{legend:{position:'bottom'}} }} />
-            </div>
-          </div>
-        </div>
-      </div>
+      
 
       {/* Overlays & Waste History */}
       <div className="card shadow-sm mb-3">
@@ -918,35 +865,18 @@ function DashboardInner() {
         </div>
       </div>
 
-      {/* Family Rotation & Photos */}
+      {/* Motivation */}
       <div className="row g-3 mb-3">
-        <div className="col-md-6">
+        <div className="col-md-12">
           <div className="card shadow-sm h-100">
             <div className="card-body d-flex flex-column">
-              <h5 className="card-title">Family Motivation</h5>
+              <h5 className="card-title">Motivation</h5>
               {family.length ? (
                 <div className="flex-grow-1">
                   <h6 className="fw-semibold mb-1">{family[familyIndex].name} {family[familyIndex].years && <small className="text-muted">({family[familyIndex].years})</small>}</h6>
                   <p className="small mb-0">{family[familyIndex].note || '—'}</p>
                 </div>
               ) : <p className="text-muted">Add stories in code (TODAY_FAMILY).</p>}
-            </div>
-          </div>
-        </div>
-        <div className="col-md-6">
-          <div className="card shadow-sm h-100">
-            <div className="card-body d-flex flex-column">
-              <h5 className="card-title">Background Photos</h5>
-              <p className="small">Upload family photos; they rotate every 30s.</p>
-              <input type="file" multiple accept="image/*" onChange={onPhotoUpload} className="form-control mb-2" />
-              {photos.length > 0 && (
-                <div className="d-flex flex-wrap gap-2 photo-thumbs">
-                  {photos.map((p,i)=>(
-                    <div key={i} className={`thumb ${i===photoIndex?'active':''}`}> <img src={p} alt="family" /> </div>
-                  ))}
-                </div>
-              )}
-              {photos.length === 0 && <p className="text-muted">No photos yet.</p>}
             </div>
           </div>
         </div>
