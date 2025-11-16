@@ -10,6 +10,7 @@ import Business from './pages/Business';
 import Awards     from './pages/Awards';
 import Contact    from './pages/Contact';
 import SigFigAI   from './pages/SigFigAI';
+import FaseehDashboard from './pages/FaseehDashboard';
 
 function App() {
   const location = useLocation();
@@ -55,6 +56,8 @@ function App() {
         <Route path="/awards" element={<Awards/>}/>
         <Route path="/contact" element={<Contact/>}/>
         <Route path="/sigfig-ai" element={<SigFigAI/>}/>
+        {/* Secret route not linked in navbar */}
+        <Route path="/__faseeh" element={<FaseehDashboard/>}/>
       </Routes>
     </>
   );
