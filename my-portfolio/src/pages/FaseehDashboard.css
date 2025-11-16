@@ -2,7 +2,7 @@
 .form-range { accent-color: #0d6efd; }
 .dashboard-wrapper { min-height: 100vh; background-size: cover; background-position: center; position: relative; }
 .bg-overlay { position: absolute; inset:0; background: rgba(0,0,0,0.35); backdrop-filter: blur(2px); }
-.dashboard-wrapper .card { background: rgba(255,255,255,0.9); }
+.dashboard-wrapper .card { background: rgba(255,255,255,0.95); border: 1px solid #eef1f5; border-radius: 16px; box-shadow: 0 10px 24px rgba(0,0,0,0.06); }
 .photo-thumbs { max-height: 120px; overflow:auto; }
 .photo-thumbs .thumb { width:54px; height:54px; border:2px solid transparent; border-radius:4px; overflow:hidden; }
 .photo-thumbs .thumb.active { border-color:#0d6efd; }
@@ -15,20 +15,20 @@
 .vision-dots .vdot.today { background:#ffc107; box-shadow:0 0 0 2px #fff; }
 /* Minimalistic mode */
 body.minimal-mode .bg-overlay { background: rgba(255,255,255,0.6); backdrop-filter: none; }
-body.minimal-mode .dashboard-wrapper .card { background:#ffffff; box-shadow:none; border:1px solid #e5e5e5; }
+body.minimal-mode .dashboard-wrapper .card { background:#ffffff; box-shadow:none; border:1px solid #e8ebf0; border-radius:14px; }
 body.minimal-mode .badge { opacity:0.85; }
 /* Snow layer */
 .snow-layer { position:fixed; inset:0; pointer-events:none; overflow:hidden; }
 .snow-layer .flake { position:absolute; top:-10px; background:#fff; border-radius:50%; opacity:0.8; animation: fall linear infinite; }
 @keyframes fall { to { transform: translateY(110vh); opacity:0.2; } }
 
-/* Timeline */
-.timeline { position: relative; height: 56px; background: rgba(255,255,255,0.9); border:1px solid #e9ecef; border-radius:6px; overflow:hidden; cursor: crosshair; }
-.timeline .tick { position:absolute; top:0; bottom:0; width:1px; background:#e9ecef; }
-.timeline .tick .tick-label { position:absolute; top:0; transform: translateX(-50%); font-size:10px; color:#6c757d; }
-.timeline .block { position:absolute; top:18px; height:20px; border-radius:4px; color:#fff; display:flex; align-items:center; justify-content:space-between; padding:0 8px; cursor: move; box-shadow: 0 1px 3px rgba(0,0,0,0.2); }
-.timeline .block .label { font-size:12px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-.timeline .block.selected { outline:2px solid #212529; }
-.timeline .block .handle { position:absolute; top:0; width:6px; height:100%; background:rgba(255,255,255,0.5); cursor: ew-resize; }
-.timeline .block .handle.left { left:0; border-top-left-radius:4px; border-bottom-left-radius:4px; }
-.timeline .block .handle.right { right:0; border-top-right-radius:4px; border-bottom-right-radius:4px; }
+/* Vertical Day Schedule */
+.day-schedule { position: relative; height: 900px; background: rgba(255,255,255,0.9); border:1px solid #e9ecef; border-radius:10px; overflow:hidden; cursor: crosshair; }
+.day-schedule .hour-row { position:absolute; left:0; right:0; height: calc(100% / 24); border-top: 1px solid #f0f2f5; }
+.day-schedule .hour-row .hour-label { position:absolute; left:8px; top:-8px; font-size:10px; color:#6c757d; background:#fff; padding:0 4px; border-radius:4px; }
+.day-schedule .vblock { position:absolute; left:80px; right:10px; border-radius:8px; color:#fff; display:flex; align-items:center; justify-content:space-between; padding:4px 8px; cursor: move; box-shadow: 0 2px 6px rgba(0,0,0,0.2); }
+.day-schedule .vblock .label { font-size:12px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.day-schedule .vblock.selected { outline:2px solid #212529; }
+.day-schedule .vblock .handle { position:absolute; left:0; right:0; height:6px; background:rgba(255,255,255,0.5); cursor: ns-resize; }
+.day-schedule .vblock .handle.top { top:0; border-top-left-radius:8px; border-top-right-radius:8px; }
+.day-schedule .vblock .handle.bottom { bottom:0; border-bottom-left-radius:8px; border-bottom-right-radius:8px; }

@@ -1,4 +1,16 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
+import {
+  Chart as ChartJS,
+  LineElement,
+  PointElement,
+  LinearScale,
+  CategoryScale,
+  ArcElement,
+  BarElement,
+  Tooltip,
+  Legend
+} from 'chart.js';
+import { Line, Doughnut, Bar } from 'react-chartjs-2';
 import './FaseehDashboard.css';
 
 // Local storage keys (all local-only)
@@ -6,11 +18,8 @@ const LS_KEYS = {
   tasks: 'faseeh.tasks.v1',           // habit templates
   quotes: 'faseeh.quotes.v1',
   entries: 'faseeh.entries.v1',       // map date -> entry {todos, completions, ratings}
-  timer: 'faseeh.timer.v1',
   photos: 'faseeh.photos.v1',         // array of data URLs
-  family: 'faseeh.family.v1',         // array of {name, years, note}
   defaultTodos: 'faseeh.defaultTodos.v1', // array of {id, text, due}
-  goals: 'faseeh.goals.v1',           // array of {id,name,targetDate,progress}
   visionStart: 'faseeh.visionStart.v1',   // ISO date string
 };
 
@@ -50,12 +59,10 @@ function MiniLineChart({ data, height = 48, color = '#0d6efd' }) {
 
 // Gate removed.
 
-const DEFAULT_QUOTES = [
-  'Small steps, big trajectory.',
-  'Consistency outperforms intensity over time.',
-  'Focus is a force multiplier.',
-  'Start where you are; optimize as you go.',
-  'When it matters, schedule it.',
+// Hardcoded content: fill these with your picks
+const TODAY_QUOTES = [
+  'Hardcode your favorite quote here.',
+  'Another quote for today if desired.'
 ];
 
 const DEFAULT_HABITS = [
@@ -66,6 +73,12 @@ const DEFAULT_HABITS = [
   { id: 'maghrib', label: 'Maghrib' },
   { id: 'isha', label: 'Isha' },
 ];
+
+const TODAY_FAMILY = [
+  { name: 'Hardcoded Person', years: '19xx-20xx', note: 'A short inspiring story to keep you going.' }
+];
+
+ChartJS.register(LineElement, PointElement, LinearScale, CategoryScale, ArcElement, BarElement, Tooltip, Legend);
 
 // Time monitor categories
 const TIME_CATEGORIES = [
@@ -100,12 +113,8 @@ function DashboardInner() {
     };
   }, []);
   const now = useNow(1000);
-  const [quotes, setQuotes] = useState(() => {
-    try {
-      const raw = localStorage.getItem(LS_KEYS.quotes);
-      return raw ? JSON.parse(raw) : DEFAULT_QUOTES;
-    } catch { return DEFAULT_QUOTES; }
-  });
+  // Quotes hardcoded for today
+  const quotes = TODAY_QUOTES;
   const [habits, setHabits] = useState(() => {
     try {
       const raw = localStorage.getItem(LS_KEYS.tasks);
@@ -121,14 +130,10 @@ function DashboardInner() {
   const [photos, setPhotos] = useState(() => {
     try { const raw = localStorage.getItem(LS_KEYS.photos); return raw ? JSON.parse(raw) : []; } catch { return []; }
   });
-  const [family, setFamily] = useState(() => {
-    try { const raw = localStorage.getItem(LS_KEYS.family); return raw ? JSON.parse(raw) : []; } catch { return []; }
-  });
+  // Family stories hardcoded
+  const family = TODAY_FAMILY;
   const [defaultTodos, setDefaultTodos] = useState(() => {
     try { const raw = localStorage.getItem(LS_KEYS.defaultTodos); return raw ? JSON.parse(raw) : []; } catch { return []; }
-  });
-  const [goals, setGoals] = useState(() => {
-    try { const raw = localStorage.getItem(LS_KEYS.goals); return raw ? JSON.parse(raw) : []; } catch { return []; }
   });
   const [visionStart, setVisionStart] = useState(() => {
     const raw = localStorage.getItem(LS_KEYS.visionStart);
@@ -147,20 +152,20 @@ function DashboardInner() {
     localStorage.setItem(LS_KEYS.entries, JSON.stringify(seeded));
   }
 
-  // ===== Shabih ur Raza Time Monitor =====
+  // ===== Shabih ur Raza Time Monitor (Vertical) =====
   const [selectedBlockId, setSelectedBlockId] = useState(null);
   const blocks = entry.timeBlocks || []; // [{id,startMin,endMin,label,category,prod(0..10),feeling:string}]
   const setBlocks = (next) => updateToday({ timeBlocks: next });
   const [snapTo15, setSnapTo15] = useState(true);
 
-  const timelineRef = useRef(null);
+  const scheduleRef = useRef(null);
   const dragState = useRef(null); // {type:'create'|'move'|'resizeL'|'resizeR', id, startMin, endMin, offset}
 
-  const minutesFromEvent = (e) => {
-    const el = timelineRef.current; if(!el) return 0;
+  const minutesFromEventY = (e) => {
+    const el = scheduleRef.current; if(!el) return 0;
     const rect = el.getBoundingClientRect();
-    const x = (e.clientX ?? (e.touches?.[0]?.clientX||0)) - rect.left;
-    const pct = clamp(x / rect.width, 0, 1);
+    const y = (e.clientY ?? (e.touches?.[0]?.clientY||0)) - rect.top;
+    const pct = clamp(y / rect.height, 0, 1);
     return Math.round(pct * 24 * 60);
   };
   const snapMinutes = (m) => {
@@ -169,10 +174,9 @@ function DashboardInner() {
     return clamp(snapped, 0, 1440);
   };
 
-  const onTimelineMouseDown = (e) => {
+  const onScheduleMouseDown = (e) => {
     if (e.button !== 0) return;
-    // If clicking empty region, start creating a block
-    const m = minutesFromEvent(e);
+    const m = minutesFromEventY(e);
     // Avoid creating if clicked on existing block (handled by block handlers)
     const hit = blocks.find(b => m >= b.startMin && m <= b.endMin);
     if (hit) return;
@@ -184,13 +188,13 @@ function DashboardInner() {
     setBlocks([...blocks, sanitized]);
     setSelectedBlockId(id);
     dragState.current = { type: 'resizeR', id };
-    window.addEventListener('mousemove', onTimelineMouseMove);
-    window.addEventListener('mouseup', onTimelineMouseUp, { once: true });
+    window.addEventListener('mousemove', onScheduleMouseMove);
+    window.addEventListener('mouseup', onScheduleMouseUp, { once: true });
   };
 
-  const onTimelineMouseMove = (e) => {
+  const onScheduleMouseMove = (e) => {
     if (!dragState.current) return;
-    const m = minutesFromEvent(e);
+    const m = minutesFromEventY(e);
     const idx = blocks.findIndex(b => b.id === dragState.current.id);
     if (idx < 0) return;
     const b = blocks[idx];
@@ -210,25 +214,25 @@ function DashboardInner() {
     const next = [...blocks]; next[idx] = { ...b, startMin: start, endMin: end };
     setBlocks(next);
   };
-  const onTimelineMouseUp = () => { dragState.current = null; window.removeEventListener('mousemove', onTimelineMouseMove); };
+  const onScheduleMouseUp = () => { dragState.current = null; window.removeEventListener('mousemove', onScheduleMouseMove); };
 
   const onBlockMouseDown = (e, id) => {
     if (e.button !== 0) return;
     e.stopPropagation();
     setSelectedBlockId(id);
-    const m = minutesFromEvent(e);
+    const m = minutesFromEventY(e);
     const b = blocks.find(x => x.id === id); if (!b) return;
     dragState.current = { type: 'move', id, offset: m - b.startMin };
-    window.addEventListener('mousemove', onTimelineMouseMove);
-    window.addEventListener('mouseup', onTimelineMouseUp, { once: true });
+    window.addEventListener('mousemove', onScheduleMouseMove);
+    window.addEventListener('mouseup', onScheduleMouseUp, { once: true });
   };
   const onHandleMouseDown = (e, id, which) => {
     if (e.button !== 0) return;
     e.stopPropagation();
     setSelectedBlockId(id);
     dragState.current = { type: which, id };
-    window.addEventListener('mousemove', onTimelineMouseMove);
-    window.addEventListener('mouseup', onTimelineMouseUp, { once: true });
+    window.addEventListener('mousemove', onScheduleMouseMove);
+    window.addEventListener('mouseup', onScheduleMouseUp, { once: true });
   };
 
   const deleteBlock = (id) => setBlocks(blocks.filter(b => b.id !== id));
@@ -346,11 +350,7 @@ function DashboardInner() {
   const productivity = entry.productivity ?? autoProductivity;
   const mood = entry.mood || { happy: 0, energized: 0, calm: 0, social: 0 }; // -5..+5
 
-  const dayQuote = useMemo(() => {
-    if (!quotes.length) return '';
-    const idx = Math.abs(Number(new Date().toISOString().slice(0,10).replaceAll('-', ''))) % quotes.length;
-    return quotes[idx];
-  }, [quotes]);
+  const dayQuote = quotes[0] || '';
 
   // History arrays (last 30 days)
   const histSpirituality = historyKeys.map(k => entries[k]?.spirituality ?? 0);
@@ -385,7 +385,10 @@ function DashboardInner() {
     return total? Math.round((done/total)*100):0;
   })();
   // Composite productivity score (0-100) including time-block productivity
-  const focusHours = timerMs / 3600000;
+  // Focus hours: manual input or derived from 'work' blocks
+  const useTrackerFocus = !!(entry.useTrackerFocus);
+  const workBlockMinutes = (entries[dateKey]?.timeBlocks || []).filter(b=>b.category==='work').reduce((s,b)=> s + Math.max(0,(b.endMin-b.startMin)), 0);
+  const focusHours = useTrackerFocus ? (workBlockMinutes/60) : (entry.focusHoursManual || 0);
   const todaysBlocks = (entries[dateKey]?.timeBlocks) || [];
   const blocksTotalMin = todaysBlocks.reduce((s,b)=> s + Math.max(0,(b.endMin-b.startMin)), 0);
   const blocksAvgProd10 = blocksTotalMin ? (
@@ -408,21 +411,7 @@ function DashboardInner() {
     console.log('[Dashboard] dateKey:', dateKey, 'todos:', todos.length, 'habits:', habits.length, 'blocks:', blocks.length);
   }, [dateKey, todos.length, habits.length, blocks.length]);
 
-  // Quote add/remove
-  const [newQuote, setNewQuote] = useState('');
-  const addQuote = () => {
-    const q = newQuote.trim();
-    if (!q) return;
-    const next = [...quotes, q];
-    setQuotes(next);
-    localStorage.setItem(LS_KEYS.quotes, JSON.stringify(next));
-    setNewQuote('');
-  };
-  const removeQuote = (i) => {
-    const next = quotes.filter((_, idx) => idx !== i);
-    setQuotes(next);
-    localStorage.setItem(LS_KEYS.quotes, JSON.stringify(next));
-  };
+  // Quotes are hardcoded: no add/remove UI
 
   // Habit add/remove/toggle
   const [habitName, setHabitName] = useState('');
@@ -499,48 +488,14 @@ function DashboardInner() {
       e.target.value = '';
     };
 
-    // Family rotation
+    // Family stories are hardcoded; no editor UI
     const [familyIndex, setFamilyIndex] = useState(0);
     useEffect(() => {
       if (!family.length) return;
       const id = setInterval(() => setFamilyIndex(i => (i + 1) % family.length), 20000);
       return () => clearInterval(id);
     }, [family]);
-    const [famName, setFamName] = useState('');
-    const [famYears, setFamYears] = useState(''); // e.g., 1940-2020
-    const [famNote, setFamNote] = useState('');
-    const addFamily = () => {
-      const name = famName.trim();
-      if (!name) return;
-      const next = [...family, { id: crypto.randomUUID(), name, years: famYears.trim(), note: famNote.trim() }];
-      setFamily(next);
-      localStorage.setItem(LS_KEYS.family, JSON.stringify(next));
-      setFamName(''); setFamYears(''); setFamNote('');
-    };
-    const removeFamily = (id) => {
-      const next = family.filter(f => f.id !== id);
-      setFamily(next);
-      localStorage.setItem(LS_KEYS.family, JSON.stringify(next));
-    };
 
-    // Goals
-    const [goalName, setGoalName] = useState('');
-    const [goalDate, setGoalDate] = useState('');
-    const addGoal = () => {
-      const name = goalName.trim(); if (!name) return;
-      const id = crypto.randomUUID();
-      const next = [...goals, { id, name, targetDate: goalDate, progress: 0 }];
-      setGoals(next); localStorage.setItem(LS_KEYS.goals, JSON.stringify(next));
-      setGoalName(''); setGoalDate('');
-    };
-    const updateGoalProgress = (id, progress) => {
-      const next = goals.map(g => g.id === id ? { ...g, progress } : g);
-      setGoals(next); localStorage.setItem(LS_KEYS.goals, JSON.stringify(next));
-    };
-    const removeGoal = (id) => {
-      const next = goals.filter(g => g.id !== id);
-      setGoals(next); localStorage.setItem(LS_KEYS.goals, JSON.stringify(next));
-    };
     // Reorder helpers
     const moveItem = (list, setList, storageKey, id, dir) => {
       const idx = list.findIndex(x=>x.id===id); if(idx<0) return;
@@ -551,7 +506,6 @@ function DashboardInner() {
     };
     const moveHabit = (id, dir) => moveItem(habits, setHabits, LS_KEYS.tasks, id, dir);
     const moveDefaultTodo = (id, dir) => moveItem(defaultTodos, setDefaultTodos, LS_KEYS.defaultTodos, id, dir);
-    const moveGoal = (id, dir) => moveItem(goals, setGoals, LS_KEYS.goals, id, dir);
 
     // Vision dots (20 years)
     const startDate = new Date(visionStart);
@@ -583,7 +537,7 @@ function DashboardInner() {
   // Export / Import
   const onExport = () => {
     const payload = {
-      quotes, habits, entries, photos, family, defaultTodos, goals, visionStart
+      habits, entries, photos, defaultTodos, visionStart
     };
     const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
@@ -598,13 +552,10 @@ function DashboardInner() {
     try {
       const txt = await f.text();
       const obj = JSON.parse(txt);
-      if (obj.quotes) { setQuotes(obj.quotes); localStorage.setItem(LS_KEYS.quotes, JSON.stringify(obj.quotes)); }
       if (obj.habits) { setHabits(obj.habits); localStorage.setItem(LS_KEYS.tasks, JSON.stringify(obj.habits)); }
       if (obj.entries) { setEntries(obj.entries); localStorage.setItem(LS_KEYS.entries, JSON.stringify(obj.entries)); }
       if (obj.photos) { setPhotos(obj.photos); localStorage.setItem(LS_KEYS.photos, JSON.stringify(obj.photos)); }
-      if (obj.family) { setFamily(obj.family); localStorage.setItem(LS_KEYS.family, JSON.stringify(obj.family)); }
       if (obj.defaultTodos) { setDefaultTodos(obj.defaultTodos); localStorage.setItem(LS_KEYS.defaultTodos, JSON.stringify(obj.defaultTodos)); }
-      if (obj.goals) { setGoals(obj.goals); localStorage.setItem(LS_KEYS.goals, JSON.stringify(obj.goals)); }
       if (obj.visionStart) { setVisionStart(obj.visionStart); localStorage.setItem(LS_KEYS.visionStart, obj.visionStart); }
     } catch (err) {
       console.error('Import failed', err);
@@ -654,21 +605,26 @@ function DashboardInner() {
         </div>
       </div>
 
-      {/* Top row: Timer and Quote */}
+      {/* Top row: Focus Summary and Quote */}
       <div className="row g-3 mb-3">
         <div className="col-md-6">
           <div className="card shadow-sm h-100">
             <div className="card-body d-flex flex-column">
-              <h5 className="card-title">Focus Timer</h5>
-              <div className="display-6 mb-3">
-                {new Date(timerMs).toISOString().substr(11, 8)}
+              <h5 className="card-title">Focus Summary</h5>
+              <div className="d-flex align-items-center gap-3">
+                <div className="form-check form-switch">
+                  <input className="form-check-input" type="checkbox" id="useTrackerFocus" checked={useTrackerFocus} onChange={(e)=>updateToday({ useTrackerFocus: e.target.checked })} />
+                  <label className="form-check-label" htmlFor="useTrackerFocus">Use tracker (work blocks)</label>
+                </div>
+                {!useTrackerFocus && (
+                  <div className="d-flex align-items-center gap-2">
+                    <label className="form-label m-0">Hours today</label>
+                    <input type="number" step="0.25" min="0" className="form-control" style={{maxWidth:120}} value={entry.focusHoursManual||0} onChange={(e)=>updateToday({ focusHoursManual: Number(e.target.value||0) })} />
+                  </div>
+                )}
+                {useTrackerFocus && <span className="badge bg-primary">From tracker: {(workBlockMinutes/60).toFixed(2)}h</span>}
               </div>
-              <div className="d-flex gap-2 mt-auto">
-                <button className={`btn btn-${timerRunning ? 'warning' : 'primary'}`} onClick={() => setTimerRunning(!timerRunning)}>
-                  {timerRunning ? 'Pause' : 'Start'}
-                </button>
-                <button className="btn btn-outline-secondary" onClick={() => { setTimerRunning(false); setTimerMs(0); }}>Reset</button>
-              </div>
+              <div className="text-muted small mt-2">Composite uses this value (manual or from schedule).</div>
             </div>
           </div>
         </div>
@@ -677,20 +633,6 @@ function DashboardInner() {
             <div className="card-body d-flex flex-column">
               <h5 className="card-title">Today’s Quote</h5>
               <p className="flex-grow-1 fs-6">“{dayQuote}”</p>
-              <div className="d-flex gap-2">
-                <input className="form-control" placeholder="Add a quote you believe in" value={newQuote} onChange={(e)=>setNewQuote(e.target.value)} />
-                <button className="btn btn-outline-primary" onClick={addQuote}>Add</button>
-              </div>
-              {!!quotes.length && (
-                <div className="quote-list mt-2">
-                  {quotes.slice(-3).map((q, i) => (
-                    <div key={i} className="small text-muted d-flex align-items-center justify-content-between">
-                      <span className="me-2">• {q}</span>
-                      <button className="btn btn-sm btn-link text-danger" onClick={()=>removeQuote(quotes.length-3+i)}>remove</button>
-                    </div>
-                  ))}
-                </div>
-              )}
             </div>
           </div>
         </div>
@@ -853,7 +795,7 @@ function DashboardInner() {
         </div>
       </div>
 
-      {/* Shabih ur Raza Time Monitor */}
+      {/* Shabih ur Raza Time Monitor (Vertical Day Schedule) */}
       <div className="card shadow-sm mb-3">
         <div className="card-body">
           <div className="d-flex align-items-baseline justify-content-between mb-2">
@@ -866,23 +808,26 @@ function DashboardInner() {
               <span className="badge bg-secondary">Wasted today: {Math.round(wastedMinutesToday/60)}h {wastedMinutesToday%60}m</span>
             </div>
           </div>
-          <div className="timeline" ref={timelineRef} onMouseDown={onTimelineMouseDown}>
-            {/* Hour ticks */}
-            {Array.from({length:25}, (_,i)=> (
-              <div key={i} className="tick" style={{left: `${(i/24)*100}%`}}>
-                {i%2===0 && <span className="tick-label">{String(i).padStart(2,'0')}:00</span>}
-              </div>
-            ))}
+          <div className="day-schedule" ref={scheduleRef} onMouseDown={onScheduleMouseDown}>
+            {/* Hour rows with 12-hour labels */}
+            {Array.from({length:25}, (_,i)=> {
+              const hour12 = ((i+11)%12)+1; const ampm = i<12?'AM':'PM';
+              return (
+                <div key={i} className="hour-row" style={{top: `${(i/24)*100}%`}}>
+                  <span className="hour-label">{hour12} {ampm}</span>
+                </div>
+              );
+            })}
             {/* Blocks */}
             {blocks.map(b => {
-              const left = (b.startMin/1440)*100;
-              const width = ((b.endMin-b.startMin)/1440)*100;
+              const top = (b.startMin/1440)*100;
+              const height = ((b.endMin-b.startMin)/1440)*100;
               const cat = categoryById(b.category||'other');
               return (
-                <div key={b.id} className={`block ${selectedBlockId===b.id?'selected':''}`} style={{left:`${left}%`, width:`${width}%`, background:cat.color}} onMouseDown={(e)=>onBlockMouseDown(e,b.id)}>
-                  <div className="handle left" onMouseDown={(e)=>onHandleMouseDown(e,b.id,'resizeL')} />
+                <div key={b.id} className={`vblock ${selectedBlockId===b.id?'selected':''}`} style={{top:`${top}%`, height:`${height}%`, background:cat.color}} onMouseDown={(e)=>onBlockMouseDown(e,b.id)}>
+                  <div className="handle top" onMouseDown={(e)=>onHandleMouseDown(e,b.id,'resizeL')} />
                   <div className="label">{b.label}</div>
-                  <div className="handle right" onMouseDown={(e)=>onHandleMouseDown(e,b.id,'resizeR')} />
+                  <div className="handle bottom" onMouseDown={(e)=>onHandleMouseDown(e,b.id,'resizeR')} />
                 </div>
               );
             })}
@@ -935,11 +880,19 @@ function DashboardInner() {
           <div className="row g-3 mt-3">
             <div className="col-md-7">
               <h6 className="mb-2">Category Distribution (Stacked)</h6>
-              <StackedBar map={distributionToday} total={1440} />
+              <Bar data={{
+                labels: ['Today'],
+                datasets: Array.from(distributionToday.entries()).filter(([,v])=>v>0).map(([cat,mins])=>{
+                  const c = categoryById(cat); return { label: c.label, data: [mins/60], backgroundColor: c.color };
+                })
+              }} options={{ responsive:true, plugins:{legend:{position:'bottom'}}, scales:{ x:{ stacked:true, grid:{display:false}}, y:{ stacked:true, title:{display:true, text:'Hours'}, beginAtZero:true } } }} />
             </div>
             <div className="col-md-5">
-              <h6 className="mb-2">Today’s Pie</h6>
-              <PieChart map={distributionToday} total={1440} />
+              <h6 className="mb-2">Today’s Breakdown</h6>
+              <Doughnut data={{
+                labels: Array.from(distributionToday.entries()).filter(([,v])=>v>0).map(([cat])=>categoryById(cat).label),
+                datasets:[{ data: Array.from(distributionToday.entries()).filter(([,v])=>v>0).map(([,mins])=>mins/60), backgroundColor: Array.from(distributionToday.entries()).filter(([,v])=>v>0).map(([cat])=>categoryById(cat).color) }]
+              }} options={{ plugins:{legend:{position:'bottom'}} }} />
             </div>
           </div>
         </div>
@@ -957,12 +910,11 @@ function DashboardInner() {
               </label>
             ))}
           </div>
-          <div className="overlay-charts d-flex align-items-center">
-            {overlayOptions.filter(o=>overlayShown.includes(o.id)).map(o => (
-              <MiniLineChart key={o.id} data={o.series.map(v=>Math.round(v/60))} color={o.color} />
-            ))}
-          </div>
-          <div className="small text-muted">Units shown in hours (rounded) per day.</div>
+          <Line data={{
+            labels: historyKeys,
+            datasets: overlayOptions.filter(o=>overlayShown.includes(o.id)).map(o=>({ label:o.label, data:o.series.map(v=>v/60), borderColor:o.color, backgroundColor:o.color, tension:0.3 }))
+          }} options={{ responsive:true, plugins:{legend:{position:'bottom'}, tooltip:{mode:'index', intersect:false}}, scales:{ x:{ grid:{display:true}}, y:{ title:{display:true, text:'Hours'}, beginAtZero:true, grid:{display:true} } } }} />
+          <div className="small text-muted">Units shown in hours per day.</div>
         </div>
       </div>
 
@@ -977,25 +929,7 @@ function DashboardInner() {
                   <h6 className="fw-semibold mb-1">{family[familyIndex].name} {family[familyIndex].years && <small className="text-muted">({family[familyIndex].years})</small>}</h6>
                   <p className="small mb-0">{family[familyIndex].note || '—'}</p>
                 </div>
-              ) : <p className="text-muted">Add family members for rotating motivation.</p>}
-              <div className="mt-3 d-flex flex-column gap-2">
-                <input className="form-control" placeholder="Name" value={famName} onChange={(e)=>setFamName(e.target.value)} />
-                <input className="form-control" placeholder="Years (e.g. 1940-2020)" value={famYears} onChange={(e)=>setFamYears(e.target.value)} />
-                <textarea className="form-control" rows={2} placeholder="Note / Story" value={famNote} onChange={(e)=>setFamNote(e.target.value)} />
-                <div className="d-flex gap-2">
-                  <button className="btn btn-outline-primary" onClick={addFamily}>Add Member</button>
-                </div>
-              </div>
-              {family.length > 0 && (
-                <ul className="list-group list-group-flush mt-3" style={{maxHeight:140,overflow:'auto'}}>
-                  {family.map(f => (
-                    <li key={f.id} className="list-group-item d-flex justify-content-between align-items-center">
-                      <span>{f.name}</span>
-                      <button className="btn btn-sm btn-outline-danger" onClick={()=>removeFamily(f.id)}>Remove</button>
-                    </li>
-                  ))}
-                </ul>
-              )}
+              ) : <p className="text-muted">Add stories in code (TODAY_FAMILY).</p>}
             </div>
           </div>
         </div>
@@ -1018,41 +952,9 @@ function DashboardInner() {
         </div>
       </div>
 
-      {/* Goals & Vision */}
+      {/* Vision */}
       <div className="row g-3 mb-3">
-        <div className="col-md-6">
-          <div className="card shadow-sm h-100">
-            <div className="card-body d-flex flex-column">
-              <h5 className="card-title">Life Goals</h5>
-              <div className="d-flex gap-2 mb-2">
-                <input className="form-control" placeholder="Goal name" value={goalName} onChange={(e)=>setGoalName(e.target.value)} />
-                <input type="date" className="form-control" value={goalDate} onChange={(e)=>setGoalDate(e.target.value)} />
-                <button className="btn btn-outline-primary" onClick={addGoal}>Add</button>
-              </div>
-              <ul className="list-group list-group-flush flex-grow-1 overflow-auto" style={{maxHeight:220}}>
-                {goals.map(g => (
-                  <li key={g.id} className="list-group-item">
-                    <div className="d-flex justify-content-between align-items-center mb-1">
-                      <strong>{g.name}</strong>
-                      <small className="text-muted">{g.targetDate || 'No date'}</small>
-                    </div>
-                    <input type="range" min={0} max={100} value={g.progress} className="form-range" onChange={(e)=>updateGoalProgress(g.id, Number(e.target.value))} />
-                    <div className="d-flex justify-content-between small align-items-center">
-                      <span>{g.progress}%</span>
-                      <div className="btn-group btn-group-sm">
-                        <button className="btn btn-outline-secondary" onClick={()=>moveGoal(g.id,'up')}>↑</button>
-                        <button className="btn btn-outline-secondary" onClick={()=>moveGoal(g.id,'down')}>↓</button>
-                        <button className="btn btn-outline-danger" onClick={()=>removeGoal(g.id)}>×</button>
-                      </div>
-                    </div>
-                  </li>
-                ))}
-                {goals.length===0 && <li className="list-group-item text-muted">No goals yet.</li>}
-              </ul>
-            </div>
-          </div>
-        </div>
-        <div className="col-md-6">
+        <div className="col-md-12">
           <div className="card shadow-sm h-100">
             <div className="card-body">
               <h5 className="card-title">20-Year Vision</h5>
@@ -1127,48 +1029,4 @@ function SeasonalSnow({ date }) {
   );
 }
 
-// Stacked bar chart (today)
-function StackedBar({ map, total }) {
-  const entries = Array.from(map.entries()).filter(([,v])=>v>0);
-  const width = 300, height = 20;
-  let acc = 0;
-  return (
-    <svg width={width} height={height} className="border rounded w-100" style={{height}}
-         viewBox={`0 0 ${width} ${height}`} preserveAspectRatio="none">
-      {entries.map(([cat, mins]) => {
-        const c = TIME_CATEGORIES.find(x=>x.id===cat) || {color:'#ccc'};
-        const w = (mins/total)*width;
-        const rect = <rect key={cat} x={acc} y={0} width={w} height={height} fill={c.color} />;
-        acc += w;
-        return rect;
-      })}
-    </svg>
-  );
-}
-
-// Pie chart (today)
-function PieChart({ map, total, size=140 }) {
-  const entries = Array.from(map.entries()).filter(([,v])=>v>0);
-  const r = size/2; const cx = r, cy = r; const circ = 2*Math.PI*r;
-  let offset = 0;
-  return (
-    <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
-      <circle cx={cx} cy={cy} r={r-8} fill="#f8f9fa" />
-      {entries.map(([cat, mins]) => {
-        const c = TIME_CATEGORIES.find(x=>x.id===cat) || {color:'#ccc'};
-        const frac = mins/total;
-        const len = frac * circ;
-        const seg = (
-          <circle key={cat}
-            cx={cx} cy={cy} r={r-8}
-            fill="transparent" stroke={c.color} strokeWidth={16}
-            strokeDasharray={`${len} ${circ-len}`}
-            strokeDashoffset={-offset}
-          />
-        );
-        offset += len;
-        return seg;
-      })}
-    </svg>
-  );
-}
+// Removed custom SVG charts in favor of Chart.js
