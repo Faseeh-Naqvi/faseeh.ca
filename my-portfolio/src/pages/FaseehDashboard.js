@@ -84,10 +84,21 @@ const TIME_CATEGORIES = [
 ];
 
 export default function FaseehDashboard() {
+  // eslint-disable-next-line no-console
+  console.log('[Dashboard] Export wrapper render');
   return <DashboardInner />;
 }
 
 function DashboardInner() {
+  // Basic lifecycle logging
+  useEffect(() => {
+    // eslint-disable-next-line no-console
+    console.log('[Dashboard] Mounted');
+    return () => {
+      // eslint-disable-next-line no-console
+      console.log('[Dashboard] Unmounted');
+    };
+  }, []);
   const now = useNow(1000);
   const [quotes, setQuotes] = useState(() => {
     try {
@@ -253,6 +264,18 @@ function DashboardInner() {
     return total;
   }, [blocks]);
 
+  // History keys need to be defined before any history-based computations
+  const historyKeys = useMemo(() => {
+    const keys = [];
+    const base = new Date();
+    for (let i = 29; i >= 0; i--) {
+      const d = new Date(base);
+      d.setDate(base.getDate() - i);
+      keys.push(d.toISOString().slice(0,10));
+    }
+    return keys;
+  }, []);
+
   // Across days arrays (waste & overlays)
   const wasteHistory = historyKeys.map(k => {
     const e = entries[k]; if (!e || !e.timeBlocks) return 0;
@@ -330,16 +353,6 @@ function DashboardInner() {
   }, [quotes]);
 
   // History arrays (last 30 days)
-  const historyKeys = useMemo(() => {
-    const keys = [];
-    const base = new Date();
-    for (let i = 29; i >= 0; i--) {
-      const d = new Date(base);
-      d.setDate(base.getDate() - i);
-      keys.push(d.toISOString().slice(0,10));
-    }
-    return keys;
-  }, []);
   const histSpirituality = historyKeys.map(k => entries[k]?.spirituality ?? 0);
   const histProductivity = historyKeys.map(k => entries[k]?.productivity ?? 0);
   const histMood = historyKeys.map(k => {
@@ -388,6 +401,12 @@ function DashboardInner() {
     (blocksPct*100)*WEIGHTS.blocks +
     (focusPct*100)*WEIGHTS.focus
   );
+
+  // Targeted state snapshot to console for debugging
+  useEffect(() => {
+    // eslint-disable-next-line no-console
+    console.log('[Dashboard] dateKey:', dateKey, 'todos:', todos.length, 'habits:', habits.length, 'blocks:', blocks.length);
+  }, [dateKey, todos.length, habits.length, blocks.length]);
 
   // Quote add/remove
   const [newQuote, setNewQuote] = useState('');

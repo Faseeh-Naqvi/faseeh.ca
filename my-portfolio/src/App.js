@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Routes, Route, NavLink, useLocation } from 'react-router-dom';
 
 import Home       from './pages/Home';
@@ -11,13 +11,20 @@ import Awards     from './pages/Awards';
 import Contact    from './pages/Contact';
 import SigFigAI   from './pages/SigFigAI';
 import FaseehDashboard from './pages/FaseehDashboard';
+import ErrorBoundary from './ErrorBoundary';
+import RouteLogger from './RouteLogger';
 
 function App() {
   const location = useLocation();
   const isStandalonePage = location.pathname === '/sigfig-ai';
+  useEffect(() => {
+    // eslint-disable-next-line no-console
+    console.log('[App] Render path:', location.pathname);
+  }, [location.pathname]);
 
   return (
     <>
+      <RouteLogger />
       {/* Only show navbar for non-standalone pages */}
       {!isStandalonePage && (
         <nav className="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
@@ -57,7 +64,16 @@ function App() {
         <Route path="/contact" element={<Contact/>}/>
         <Route path="/sigfig-ai" element={<SigFigAI/>}/>
         {/* Secret route not linked in navbar */}
-        <Route path="/faseehDASHLetsLockInBro" element={<FaseehDashboard/>}/>
+        <Route
+          path="/faseehDASHLetsLockInBro"
+          element={
+            <ErrorBoundary>
+              <FaseehDashboard />
+            </ErrorBoundary>
+          }
+        />
+        {/* Catch-all to help debug unmatched routes */}
+        <Route path="*" element={<div className="container py-4"><div className="alert alert-warning"><strong>Route not found:</strong> {location.pathname}</div></div>} />
       </Routes>
     </>
   );

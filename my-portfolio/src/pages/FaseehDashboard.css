@@ -1,6 +1,6 @@
 .quote-list { max-height: 90px; overflow: auto; }
 .form-range { accent-color: #0d6efd; }
-.	dashboard-wrapper { min-height: 100vh; background-size: cover; background-position: center; position: relative; }
+.dashboard-wrapper { min-height: 100vh; background-size: cover; background-position: center; position: relative; }
 .bg-overlay { position: absolute; inset:0; background: rgba(0,0,0,0.35); backdrop-filter: blur(2px); }
 .dashboard-wrapper .card { background: rgba(255,255,255,0.9); }
 .photo-thumbs { max-height: 120px; overflow:auto; }
