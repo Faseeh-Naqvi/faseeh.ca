@@ -1,0 +1,92 @@
+/* Page-specific styles for Businesses */
+
+.status-badge {
+  display: inline-block;
+  padding: 0.22rem 0.6rem;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 0.78rem;
+  text-transform: capitalize;
+  vertical-align: middle;
+}
+
+.status-success {
+  background-color: #e6f4ea;
+  color: #0f5132;
+  border: 1px solid rgba(15,81,50,0.08);
+}
+
+.status-warning {
+  background-color: #fff8e6;
+  color: #7a4f00;
+  border: 1px solid rgba(122,79,0,0.06);
+}
+
+.status-info {
+  background-color: #eaf4ff;
+  color: #084298;
+  border: 1px solid rgba(8,66,152,0.06);
+}
+
+.status-dark {
+  background-color: #f5f5f5;
+  color: #222;
+  border: 1px solid rgba(0,0,0,0.05);
+}
+
+.status-secondary {
+  background-color: #f8f9fa;
+  color: #495057;
+  border: 1px solid rgba(0,0,0,0.03);
+}
+
+/* Card tweaks for better readability */
+.card {
+  border-radius: 12px;
+}
+
+.card .card-title {
+  font-size: 1.03rem;
+  margin-bottom: 0.35rem;
+}
+
+.card .card-text {
+  color: #343a40;
+  line-height: 1.35;
+}
+
+/* Make scoreboard numbers slightly smaller on narrow screens */
+@media (max-width: 575px) {
+  .display-3 { font-size: 2.2rem; }
+}
+
+/* Buttons and collapse body */
+.card .btn {
+  font-size: 0.85rem;
+}
+
+.card .card-body .card.card-body {
+  background: #ffffff;
+}
+
+.card .collapse .card-body small.text-dark {
+  color: #212529;
+}
+
+/* Links area */
+.card .d-flex .btn {
+  margin-top: 0.45rem;
+}
+
+/* Improve spacing of updates and lessons lists */
+.card .collapse > .card {
+  box-shadow: none;
+  border-radius: 8px;
+  border: 1px solid rgba(0,0,0,0.04);
+}
+
+/* Slight hover lift for business cards */
+.card.h-100:hover {
+  transform: translateY(-4px);
+  transition: transform 160ms ease;
+}

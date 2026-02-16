@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { FaGlobe, FaInstagram, FaYoutube, FaLinkedin, FaTiktok } from 'react-icons/fa';
+import './Business.css';
 //Status: active, paused, stealth, attempted
 const businesses = [
 	{
@@ -189,7 +190,7 @@ function StatusBadge({ status }) {
 		'secondary';//Teniary operator to determine the badge color based on status
 
 	return (
-		<span className={`badge bg-${variant}`} title={status}>
+		<span className={`status-badge status-${variant}`} title={status}>
 			{status}
 		</span>
 	);
@@ -226,11 +227,11 @@ export default function Businesses() {
 						<div className="row g-4 align-items-stretch mb-4">
 							{/* Sports-style Scoreboard */}
 							<div className="col-md-4">
-								<div className="card h-100 text-center shadow-sm bg-dark text-white">
+								<div className="card h-100 text-center shadow-sm bg-success bg-opacity-10">
 									<div className="card-body py-4">
-										<h6 className="text-uppercase text-muted mb-2 text-white-50">In Progress</h6>
-										<div className="display-3 fw-bold">{inProgressCount}</div>
-										<small className="text-white-50">Live development & active projects</small>
+										<h6 className="text-uppercase text-muted mb-2">In Progress</h6>
+										<div className="display-3 fw-bold text-success">{inProgressCount}</div>
+										<small className="text-muted">Live development & active projects</small>
 									</div>
 								</div>
 							</div>
