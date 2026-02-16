@@ -200,7 +200,10 @@ function StatusBadge({ status }) {
 export default function Businesses() {
 	return (
 		<div className="container py-5">
-			<h1 className="fw-bold mb-4 text-center">Businesses & Ventures</h1>
+			<h1 className="fw-bold mb-2 text-center">Businesses & Ventures</h1>
+			<div className="text-center mb-4">
+				<a href="/projects" className="btn btn-sm btn-theme rounded-pill px-3">See what I'm working on</a>
+			</div>
 
 			{/* Scoreboard & Stats */}
 			{(() => {

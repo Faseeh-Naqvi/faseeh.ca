@@ -1,5 +1,36 @@
 /* Page-specific styles for Businesses */
 
+.card {
+  border-radius: 12px;
+  transition: transform 180ms ease, box-shadow 220ms ease;
+}
+.status-badge {
+  display: inline-block;
+  padding: 0.22rem 0.6rem;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 0.78rem;
+  text-transform: capitalize;
+  vertical-align: middle;
+  transition: background-color 160ms ease, color 160ms ease, transform 140ms ease;
+}
+.card.h-100:hover {
+  transform: translateY(-4px);
+  transition: transform 160ms ease;
+}
+
+/* Collapse fade/opacity transition for update/lesson panels */
+.collapse {
+  transition: opacity 200ms ease;
+}
+.collapse:not(.show) {
+  opacity: 0;
+}
+.collapse.show {
+  opacity: 1;
+}
+/* Page-specific styles for Businesses */
+
 .status-badge {
   display: inline-block;
   padding: 0.22rem 0.6rem;

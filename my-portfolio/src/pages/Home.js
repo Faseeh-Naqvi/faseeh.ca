@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { FaLinkedin, FaGithub, FaYoutube } from 'react-icons/fa';
 import ResumeGraveyard from '../components/ResumeGraveyard';
+import './Home.css';
 
 export default function Home() {
   const [showGraveyard, setShowGraveyard] = useState(false);
@@ -20,7 +21,7 @@ export default function Home() {
         {/* Name */}
         <h1 className="display-1 fw-bold mb-2">Syed Faseeh Hayder Naqvi</h1>
         <p className="fs-4 mb-4 text-secondary">
-          4th-year Computer Science Student & Software Developer
+          Problem Solver & 4th-year Computer Science Student
         </p>
 
         {/* Big Icon Links */}
@@ -56,7 +57,7 @@ export default function Home() {
           >
             Download Resume
           </a>
-          
+
           <button
             className="btn btn-lg btn-outline-dark rounded-pill px-4"
             onClick={() => setShowGraveyard(true)}
@@ -78,6 +79,13 @@ export default function Home() {
           >
             👻 Resume Graveyard
           </button>
+        </div>
+
+        {/* Quick Links */}
+        <div className="d-flex flex-column flex-sm-row gap-3 align-items-center mt-4">
+          <a href="/businesses" className="btn btn-sm btn-theme rounded-pill px-4">See what I'm working on</a>
+          <a href="/about" className="btn btn-sm btn-theme-outline rounded-pill px-4">Learn more about me!</a>
+          <a href="/projects" className="btn btn-sm btn-ghost rounded-pill px-4">See where I am solving unique problems</a>
         </div>
       </div>
 

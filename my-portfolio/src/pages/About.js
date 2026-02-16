@@ -20,8 +20,8 @@ export default function About() {
 
   /* ---------- Reading Lists (update any time) ---------- */
   const currentlyReading = [
-    'The Art of War – Sun Tzu',
-    'The lantern of the path',
+    'Psycho-Cybernetics - Dr. Maxwell Maltz',
+    'The Art of War - Sun Tzu',
     
 
   ];
@@ -51,10 +51,9 @@ export default function About() {
       <p className="fs-lg">
         I’m a fourth-year Computer Science student at Western University who
         <strong> loves reading, learning, and problem solving</strong>.
-        I consider myself entrepreneurial, please get in touch if you are working on something cool! Lately I’ve been diving into <em>Stoicism</em>, Eastern philosophy, and how
+        I love entrepreneurship! Please get in touch if you are working on something cool! Lately I’ve been diving into various philosophies, psychology, and how
         social media rewires our brains. When I’m not coding, you’ll find me watching
-        videos on psychology, history, religion, marketing, astronomy, or global
-        business trends. I’m always up for a good conversation!
+        videos on my interests! I recently picked up film reviewing as a hobby. Check out my letterboxd: fazeeh
       </p>
 
       {/* ---------- Interests ---------- */}
@@ -62,8 +61,8 @@ export default function About() {
         <h2 className="h4 fw-semibold mb-3">What I’m into right now</h2>
         <p>
           Emerging tech &amp; AI · Psychology · History · Cybersecurity · Religion · Marketing · Astronomy · Business ·
-          Meditation · Stoicism · Geopolitics · Stocks &amp; Global Markets ·
-          Social-media neuroscience · The ever-shifting humour culture on the internet, and many more. Love talking to people about their niche interests!
+          Meditation · Stoicism · Geopolitics · Stocks &amp; Global Markets · Film ·
+          Social-media neuroscience · The ever-shifting humour culture on the internet · lets talk! I am sure we have something in common :D
         </p>
       </div>
       {/* ---------- Photo Scrapbook ---------- */}
@@ -110,10 +109,10 @@ export default function About() {
       <div className="mb-5">
         <h2 className="h4 fw-semibold mb-3">Fun Facts</h2>
         <ul className="list-unstyled">
-          <li>🎤 <strong>Public-speaking —</strong> on stage since Grade 3 assemblies; I enjoy public speaking. My style is laid-back and conversational. I also love pitching, Shark Tank is a family favorite.</li>
-          <li>🎬 <strong>Content-creation geek —</strong> wrote & directed Western TMA videos (12.4 k views, +152 % engagement). Been filming comedy videos since the Vine days (they were not funny). I like to think I have slowly been getting better. Obsessed with the art of storytelling, regardless of medium</li>
-          <li>🏦 <strong>Entrepreneur—</strong> tried (and failed) many <Link to="/businesses">businesses</Link> I will keep working on solving unique problems!</li>
-          <li>📝 <strong>Journaler —</strong> my notebook is a sketch-filled scrapbook. Started first year. Great for reminiscing and untangling the brain; highly recommended.</li>
+          <li>🎤 <strong>Public Speaking:</strong> on stage since Grade 3 assemblies; I enjoy public speaking. My style is laid-back and conversational. I also love pitching, Shark Tank is a family favorite.</li>
+          <li>🎬 <strong>Content Creation:</strong> wrote & directed Western TMA videos (12.4 k views, +152 % engagement). Been filming comedy videos since the Vine days (they were not funny). I also have a small instagram called @lookfarsee where I post more abstract content. Obsessed with the art of storytelling, regardless of medium</li>
+          <li>👷🏽‍♂️ <strong>Problem Solving:</strong> tried (and failed) many <Link to="/businesses">businesses</Link> I will keep working on solving unique problems!</li>
+          <li>📝 <strong>Journaler :</strong>Started first year. Great for reminiscing and untangling the brain; highly recommended.</li>
         </ul>
       </div>
 
@@ -132,7 +131,7 @@ export default function About() {
                   ))}
                 </ul>
                 <small className="text-muted fst-italic">
-                  💬 I'd love to discuss any of these with you!
+                  💬 I'd love to discuss any of these!
                 </small>
               </div>
               

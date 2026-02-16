@@ -1,0 +1,49 @@
+/* Theme-aware button styles for Home quick links */
+:root {
+  --theme-dark: var(--bs-dark);
+  --theme-primary: var(--bs-primary);
+  --theme-light: var(--bs-light);
+  --theme-text: var(--bs-body-color);
+}
+
+.btn-theme {
+  background: linear-gradient(135deg, var(--theme-dark) 0%, #2d5b36 100%);
+  color: var(--theme-light) !important;
+  border: 1px solid rgba(255,255,255,0.06);
+  box-shadow: 0 6px 18px rgba(45,75,45,0.08);
+  transition: transform 160ms ease, box-shadow 180ms ease, background-color 160ms ease;
+}
+.btn-theme:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(45,75,45,0.12);
+}
+
+.btn-theme-outline {
+  background: transparent;
+  color: var(--theme-dark) !important;
+  border: 1px solid var(--theme-primary) !important;
+  transition: background-color 140ms ease, color 140ms ease, transform 120ms ease;
+}
+.btn-theme-outline:hover {
+  background: var(--theme-primary) !important;
+  color: var(--theme-light) !important;
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--theme-text) !important;
+  border: 1px solid rgba(45,75,45,0.06);
+  transition: background-color 140ms ease, color 140ms ease, transform 120ms ease;
+}
+.btn-ghost:hover {
+  background: rgba(45,75,45,0.04) !important;
+}
+
+/* Make the quick-links area look tighter on small screens */
+@media (max-width: 575px) {
+  .btn-theme, .btn-theme-outline, .btn-ghost {
+    font-size: 0.95rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
