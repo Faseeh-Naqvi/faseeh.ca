@@ -22,7 +22,7 @@ const businesses = [
 	{
 		name: 'Reelranked (formerly Brainrot App)',
 		status: 'active',
-		note: 'B2C app to help people track and reduce thier "brainrot" ',
+		note: 'B2C app to help people track and reduce their "brainrot" ',
 		links: [
 			{ url: 'https://reelranked.com', icon: <FaGlobe /> },
 			{ url: 'https://brainrotapp.lol', icon: <FaGlobe /> },
@@ -32,12 +32,14 @@ const businesses = [
 		],
 		updates: [
 			{ date: '2024-12-03', text: 'Came up with the idea after scrolling the whole day away. Realised that this is an idea that has not been done before.' },
-			{ date: '2025-01-15', text: 'Started working on the app, but got distracted by other projects and never finished it. Everyone got busy with exams, one co-founder dropped it. We made a mistake, should have moved faster and been more strict with schedule.' },
+			{ date: '2025-01-15', text: 'Started working on the app, found out that I would need google accessibility settings which the app did not qualify for' },			
+			{ date: '2025-01-15', text: 'Gave up on the project and got distracted by other projects. Everyone got busy with exams, one co-founder dropped it.' },
 			{ date: '2025-10-05', text: 'Talked to a friend about the old idea, and they were interested in it and I realised it may have market footing' },
-			{ date: '2025-12-01', text: 'Found a way to make the app profitable.' },
-			{ date: '2026-01-20', text: 'Started brainstorming and re-evaluating the app idea and its potential. Changed the core philosophy of the app from gimmick to real tool for change' },
-			{ date: '2026-02-12', text: 'Changed name from "brainrot app" to "Reel Ranked"' },
+			{ date: '2025-12-01', text: 'Found a way to make the app profitable. But still facing the Google permissions issue.' },
+			{ date: '2026-01-20', text: 'Started brainstorming and re-evaluating the app idea and its potential. Changed the core philosophy of the app from gimmick to real tool for change and to not use the features that would require permissions from Google.' },
+			{ date: '2026-02-12', text: 'Changed name from "brainrot app" to "Reel Ranked" and started planning this new app' },
 			{ date: '2026-02-14', text: 'Started working on the app again, this time with a new strategy and development plan.' },
+			{ date: '2026-02-17', text: 'Saw a reel where someone was building an app with a feature that requires accessibility permissions but it is not an accessibility app. Revisiting Google policies' },
 			
 		],
 		
@@ -56,7 +58,7 @@ const businesses = [
 		note: 'Trying to bridge the gap between psychology and marketing using AI. Really combining many of my interests together.',
 		updates: [
 			{ date: '2025-09-20', text: 'Got the idea after trying to find a thesis project that combined my interests in psychology and marketing.' },
-			{ date: '2025-09-30', text: 'Conducted market research and talked to people in the field. Turns out it would more difficult to make than anticipated and may not derrive the intended results effeciently.' }
+			{ date: '2025-09-30', text: 'Conducted market research and talked to people in the field. Turns out it would be more difficult to make than anticipated and may not derive the intended results efficiently.' }
 		],
 		links: [],
 	},
@@ -65,8 +67,8 @@ const businesses = [
 		status: 'attempted',
 		note: 'Make a custom CISC microcontroller that is optimized for a specific niche ',
 		updates: [
-			{ date: '2025-11-10', text: 'My friend in elecrtical eng wanted to start this with me. Not scalable enough to be worth it. If it was a big market, there are already huge players with large market share.' },
-			{ date: '2025-12-24', text: 'Friend got internship and does not have the time for a buisness this technical' }
+			{ date: '2025-11-10', text: 'My friend in electrical eng wanted to start this with me. Not scalable enough to be worth it. If it was a big market, there are already huge players with large market share.' },
+			{ date: '2025-12-24', text: 'Friend got internship and does not have the time for a business this technical' }
 		],
 		lessons: ['Niche markets dominated by large players are hard to break into', 'Co-founder availability and commitment is crucial'],
 		links: [],
@@ -89,7 +91,7 @@ const businesses = [
 		updates: [
 			{ date: '2025-06-23', text: 'Knew I wanted to do work in the agricultural space, so I started market research' },
 			{ date: '2025-09-15', text: 'Conducted market research and Landed on an idea and started rough designs with logistics & marketing plans' },
-			{ date: '2025-10-12', text: 'Consulted with engineers I know and started working on a feasible rough prototype, It is too difficult of an engineering problem. Would have to literally build our own silo\'s' }
+			{ date: '2025-10-12', text: 'Consulted with engineers I know and started working on a feasible rough prototype. It is too difficult of an engineering problem. Would have to literally build our own silos.' }
 		],
 		lessons: ['Validate engineering feasibility early', 'Manufacturing requirements can make ideas impractical', 'Talk to domain experts sooner in the research phase'],
 		links: [],
@@ -109,7 +111,7 @@ const businesses = [
 		status: 'attempted',
 		note: 'custom Zapier/Integromat/Make.com style automation solutions for small businesses, using AI to create more complex and tailored automations than existing platforms allow.',
 		updates: [
-			{ date: '2025-02-15', text: 'Came up with the idea after talking with a friend that runs a small buisness. I made a small automation for him and it worked well.' },
+			{ date: '2025-02-15', text: 'Came up with the idea after talking with a friend that runs a small business. I made a small automation for him and it worked well.' },
 			{ date: '2025-05-10', text: 'After market research, found it was too saturated to be scalable with so many people offering similar services' }
 		],
 		lessons: ['Market saturation kills margins', 'A working proof of concept doesn\'t guarantee scalability', 'Look for defensible competitive advantages'],
@@ -125,8 +127,8 @@ const businesses = [
 		links: [{ url: 'https://fastech.dev', icon: <FaGlobe /> },{url: 'https://www.linkedin.com/company/fastech-developers/', icon: <FaLinkedin /> }],
 		updates: [
 			{ date: '2018-10-15', text: 'Thought of the company name in grade 9 for a school project (faseeh + Fast + Tech = FasTech) ' },
-			{ date: '2023-02-25', text: 'Started the company as a freelance web development agency, building websites for local businesses and friends. I applied to the ontario youth buisness employment grant and was rejected.' },
-			{ date: '2024-06-14', text: 'Unfortunatly, I was not able to get any traction with the company. It is my fault, I let it stagnate and did not put enough effort to grow it.' },
+			{ date: '2023-02-25', text: 'Started the company as a freelance web development agency, building websites for local businesses and friends. I applied to the Ontario youth business employment grant and was rejected.' },
+			{ date: '2024-06-14', text: 'Unfortunately, I was not able to get any traction with the company. It is my fault, I let it stagnate and did not put enough effort to grow it.' },
 			{ date: '2025-02-27', text: 'One last ditch linkedin run. Had few clients and no long term ones. I have decided to put the company on hold for now, but I may try to revive it in the future. I have learnt a lot from this experience and I am grateful for the opportunity to have tried.' }
 		],
 		lessons: ['Consistent marketing is essential for growth', 'You need a long-term strategy, not sporadic efforts', 'Lack of action kills momentum'],
@@ -187,7 +189,7 @@ function StatusBadge({ status }) {
 		base.includes('paused') ? 'warning' :
 		base.includes('stealth') ? 'info' :
 		base.includes('attempted') ? 'dark' :
-		'secondary';//Teniary operator to determine the badge color based on status
+		'secondary';//Ternary operator to determine the badge color based on status
 
 	return (
 		<span className={`status-badge status-${variant}`} title={status}>

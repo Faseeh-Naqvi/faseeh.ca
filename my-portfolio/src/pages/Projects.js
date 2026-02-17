@@ -47,7 +47,7 @@ const projects = [
   {
     id: "impact‑earth",
     title: "Geo-Notebook",
-    description: "Developed of a geospatial web app to analyze, visualize, and manage planetary impact data for Earth Science research.",
+    description: "Development of a geospatial web app to analyze, visualize, and manage planetary impact data for Earth Science research.",
     media: [
       { type: "image", src: "/images/projects/impact-earth/impact1.png" },
       { type: "image", src: "/images/projects/impact-earth/impact2.png" },
@@ -99,7 +99,7 @@ const projects = [
   {
     id: "order‑track",
     title: "OrderTrack",
-    description: "Delivered a secure, real-time order tracking platform used by over 10,000+ businesses nationwide, reducing client support tickets by 30% by integrating Monday.com’s API with Make.com webhooks and automating live order status updates",
+    description: "Delivered a secure, real-time order tracking platform used by 10,000+ businesses nationwide, reducing client support tickets by 30% by integrating Monday.com's API with Make.com webhooks and automating live order status updates",
     media: [
       
       { type: "image", src: "/images/projects/order-track/order.png" },
