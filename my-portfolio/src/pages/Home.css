@@ -1,3 +1,33 @@
+/* Home hero section customizations */
+.home-hero {
+  min-height: 100vh;
+  background: linear-gradient(180deg, #f0f7f0 60%, #eaf2ea 100%);
+}
+.home-profile-img img {
+  transition: box-shadow 0.2s, border-color 0.2s;
+}
+.home-profile-img img:hover {
+  box-shadow: 0 12px 40px rgba(44,75,44,0.18);
+  border-color: var(--bs-success);
+}
+.home-title {
+  letter-spacing: 0.01em;
+  text-shadow: 0 2px 8px rgba(44,75,44,0.07);
+}
+.icon-linkedin {
+  color: #0a66c2;
+  transition: color 0.18s;
+}
+.icon-linkedin:hover {
+  color: #004182;
+}
+.icon-github {
+  color: #222;
+  transition: color 0.18s;
+}
+.icon-github:hover {
+  color: #8fbc8f;
+}
 /* Theme-aware button styles for Home quick links */
 :root {
   --theme-dark: var(--bs-dark);

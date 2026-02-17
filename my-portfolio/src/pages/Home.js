@@ -9,80 +9,67 @@ export default function Home() {
 
   return (
     <>
-      <div className="d-flex flex-column justify-content-center align-items-center text-center vh-100">
-        {/* Profile Image */}
-        <img
-          src="/images/profile.jpeg"
-          alt="my profile picture"
-          className="rounded-circle mb-4"
-          style={{ width: '200px', height: '200px', objectFit: 'cover' }}
-        />
+      <div className="home-hero d-flex flex-column justify-content-center align-items-center text-center vh-100 p-3">
+        {/* Profile Image with border and shadow */}
+        <div className="home-profile-img mb-4">
+          <img
+            src="/images/profile.jpeg"
+            alt="my profile picture"
+            className="rounded-circle shadow-lg"
+            style={{ width: '180px', height: '180px', objectFit: 'cover', border: '5px solid var(--bs-primary)', boxShadow: '0 8px 32px rgba(44,75,44,0.13)' }}
+          />
+        </div>
 
-        {/* Name */}
-        <h1 className="display-1 fw-bold mb-2">Syed Faseeh Hayder Naqvi</h1>
-        <p className="fs-4 mb-4 text-secondary">
-          Problem Solver & 4th-year Computer Science Student
-        </p>
+        {/* Name & tagline */}
+        <h1 className="display-2 fw-bold mb-1 home-title" style={{ color: 'var(--bs-dark)' }}>Syed Faseeh Hayder Naqvi</h1>
+        <div className="mb-3">
+          <span className="badge bg-success bg-opacity-75 fs-5 px-4 py-2" style={{ letterSpacing: '0.03em', fontWeight: 600 }}>Problem Solver • Builder • CS @ Western</span>
+        </div>
 
         {/* Big Icon Links */}
-        <div className="d-flex align-items-center mb-4">
+        <div className="d-flex align-items-center justify-content-center mb-4 gap-4">
           <a
             href="https://www.linkedin.com/in/faseeh-naqvi/"
-            className="me-4 text-primary"
+            className="icon-linkedin"
             target="_blank"
             rel="noopener noreferrer"
-            style={{ fontSize: '2.5rem' }}
+            style={{ fontSize: '2.6rem' }}
+            title="LinkedIn"
           >
             <FaLinkedin />
           </a>
           <a
             href="https://github.com/Faseeh-Naqvi"
-            className="me-4 text-dark"
+            className="icon-github"
             target="_blank"
             rel="noopener noreferrer"
-            style={{ fontSize: '2.5rem' }}
+            style={{ fontSize: '2.6rem' }}
+            title="GitHub"
           >
             <FaGithub />
           </a>
-          
         </div>
 
         {/* Resume Buttons */}
-        <div className="d-flex flex-column flex-sm-row gap-3 align-items-center">
+        <div className="d-flex flex-column flex-sm-row gap-3 align-items-center mb-3">
           <a
             href="/Syed_Naqvi.pdf"
-            className="btn btn-lg btn-outline-secondary rounded-pill px-5"
+            className="btn btn-lg btn-theme rounded-pill px-5 py-3 fs-5"
             download
-            style={{ fontSize: '1.25rem' }}
           >
             Download Resume
           </a>
-
           <button
-            className="btn btn-lg btn-outline-dark rounded-pill px-4"
+            className="btn btn-lg btn-theme rounded-pill px-5 py-3 fs-5"
             onClick={() => setShowGraveyard(true)}
-            style={{ 
-              fontSize: '1.1rem',
-              background: 'linear-gradient(135deg, #4a6b4a 0%, #2d4a2d 100%)',
-              color: '#f0f7f0',
-              border: '2px solid #8fbc8f',
-              transition: 'all 0.3s ease'
-            }}
-            onMouseOver={(e) => {
-              e.target.style.transform = 'scale(1.05)';
-              e.target.style.boxShadow = '0 8px 25px rgba(143, 188, 143, 0.4)';
-            }}
-            onMouseOut={(e) => {
-              e.target.style.transform = 'scale(1)';
-              e.target.style.boxShadow = 'none';
-            }}
+            style={{ fontWeight: 500 }}
           >
             👻 Resume Graveyard
           </button>
         </div>
 
         {/* Quick Links */}
-        <div className="d-flex flex-column flex-sm-row gap-3 align-items-center mt-4">
+        <div className="d-flex flex-column flex-sm-row gap-3 align-items-center mt-2">
           <a href="/businesses" className="btn btn-lg btn-theme rounded-pill px-5 py-3 fs-5">See what I'm working on</a>
           <a href="/about" className="btn btn-lg btn-theme rounded-pill px-5 py-3 fs-5">Learn more about me!</a>
           <a href="/projects" className="btn btn-lg btn-theme rounded-pill px-5 py-3 fs-5">See where I am solving unique problems</a>
