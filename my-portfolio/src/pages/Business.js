@@ -15,7 +15,8 @@ const businesses = [
 			{ date: '2025-05-10', text: 'Got idea when I was going to the gym with some friends and noticed how many people sneak in. Also noticed how easy it was to bypass the system. It is far too expensive to sit at the camera all day and monitor it 24/7 Began brainstorming' },
 			{ date: '2025-08-01', text: 'Co-founder and I had gotten busy and idea died out, made a mistake, should have executed faster.' },
 			{ date: '2026-01-20', text: 'Found another person to work with and started working on the idea again and made a team of 3, this time executing faster and more effectively.' },
-			{ date: '2026-02-02', text: 'Conducted market research and began development of the MVP. Started posting regularly on linkedin and managing the team.' },
+			{ date: '2026-02-02', text: 'Conducted market research and began development of the MVP. Started posting regularly on LinkedIn and managing the team.' },
+			{ date: '2026-02-15', text: 'Made first Slide Deck and more market research.' },
 			
 		],
 	},
@@ -31,15 +32,15 @@ const businesses = [
 
 		],
 		updates: [
-			{ date: '2024-12-03', text: 'Came up with the idea after scrolling the whole day away. Realised that this is an idea that has not been done before.' },
-			{ date: '2025-01-15', text: 'Started working on the app, found out that I would need google accessibility settings which the app did not qualify for' },			
+			{ date: '2024-12-03', text: 'Came up with the idea after scrolling the whole day away. Realized that this is an idea that has not been done before.' },
+			{ date: '2025-01-15', text: 'Started working on the app, found out that I would need Google accessibility settings which the app did not qualify for' },			
 			{ date: '2025-01-15', text: 'Gave up on the project and got distracted by other projects. Everyone got busy with exams, one co-founder dropped it.' },
-			{ date: '2025-10-05', text: 'Talked to a friend about the old idea, and they were interested in it and I realised it may have market footing' },
+			{ date: '2025-10-05', text: 'Talked to a friend about the old idea, and they were interested in it and I realized it may have market footing' },
 			{ date: '2025-12-01', text: 'Found a way to make the app profitable. But still facing the Google permissions issue.' },
 			{ date: '2026-01-20', text: 'Started brainstorming and re-evaluating the app idea and its potential. Changed the core philosophy of the app from gimmick to real tool for change and to not use the features that would require permissions from Google.' },
 			{ date: '2026-02-12', text: 'Changed name from "brainrot app" to "Reel Ranked" and started planning this new app' },
 			{ date: '2026-02-14', text: 'Started working on the app again, this time with a new strategy and development plan.' },
-			{ date: '2026-02-17', text: 'Saw a reel where someone was building an app with a feature that requires accessibility permissions but it is not an accessibility app. Revisiting Google policies' },
+			{ date: '2026-02-17', text: 'Saw a reel where someone was building an app with a feature that requires accessibility permissions but it is not an accessibility app. Revisiting Google policies and possibly restarting old idea.' },
 			
 		],
 		
@@ -49,7 +50,9 @@ const businesses = [
 	  note: 'Small indie game studio focused on creating unique and engaging gaming experiences. Our mission is to bring innovative gameplay to Mobile and browser platforms, with a focus on community-driven development and player feedback.',
 	  links: [{ url: 'https://goatedgames.ca', icon: <FaGlobe /> },{ url: 'https://www.instagram.com/goatedgames.ig/', icon: <FaInstagram /> },],
 	  updates: [
-		{ date: '2026-02-12', text: 'Started the company with a friend as a fun project to work on together and to have a creative outlet. Always loved games growing up and this was a way to reconnect with my roots.' },],
+		{ date: '2026-02-12', text: 'Started the company with a friend as a fun project to work on together and to have a creative outlet. Always loved games growing up and this was a way to reconnect with my roots.' },
+		{ date: '2026-02-16', text: 'Started working on our first game, a satirical app mocking games that give you points for engaging with advertisements. The twist is, this app donates a portion of the proceeds to charity.' },
+		{ date: '2026-02-17', text: 'Registered business in Ontario, applied for D&B DUNS number for the Google and Apple Play Store so we can post apps.' },],
 
 	},
 	{
@@ -79,7 +82,7 @@ const businesses = [
 		note: 'pharmacy software is very inefficient and outdated. There is a lot of room for improvement and innovation in this space.',
 		updates: [
 			{ date: '2024-06-21', text: 'Got idea after talking to someone in the pharmacy space.' },
-			{ date: '2024-09-15', text: 'Logistics were too tricky. Very slow moving industry. May pickup again.' }
+			{ date: '2024-09-15', text: 'Logistics were too tricky. Very slow moving industry. May pick up again.' }
 		],
 		lessons: ['Industry momentum and regulatory complexity matter', 'Understand the full supply chain before committing'],
 		links: [],
@@ -129,7 +132,7 @@ const businesses = [
 			{ date: '2018-10-15', text: 'Thought of the company name in grade 9 for a school project (faseeh + Fast + Tech = FasTech) ' },
 			{ date: '2023-02-25', text: 'Started the company as a freelance web development agency, building websites for local businesses and friends. I applied to the Ontario youth business employment grant and was rejected.' },
 			{ date: '2024-06-14', text: 'Unfortunately, I was not able to get any traction with the company. It is my fault, I let it stagnate and did not put enough effort to grow it.' },
-			{ date: '2025-02-27', text: 'One last ditch linkedin run. Had few clients and no long term ones. I have decided to put the company on hold for now, but I may try to revive it in the future. I have learnt a lot from this experience and I am grateful for the opportunity to have tried.' }
+			{ date: '2025-02-27', text: 'One last ditch LinkedIn run. Had few clients and no long term ones. I have decided to put the company on hold for now, but I may try to revive it in the future. I have learned a lot from this experience and I am grateful for the opportunity to have tried.' }
 		],
 		lessons: ['Consistent marketing is essential for growth', 'You need a long-term strategy, not sporadic efforts', 'Lack of action kills momentum'],
 	},

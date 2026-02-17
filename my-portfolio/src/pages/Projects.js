@@ -87,7 +87,7 @@ const projects = [
   {
     id: "mars‑rover",
     title: "Mars Rover (School project)",
-    description: "Developed a simulated Mars rover using C# and arduino, featuring many sensors.",
+    description: "Developed a simulated Mars rover using C# and Arduino, featuring many sensors.",
     media: [
       { type: "video", src: "https://www.youtube.com/embed/ylB1peQnwVc" },
       { type: "image", src: "/images/projects/marsRover/mars1.jpeg" },
