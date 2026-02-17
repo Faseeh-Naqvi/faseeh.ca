@@ -110,7 +110,7 @@ export default function About() {
         <ul className="list-unstyled">
           <li>🎤 <strong>Public Speaking:</strong> on stage since Grade 3 assemblies; I enjoy public speaking. My style is laid-back and conversational. I also love pitching, Shark Tank is a family favorite.</li>
           <li>🎬 <strong>Content Creation:</strong> wrote & directed Western TMA videos (12.4 k views, +152 % engagement). Been filming comedy videos since the Vine days (they were not funny). I also have a small instagram called @lookfarsee where I post more abstract content. Obsessed with the art of storytelling, regardless of medium</li>
-          <li>👷🏽‍♂️ <strong>Problem Solving:</strong> tried (and failed) many <Link to="/businesses">businesses</Link> I will keep working on solving unique problems!</li>
+          <li>👷🏽‍♂️ <strong>Problem Solving:</strong> Tried many <Link to="/businesses">businesses</Link> I will keep working on solving unique problems!</li>
           <li>📝 <strong>Journaler :</strong>Started first year. Great for reminiscing and untangling the brain; highly recommended.</li>
         </ul>
       </div>
