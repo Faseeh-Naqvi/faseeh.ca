@@ -59,28 +59,17 @@ export default function Home() {
           >
             Download Resume
           </a>
-          <button
-            className="btn btn-lg btn-theme rounded-pill px-5 py-3 fs-5"
-            onClick={() => setShowGraveyard(true)}
-            style={{ fontWeight: 500 }}
-          >
-            👻 Resume Graveyard
-          </button>
         </div>
 
         {/* Quick Links */}
         <div className="d-flex flex-column flex-sm-row gap-3 align-items-center mt-2">
           <a href="/businesses" className="btn btn-lg btn-theme rounded-pill px-5 py-3 fs-5">See what I'm working on</a>
           <a href="/about" className="btn btn-lg btn-theme rounded-pill px-5 py-3 fs-5">Learn more about me!</a>
-          <a href="/projects" className="btn btn-lg btn-theme rounded-pill px-5 py-3 fs-5">See where I am solving unique problems</a>
+          <a href="/experience" className="btn btn-lg btn-theme rounded-pill px-5 py-3 fs-5">See where I am solving unique problems</a>
         </div>
       </div>
 
-      {/* Resume Graveyard Component */}
-      <ResumeGraveyard 
-        isOpen={showGraveyard} 
-        onClose={() => setShowGraveyard(false)} 
-      />
+      {/* Resume Graveyard Component hidden */}
     </>
   );
 }

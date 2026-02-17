@@ -4,6 +4,10 @@
   background: var(--bs-dark) !important;
   color: #f0f7f0 !important;
   box-shadow: 0 2px 12px rgba(44, 62, 80, 0.04);
+  min-height: 64px !important;
+  z-index: 1050 !important;
+  position: relative;
+  opacity: 1 !important;
 }
 .navbar .navbar-brand,
 .navbar .nav-link {
