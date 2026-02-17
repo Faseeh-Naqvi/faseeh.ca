@@ -41,7 +41,7 @@ function App() {
                     <NavLink
                       className="nav-link"
                       to={`/${page.toLowerCase()}`}
-                      activeclassname="active"
+                      activeClassName="active"
                     >
                       {page}
                     </NavLink>
