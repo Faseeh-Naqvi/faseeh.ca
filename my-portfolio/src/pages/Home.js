@@ -83,9 +83,9 @@ export default function Home() {
 
         {/* Quick Links */}
         <div className="d-flex flex-column flex-sm-row gap-3 align-items-center mt-4">
-          <a href="/businesses" className="btn btn-sm btn-theme rounded-pill px-4">See what I'm working on</a>
-          <a href="/about" className="btn btn-sm btn-theme-outline rounded-pill px-4">Learn more about me!</a>
-          <a href="/projects" className="btn btn-sm btn-ghost rounded-pill px-4">See where I am solving unique problems</a>
+          <a href="/businesses" className="btn btn-lg btn-theme rounded-pill px-5 py-3 fs-5">See what I'm working on</a>
+          <a href="/about" className="btn btn-lg btn-theme rounded-pill px-5 py-3 fs-5">Learn more about me!</a>
+          <a href="/projects" className="btn btn-lg btn-theme rounded-pill px-5 py-3 fs-5">See where I am solving unique problems</a>
         </div>
       </div>
 

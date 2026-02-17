@@ -49,8 +49,7 @@ export default function About() {
 
       {/* ---------- Intro ---------- */}
       <p className="fs-lg">
-        I’m a fourth-year Computer Science student at Western University who
-        <strong> loves reading, learning, and problem solving</strong>.
+        I’m a fourth-year Computer Science student at Western University who loves reading, learning, and problem solving.
         I love entrepreneurship! Please get in touch if you are working on something cool! Lately I’ve been diving into various philosophies, psychology, and how
         social media rewires our brains. When I’m not coding, you’ll find me watching
         videos on my interests! I recently picked up film reviewing as a hobby. Check out my letterboxd: fazeeh
