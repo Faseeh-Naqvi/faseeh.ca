@@ -27,14 +27,14 @@ function App() {
       <RouteLogger />
       {/* Only show navbar for non-standalone pages */}
       {!isStandalonePage && (
-        <nav className="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+        <nav className="navbar navbar-expand-lg">
           <div className="container">
             <NavLink className="navbar-brand fw-bold" to="/">Syed Naqvi</NavLink>
             <button className="navbar-toggler" type="button"
-                    data-bs-toggle="collapse" data-bs-target="#navMenu">
+                    data-bs-toggle="collapse" data-bs-target="#navMenu" aria-expanded="true">
               <span className="navbar-toggler-icon"/>
             </button>
-            <div className="collapse navbar-collapse" id="navMenu">
+            <div className="collapse navbar-collapse show" id="navMenu">
               <ul className="navbar-nav ms-auto">
                 {['About','Projects','Experience','Education','Businesses','Contact'].map(page => (
                   <li className="nav-item" key={page}>
