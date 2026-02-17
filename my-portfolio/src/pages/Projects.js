@@ -19,7 +19,18 @@ import "./Projects.css";
 /* DATA – ADD/EDIT PROJECTS HERE                                       */
 /* ------------------------------------------------------------------ */
 const projects = [
-  
+  {
+    id: "qr",
+    title: "Flyer Canada QR Code Tracker",
+    description: "real-time QR creation & analytics platform (React/Node/Express, MongoDB, JWT) with a scan-location heatmap, device-mix chart, and time-series trends that live-update via SSE/WebSockets",
+    media: [
+      { type: "image", src: "/images/projects/qrCode/Screenshot from 2025-08-24 21-33-16.png" },
+      { type: "image", src: "/images/projects/qrCode/Screenshot from 2025-08-24 21-34-19.png"}
+      
+    ],
+    link: "",
+    featured: true,
+  },
   {
     id: "attentify",
     title: "Attentify",
@@ -34,15 +45,16 @@ const projects = [
     featured: true,
   },
   {
-    id: "qr",
-    title: "Flyer Canada QR Code Tracker",
-    description: "real-time QR creation & analytics platform (React/Node/Express, MongoDB, JWT) with a scan-location heatmap, device-mix chart, and time-series trends that live-update via SSE/WebSockets",
+    id: "impact‑earth",
+    title: "Geo-Notebook",
+    description: "Developed of a geospatial web app to analyze, visualize, and manage planetary impact data for Earth Science research.",
     media: [
-      { type: "image", src: "/images/projects/qrCode/Screenshot from 2025-08-24 21-33-16.png" },
-      { type: "image", src: "/images/projects/qrCode/Screenshot from 2025-08-24 21-34-19.png"}
-      
+      { type: "image", src: "/images/projects/impact-earth/impact1.png" },
+      { type: "image", src: "/images/projects/impact-earth/impact2.png" },
+      { type: "image", src: "/images/projects/impact-earth/impact3.png" },
+      { type: "image", src: "/images/projects/impact-earth/impact4.png" },
     ],
-    link: "",
+    link: "https://impactearth.herokuapp.com/marketing",
     featured: true,
   },
   {
@@ -71,19 +83,7 @@ const projects = [
     link: "https://www.ivey.uwo.ca/news/news-ivey/2023/march/new-ivey-hackathon-allows-students-to-build-a-real-life-data-privacy-solution/",
     featured: false,
   },
-  {
-    id: "impact‑earth",
-    title: "Geo-Notebook",
-    description: "Developed of a geospatial web app to analyze, visualize, and manage planetary impact data for Earth Science research.",
-    media: [
-      { type: "image", src: "/images/projects/impact-earth/impact1.png" },
-      { type: "image", src: "/images/projects/impact-earth/impact2.png" },
-      { type: "image", src: "/images/projects/impact-earth/impact3.png" },
-      { type: "image", src: "/images/projects/impact-earth/impact4.png" },
-    ],
-    link: "https://impactearth.herokuapp.com/marketing",
-    featured: true,
-  },
+  
   {
     id: "mars‑rover",
     title: "Mars Rover (School project)",
