@@ -23,7 +23,7 @@ const projects = [
   {
     id: "attentify",
     title: "Attentify",
-    description: "AI‑powered productivity tool for ADHD users, featuring Pomodoro timers and smart note‑taking.",
+    description: "AI‑powered productivity tool for the ADHD community, featuring Pomodoro timers and smart note‑taking.",
     media: [
       { type: "video", src: "https://www.youtube.com/embed/psG8CecwZq8" },
       { type: "image", src: "/images/projects/attentify/attentify1.jpg" },
@@ -42,7 +42,7 @@ const projects = [
       { type: "image", src: "/images/projects/qrCode/Screenshot from 2025-08-24 21-34-19.png"}
       
     ],
-    link: "https://devpost.com/software/attentify",
+    link: "",
     featured: true,
   },
   {
@@ -312,7 +312,7 @@ const ProjectsPage = () => {
         {/* FEATURED SHOWCASE ------------------------------------------------ */}
         {featuredProjects.length > 0 && (
           <div className="featured-showcase">
-            <h2 className="text-center mb-4" style={{ color: 'var(--bs-body-color)', fontWeight: '700' }}>
+            <h2 className="text-center mb-5" style={{ color: 'var(--bs-body-color)', fontWeight: '900', fontSize: '2rem', letterSpacing: '-0.5px' }}>
               Featured Projects
             </h2>
             <Row className="justify-content-center">
@@ -326,7 +326,7 @@ const ProjectsPage = () => {
         )}
         
         {/* ALL PROJECTS ----------------------------------------------------- */}
-        <h2 className="text-center mb-4" style={{ color: 'var(--bs-body-color)', fontWeight: '700' }}>
+        <h2 className="text-center mb-5" style={{ color: 'var(--bs-body-color)', fontWeight: '900', fontSize: '2rem', marginTop: '3rem', letterSpacing: '-0.5px' }}>
           All Projects
         </h2>
         <Row className="g-4">

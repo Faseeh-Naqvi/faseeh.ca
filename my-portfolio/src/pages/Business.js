@@ -76,8 +76,8 @@ const businesses = [
 		status: 'attempted',
 		note: 'pharmacy software is very inefficient and outdated. There is a lot of room for improvement and innovation in this space.',
 		updates: [
-			{ date: '2024-09-15', text: 'Logistics were too tricky. Very slow moving industry. May pickup again.' },
-			{ date: '2024-06-21', text: 'Got idea after talking to someone in the pharmacy space.' }
+			{ date: '2024-06-21', text: 'Got idea after talking to someone in the pharmacy space.' },
+			{ date: '2024-09-15', text: 'Logistics were too tricky. Very slow moving industry. May pickup again.' }
 		],
 		lessons: ['Industry momentum and regulatory complexity matter', 'Understand the full supply chain before committing'],
 		links: [],
@@ -200,9 +200,11 @@ function StatusBadge({ status }) {
 export default function Businesses() {
 	return (
 		<div className="container py-5">
-			<h1 className="fw-bold mb-2 text-center">Businesses & Ventures</h1>
-			<div className="text-center mb-4">
-				<a href="/projects" className="btn btn-sm btn-theme rounded-pill px-3">See what I'm working on</a>
+			<div className="mb-5">
+				<h1 className="fw-bold mb-2 text-center" style={{ fontSize: '2.5rem', letterSpacing: '-0.5px' }}>Businesses & Ventures</h1>
+				<p className="text-center text-muted" style={{ fontSize: '1.1rem', maxWidth: '600px', margin: '0 auto' }}>
+					A portfolio of entrepreneurial ventures, experiments, and lessons learned
+				</p>
 			</div>
 
 			{/* Scoreboard & Stats */}
@@ -250,9 +252,9 @@ export default function Businesses() {
 							<div className="col-md-4">
 								<div className="card h-100 text-center shadow-sm bg-light">
 									<div className="card-body py-4">
-										<h6 className="text-uppercase text-muted mb-2">Failures</h6>
+										<h6 className="text-uppercase text-muted mb-2">Attempted</h6>
 										<div className="display-3 fw-bold text-danger">{failureCount}</div>
-										<small className="text-muted">Counted as “Attempted”</small>
+										<small className="text-muted">Learning experiences</small>
 									</div>
 								</div>
 							</div>
@@ -264,12 +266,12 @@ export default function Businesses() {
 			})()}
 
 			<div className="row g-4">
-				{businesses.map((b, i) => (
-					<div key={i} className="col-sm-6 col-lg-4">
-						<div className="card h-100 shadow-sm">
-							<div className="card-body d-flex flex-column">
+			{businesses.map((b, i) => (
+				<div key={i} className="col-sm-6 col-lg-4">
+					<div className={`card h-100 card-${b.status.toLowerCase()}`}>
+						<div className="card-body d-flex flex-column">
 								{/* Title & status */}
-								<h5 className="card-title mb-1">
+								<h5 className="card-title mb-2">
 									{b.name}{' '}
 									<StatusBadge status={b.status} />
 								</h5>
@@ -334,26 +336,28 @@ export default function Businesses() {
 
 								{/* Links */}
 								{b.links.length > 0 && (
-									<div className="d-flex flex-wrap gap-2">
+									<div className="d-flex flex-wrap gap-2 mt-3">
 										{b.links.map((l, k) => 
 											l.internal ? (
 												<Link
 													key={k}
 													to={l.url}
-													className="btn btn-outline-primary btn-sm rounded-pill d-flex align-items-center"
+													className="btn btn-outline-primary btn-sm d-inline-flex align-items-center justify-content-center"
+													style={{ gap: '0.5rem' }}
 												>
-													<span className="me-1">{l.icon}</span>
+													{l.icon}
 													View Details
 												</Link>
 											) : (
 												<a
 													key={k}
 													href={l.url}
-													className="btn btn-outline-primary btn-sm rounded-pill d-flex align-items-center"
+													className="btn btn-outline-primary btn-sm d-inline-flex align-items-center justify-content-center"
 													target="_blank"
 													rel="noopener noreferrer"
+													style={{ gap: '0.5rem' }}
 												>
-													<span className="me-1">{l.icon}</span>
+													{l.icon}
 													Visit
 												</a>
 											)
