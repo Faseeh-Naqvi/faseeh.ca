@@ -8,7 +8,7 @@ const businesses = [
 		name: 'Sigfig AI Security Services',
 		status: 'active',
 		note: 'AI-powered tailgating detection for gyms. Preventing revenue loss and improving security with 24/7 monitoring.',
-		links: [{ url: 'sigfigsecurity.com', icon: <FaGlobe />, internal: true },{ url: 'https://www.linkedin.com/company/sigfig-ai/', icon: <FaLinkedin /> },
+		links: [{ url: 'https://sigfigsecurity.com', icon: <FaGlobe />, internal: true },{ url: 'https://www.linkedin.com/company/sigfig-ai/', icon: <FaLinkedin /> },
 			{ url: 'https://www.instagram.com/sigfigsecurity/', icon: <FaInstagram /> },
 		],
 		updates: [
@@ -42,9 +42,22 @@ const businesses = [
 			{ date: '2026-02-12', text: 'Changed name from "brainrot app" to "Reel Ranked" and started planning this new app' },
 			{ date: '2026-02-14', text: 'Started working on the app again, this time with a new strategy and development plan.' },
 			{ date: '2026-02-17', text: 'Saw a reel where someone was building an app with a feature that requires accessibility permissions but it is not an accessibility app. Revisiting Google policies and possibly restarting old idea.' },
+			{ date: '2026-02-25', text: 'Talked to a friend and reviewed goolgle policies to pivot to a health first application rather than a social app. The name must be changed. Unsure what to change it to. Might make this a social app as well as the base tech will remain' },
 			
 		],
 		
+	},
+	{
+		name: 'Civil Engineering Software',
+		status: 'active',
+		note: 'Software solutions for civil engineers, focusing on improving efficiency and accuracy in research.',
+		links: [
+		],
+		updates: [
+			{ date: '2025-02-24', text: 'Talked to my roomate who is in civil engineering and he mentioned some inefficiencies in current tools used in the field.' },
+			{ date: '2025-02-26', text: 'Began research on what/how to build to solve the issues' },
+		
+		],
 	},
 	{ name: 'GoatedGames',
 	  status: 'active',
