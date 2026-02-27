@@ -219,7 +219,6 @@ export default function Businesses() {
 			{(() => {
 				const normalized = businesses.map((b) => {
 					const status = (b.status || '').toLowerCase();
-					const name = (b.name || '').toLowerCase();
 					const inProgress = status.includes('active') || status.includes('in progress');
 					const failure = status.includes('attempted');
 					const paused = status.includes('paused');
@@ -227,13 +226,9 @@ export default function Businesses() {
 					return { ...b, inProgress, failure, paused, stealth };
 				});
 
-				const total = normalized.length;
 				const inProgressCount = normalized.filter((x) => x.inProgress).length;
 				const failureCount = normalized.filter((x) => x.failure).length;
 				const pausedCount = normalized.filter((x) => x.paused && !x.failure).length;
-				const stealthCount = normalized.filter((x) => x.stealth).length;
-				const otherCount = Math.max(0, total - (inProgressCount + failureCount + pausedCount + stealthCount));
-				const pct = (n) => (total ? Math.round((n / total) * 100) : 0);
 
 				return (
 					<>

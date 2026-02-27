@@ -10,7 +10,7 @@ import {
   Tooltip,
   Legend
 } from 'chart.js';
-import { Line, Doughnut, Bar } from 'react-chartjs-2';
+import { Line, Doughnut } from 'react-chartjs-2';
 import './FaseehDashboard.css';
 
 // Local storage keys (all local-only)
@@ -148,7 +148,10 @@ function DashboardInner() {
 
   // ===== Shabih ur Raza Time Monitor (Vertical) =====
   const [selectedBlockId, setSelectedBlockId] = useState(null);
-  const blocks = entry.timeBlocks || []; // [{id,startMin,endMin,label,category,prod(0..10),feeling:string}]
+  const blocks = useMemo(
+    () => entry.timeBlocks || [],
+    [entry.timeBlocks]
+  ); // [{id,startMin,endMin,label,category,prod(0..10),feeling:string}]
   const setBlocks = (next) => updateToday({ timeBlocks: next });
   const [snapTo15, setSnapTo15] = useState(true);
 
@@ -229,6 +232,7 @@ function DashboardInner() {
     window.addEventListener('mouseup', onScheduleMouseUp, { once: true });
   };
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const deleteBlock = (id) => setBlocks(blocks.filter(b => b.id !== id));
   const updateBlock = (id, patch) => setBlocks(blocks.map(b => b.id === id ? { ...b, ...patch } : b));
 
@@ -300,6 +304,7 @@ function DashboardInner() {
   const toggleOverlay = (id) => setOverlayShown(prev => prev.includes(id) ? prev.filter(x=>x!==id) : [...prev, id]);
 
   // Keyboard delete for selected block
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     const onKey = (e) => {
       if ((e.key === 'Delete' || e.key === 'Backspace') && selectedBlockId) {
@@ -308,7 +313,7 @@ function DashboardInner() {
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, [selectedBlockId, blocks]);
+  }, [selectedBlockId, deleteBlock]);
 
   // Save helpers
   const persistEntries = (next) => {
@@ -328,7 +333,6 @@ function DashboardInner() {
   // To-Dos (free tasks)
   const todos = entry.todos || []; // [{id,text,done,due,category,effortMin}]
   const todoDone = todos.filter(t => t.done).length;
-  const totalTodos = Math.max(1, todos.length);
 
   // Scores
   const autoSpirituality = Math.round((doneCountSpiritual / totalSpiritual) * 10);

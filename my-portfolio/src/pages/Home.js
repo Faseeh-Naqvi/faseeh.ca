@@ -1,12 +1,9 @@
 // src/pages/Home.js
-import React, { useState } from 'react';
-import { FaLinkedin, FaGithub, FaYoutube } from 'react-icons/fa';
-import ResumeGraveyard from '../components/ResumeGraveyard';
+import React from 'react';
+import { FaLinkedin, FaGithub } from 'react-icons/fa';
 import './Home.css';
 
 export default function Home() {
-  const [showGraveyard, setShowGraveyard] = useState(false);
-
   return (
     <>
       <div className="home-hero d-flex flex-column justify-content-center align-items-center text-center vh-100 p-3">
@@ -14,7 +11,7 @@ export default function Home() {
         <div className="home-profile-img mb-4">
           <img
             src="/images/profile.jpeg"
-            alt="my profile picture"
+            alt="Portrait of Syed Faseeh Hayder Naqvi"
             className="rounded-circle shadow-lg"
             style={{ width: '180px', height: '180px', objectFit: 'cover', border: '5px solid var(--bs-primary)', boxShadow: '0 8px 32px rgba(44,75,44,0.13)' }}
           />
