@@ -8,7 +8,7 @@ const businesses = [
 		name: 'Sigfig AI Security Services',
 		status: 'active',
 		note: 'AI-powered tailgating detection for gyms. Preventing revenue loss and improving security with 24/7 monitoring.',
-		links: [{ url: '/sigfig-ai', icon: <FaGlobe />, internal: true },{ url: 'https://www.linkedin.com/company/sigfig-ai/', icon: <FaLinkedin /> },
+		links: [{ url: 'sigfigsecurity.com', icon: <FaGlobe />, internal: true },{ url: 'https://www.linkedin.com/company/sigfig-ai/', icon: <FaLinkedin /> },
 			{ url: 'https://www.instagram.com/sigfigsecurity/', icon: <FaInstagram /> },
 		],
 		updates: [
@@ -17,6 +17,7 @@ const businesses = [
 			{ date: '2026-01-20', text: 'Found another person to work with and started working on the idea again and made a team of 3, this time executing faster and more effectively.' },
 			{ date: '2026-02-02', text: 'Conducted market research and began development of the MVP. Started posting regularly on LinkedIn and managing the team.' },
 			{ date: '2026-02-15', text: 'Made first Slide Deck and more market research.' },
+			{ date: '2026-02-26', text: 'Got first real landing page up with registered domain!' },
 			
 		],
 	},
@@ -52,7 +53,9 @@ const businesses = [
 	  updates: [
 		{ date: '2026-02-12', text: 'Started the company with a friend as a fun project to work on together and to have a creative outlet. Always loved games growing up and this was a way to reconnect with my roots.' },
 		{ date: '2026-02-16', text: 'Started working on our first game, a satirical app mocking games that give you points for engaging with advertisements. The twist is, this app donates a portion of the proceeds to charity.' },
-		{ date: '2026-02-17', text: 'Registered business in Ontario, applied for D&B DUNS number for the Google and Apple Play Store so we can post apps.' },],
+		{ date: '2026-02-17', text: 'Registered business in Ontario, applied for D&B DUNS number for the Google and Apple Play Store so we can post apps.' },
+		{ date: '2026-02-20', text: 'Finished and began testing advertisment philanthropy app.' },
+	],
 
 	},
 	{
