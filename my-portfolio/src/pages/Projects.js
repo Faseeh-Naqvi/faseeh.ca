@@ -21,8 +21,8 @@ import "./Projects.css";
 const projects = [
   {
     id: "qr",
-    title: "Flyer Canada QR Code Tracker",
-    description: "real-time QR creation & analytics platform (React/Node/Express, MongoDB, JWT) with a scan-location heatmap, device-mix chart, and time-series trends that live-update via SSE/WebSockets",
+    title: "Flyer Canada Tracking & Analytics",
+    description: "real-time QR creation & analytics platform (React/Node/Express, DynamoDB, JWT, Vercel) with a scan-location heatmap, device-mix chart, and time-series trends that live-update via SSE/WebSockets",
     media: [
       { type: "image", src: "/images/projects/qrCode/fctrackmain.png" },
       { type: "image", src: "/images/projects/qrCode/fctrackanalytics.png"},
