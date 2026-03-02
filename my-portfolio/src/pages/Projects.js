@@ -24,11 +24,12 @@ const projects = [
     title: "Flyer Canada QR Code Tracker",
     description: "real-time QR creation & analytics platform (React/Node/Express, MongoDB, JWT) with a scan-location heatmap, device-mix chart, and time-series trends that live-update via SSE/WebSockets",
     media: [
-      { type: "image", src: "/images/projects/qrCode/Screenshot from 2025-08-24 21-33-16.png" },
-      { type: "image", src: "/images/projects/qrCode/Screenshot from 2025-08-24 21-34-19.png"}
-      
+      { type: "image", src: "/images/projects/qrCode/fctrackmain.png" },
+      { type: "image", src: "/images/projects/qrCode/fctrackanalytics.png"},
+      { type: "image", src: "/images/projects/qrCode/fctrackanalytics2.png" },
+      { type: "image", src: "/images/projects/qrCode/fctrackwifi.png" },
     ],
-    link: "",
+    link: "https://flyercanada-tracking.vercel.app/",
     featured: true,
   },
   {
