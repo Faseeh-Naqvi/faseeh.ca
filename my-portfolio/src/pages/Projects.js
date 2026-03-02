@@ -35,7 +35,7 @@ const projects = [
   {
     id: "Traffic Analysis Dashboard",
     title: "Traffic Analysis Dashboard",
-    description: "Interactive dashboard for analyzing traffic data using C++, Django, Azure, and JS, featuring dynamic visualizations and real-time updates.",
+    description: "Interactive dashboard & IoT tool used by the Ontario Ministry of Transportation to analyze traffic data using; C++, Django, Azure, and JS. Featuring, dynamic visualizations, real-time updates, and a custom API to handle complexity from high-volume data via many devices.",
     media: [
       { type: "image", src: "/images/projects/emrc/emrc.png" },
     ],
