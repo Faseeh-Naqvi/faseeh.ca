@@ -33,6 +33,16 @@ const projects = [
     featured: true,
   },
   {
+    id: "Traffic Analysis Dashboard",
+    title: "Traffic Analysis Dashboard",
+    description: "Interactive dashboard for analyzing traffic data using C++, Django, Azure, and JS, featuring dynamic visualizations and real-time updates.",
+    media: [
+      { type: "image", src: "/images/projects/emrc/emrc.png" },
+    ],
+    
+    featured: true,
+  },
+  {
     id: "attentify",
     title: "Attentify",
     description: "AI‑powered productivity tool for the ADHD community, featuring Pomodoro timers and smart note‑taking.",
@@ -58,18 +68,7 @@ const projects = [
     link: "https://impactearth.herokuapp.com/marketing",
     featured: true,
   },
-  {
-    id: "clocky",
-    title: "Clocky",
-    description: "Dynamic web clock that changes background based on geolocation & sunrise/sunset API data.",
-    media: [
-      { type: "image", src: "/images/projects/clocky/clock1.jpeg" },
-      { type: "image", src: "/images/projects/clocky/clock2.jpeg" },
-      { type: "image", src: "/images/projects/clocky/clock3.jpeg" },
-    ],
-    link: "https://clock.faseeh.ca/",
-    featured: false,
-  },
+  
   {
     id: "cyderapp",
     title: "🥈 Cyder App Prototype (IveyHacks 2023 – 2nd place)",
@@ -107,6 +106,18 @@ const projects = [
     ],
     link: "https://flyercanada.ca/order-status",
     featured: true,
+  },
+  {
+    id: "clocky",
+    title: "Clocky",
+    description: "Dynamic web clock that changes background based on geolocation & sunrise/sunset API data.",
+    media: [
+      { type: "image", src: "/images/projects/clocky/clock1.jpeg" },
+      { type: "image", src: "/images/projects/clocky/clock2.jpeg" },
+      { type: "image", src: "/images/projects/clocky/clock3.jpeg" },
+    ],
+    link: "https://clock.faseeh.ca/",
+    featured: false,
   },
 ];
 /* ------------------------------------------------------------------ */
