@@ -18,7 +18,7 @@ const businesses = [
 			{ date: '2026-02-02', text: 'Conducted market research and began development of the MVP. Started posting regularly on LinkedIn and managing the team.' },
 			{ date: '2026-02-15', text: 'Made first Slide Deck and more market research.' },
 			{ date: '2026-02-26', text: 'Got first real landing page up with registered domain!' },
-			
+			{ date: '2026-04-03', text: 'Got first yes in a cold call to join the waitlist.' },
 		],
 	},
 	{
@@ -43,20 +43,21 @@ const businesses = [
 			{ date: '2026-02-14', text: 'Started working on the app again, this time with a new strategy and development plan.' },
 			{ date: '2026-02-17', text: 'Saw a reel where someone was building an app with a feature that requires accessibility permissions but it is not an accessibility app. Revisiting Google policies and possibly restarting old idea.' },
 			{ date: '2026-02-25', text: 'Talked to a friend and reviewed goolgle policies to pivot to a health first application rather than a social app. The name must be changed. Unsure what to change it to. Might make this a social app as well as the base tech will remain' },
-			
+			{ date: '2026-03-02', text: 'Paused work on the app.' },
+			{ date: '2026-04-03', text: 'Started looking into it again. Still figuring out Play Store compliance and technical feasibility due to strict tracking laws.' },
 		],
 		
 	},
 	{
 		name: 'Civil Engineering Software',
-		status: 'active',
+		status: 'paused',
 		note: 'Software solutions for civil engineers, focusing on improving efficiency and accuracy in research.',
 		links: [
 		],
 		updates: [
 			{ date: '2025-02-24', text: 'Talked to my roomate who is in civil engineering and he mentioned some inefficiencies in current tools used in the field.' },
 			{ date: '2025-02-26', text: 'Began research on what/how to build to solve the issues' },
-		
+			{ date: '2026-03-20', text: 'Put on pause to devote time to other things.' },
 		],
 	},
 	{ name: 'GoatedGames',
