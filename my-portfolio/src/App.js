@@ -14,6 +14,19 @@ import FaseehDashboard from './pages/FaseehDashboard';
 import ErrorBoundary from './ErrorBoundary';
 import RouteLogger from './RouteLogger';
 
+const LINKEDIN_URL = 'https://www.linkedin.com/in/faseeh-naqvi/';
+
+function LinkedInRedirect() {
+  useEffect(() => {
+    window.location.replace(LINKEDIN_URL);
+  }, []);
+  return (
+    <div className="container py-4">
+      <p>Redirecting to LinkedIn…</p>
+    </div>
+  );
+}
+
 function App() {
   const location = useLocation();
   const isStandalonePage = location.pathname === '/sigfig-ai';
@@ -62,6 +75,7 @@ function App() {
         <Route path="/businesses" element={<Business/>}/>
         <Route path="/awards" element={<Awards/>}/>
         <Route path="/contact" element={<Contact/>}/>
+        <Route path="/linkedin" element={<LinkedInRedirect/>}/>
         <Route path="/sigfig-ai" element={<SigFigAI/>}/>
         {/* Secret route not linked in navbar */}
         <Route
