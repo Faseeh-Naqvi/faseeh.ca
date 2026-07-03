@@ -1,6 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+import {
+  currentlyReading,
+  getBookCoverUrl,
+  readAndTalkAbout,
+  wantToRead,
+} from '../readingLists';
 import './About.css';
 
 export default function About() {
@@ -17,31 +23,6 @@ export default function About() {
     '/images/about/Present.jpg',
   ];
   const rotations = ['rot-1','rot-2','rot-3','rot-4','rot-5','rot-6','rot-7','rot-8'];
-
-  /* ---------- Reading Lists (update any time) ---------- */
-  const currentlyReading = [
-    'Psycho-Cybernetics - Dr. Maxwell Maltz',
-    'The Art of War - Sun Tzu',
-    
-
-  ];
-  const wantToRead = [
-
-    'Amusing Ourselves to Death: Public Discourse ... – Neil Postman',
-    'Letting Go: The Pathway of Surrender – MD/PHD. David R. Hawkins',
-    'Influence, The Psychology of Persuasion – Dr. Robert Cialdini',
-    
-  ];
-  const haveRead = [
-    'The Alchemist – Paulo Coelho',
-    'Meditations – Marcus Aurelius',
-    'Brave New World – Aldous Huxley',
-    'Life of Pi – Yann Martel',
-    'The little prince – Antoine de Saint-Exupéry',
-    'The autobiography of malcolm x - malcolm x and alex haley',
-    'Flowers for Algernon - Daniel Keyes',
-
-  ];
 
   return (
     <div className="container py-5">
@@ -125,8 +106,8 @@ export default function About() {
               <div className="col-md-4">
                 <h5 className="card-title">Books I enjoyed</h5>
                 <ul className="mb-2">
-                  {haveRead.map((book, i) => (
-                    <li key={i}>{book}</li>
+                  {readAndTalkAbout.map((book) => (
+                    <li key={book.title}>{book.title} - {book.author}</li>
                   ))}
                 </ul>
                 <small className="text-muted fst-italic">
@@ -138,8 +119,8 @@ export default function About() {
               <div className="col-md-4 mb-3 mb-md-0">
                 <h5 className="card-title">Want to Read</h5>
                 <ul className="mb-0">
-                  {wantToRead.map((book, i) => (
-                    <li key={i}>{book}</li>
+                  {wantToRead.map((book) => (
+                    <li key={book.title}>{book.title} - {book.author}</li>
                   ))}
                 </ul>
               </div>
@@ -147,10 +128,31 @@ export default function About() {
               <div className="col-md-4 mb-3 mb-md-0">
                 <h5 className="card-title">Currently Reading</h5>
                 <ul className="mb-0">
-                  {currentlyReading.map((book, i) => (
-                    <li key={i}>{book}</li>
+                  {currentlyReading.map((book) => (
+                    <li key={book.title}>{book.title} - {book.author}</li>
                   ))}
                 </ul>
+              </div>
+            </div>
+
+            <div className="about-book-shelf mt-4">
+              <h5 className="card-title">Books on my mind</h5>
+              <p className="text-muted small mb-3">
+                A visual shelf of books I am reading now or would happily talk about.
+              </p>
+              <div className="about-book-grid">
+                {[...currentlyReading, ...readAndTalkAbout].slice(0, 8).map((book) => (
+                  <div className="about-book-card" key={book.title}>
+                    <img
+                      src={getBookCoverUrl(book.isbn)}
+                      alt={`${book.title} book cover`}
+                    />
+                    <div className="about-book-meta">
+                      <strong>{book.title}</strong>
+                      <span>{book.author}</span>
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
