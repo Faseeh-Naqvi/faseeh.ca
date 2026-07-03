@@ -21,6 +21,40 @@
   border-color: rgba(8, 66, 152, 0.15);
 }
 
+.card.card-pre-launch {
+  background: linear-gradient(135deg, #fff8e8 0%, #f8f9fa 100%);
+  border-color: rgba(179, 107, 0, 0.16);
+}
+
+.card.card-research {
+  background: linear-gradient(135deg, #eef7ff 0%, #f8f9fa 100%);
+  border-color: rgba(13, 110, 253, 0.14);
+}
+
+.card.card-ideation {
+  background: linear-gradient(135deg, #f5f0ff 0%, #f8f9fa 100%);
+  border-color: rgba(111, 66, 193, 0.14);
+}
+
+.card.card-frozen {
+  filter: saturate(0.82);
+  position: relative;
+}
+
+.card.card-frozen::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    135deg,
+    rgba(108, 117, 125, 0.045),
+    rgba(108, 117, 125, 0.045) 6px,
+    transparent 6px,
+    transparent 14px
+  );
+}
+
 /* Main business cards */
 .card {
   border-radius: 16px;
@@ -102,6 +136,42 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
+.status-active {
+  background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+  color: #0f5132;
+  border: 1px solid rgba(15, 81, 50, 0.15);
+}
+
+.status-pre-launch {
+  background: linear-gradient(135deg, #fff3cd 0%, #ffe69c 100%);
+  color: #664d03;
+  border: 1px solid rgba(102, 77, 3, 0.15);
+}
+
+.status-research {
+  background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+  color: #084298;
+  border: 1px solid rgba(8, 66, 152, 0.15);
+}
+
+.status-ideation {
+  background: linear-gradient(135deg, #ede7ff 0%, #ddd1ff 100%);
+  color: #4c2a85;
+  border: 1px solid rgba(76, 42, 133, 0.15);
+}
+
+.status-attempted {
+  background: linear-gradient(135deg, #e9ecef 0%, #dee2e6 100%);
+  color: #222;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.status-frozen {
+  background: linear-gradient(135deg, #f1f3f5 0%, #e9ecef 100%);
+  color: #495057;
+  border: 1px solid rgba(73, 80, 87, 0.18);
+}
+
 /* Collapse transitions */
 .collapse {
   transition: all 0.3s ease;
@@ -116,7 +186,8 @@
 .collapse.show {
   opacity: 1;
   visibility: visible;
-  max-height: 1000px;
+  max-height: none;
+  overflow: visible;
 }
 
 /* Buttons styling */
@@ -272,5 +343,258 @@
   
   .card .card-body {
     padding: 1.5rem;
+  }
+}
+
+/* Refined Businesses page */
+.business-page {
+  max-width: 1180px;
+}
+
+.business-hero h1 {
+  font-size: clamp(2rem, 5vw, 3rem);
+  letter-spacing: -0.05em;
+}
+
+.business-hero p {
+  font-size: 1.05rem;
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.phase-board {
+  border: 1px solid rgba(143, 188, 143, 0.22);
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.76);
+  box-shadow: 0 10px 35px rgba(45, 74, 45, 0.08);
+  padding: 1.5rem;
+}
+
+.phase-board-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: flex-start;
+  margin-bottom: 1.25rem;
+}
+
+.phase-board-header h2 {
+  font-size: 1rem;
+  font-weight: 800;
+  margin: 0 0 0.25rem;
+  letter-spacing: -0.02em;
+}
+
+.phase-board-header p {
+  margin: 0;
+  color: #6c757d;
+  font-size: 0.92rem;
+}
+
+.phase-score-card {
+  height: 100%;
+  min-height: 150px;
+  text-align: center;
+  border-radius: 16px;
+  border: 1.5px solid rgba(143, 188, 143, 0.16);
+  background: linear-gradient(135deg, rgba(248, 249, 250, 0.9) 0%, rgba(255, 255, 255, 0.78) 100%);
+  box-shadow: 0 4px 18px rgba(45, 74, 45, 0.07);
+  padding: 1.15rem 0.9rem;
+}
+
+.phase-score-card h6 {
+  color: #6c757d;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  margin: 0 0 0.35rem;
+  text-transform: uppercase;
+}
+
+.phase-score-card div {
+  color: #2d4a2d;
+  font-size: 2.6rem;
+  font-weight: 900;
+  letter-spacing: -0.06em;
+  line-height: 1;
+  margin-bottom: 0.45rem;
+}
+
+.phase-score-card small {
+  color: #6c757d;
+  display: block;
+  font-size: 0.76rem;
+  line-height: 1.35;
+}
+
+.phase-score-card.phase-active {
+  background: linear-gradient(135deg, rgba(198, 239, 206, 0.32) 0%, rgba(248, 249, 250, 0.85) 100%);
+  border-color: rgba(15, 81, 50, 0.18);
+}
+
+.phase-score-card.phase-pre-launch {
+  background: linear-gradient(135deg, rgba(255, 243, 205, 0.5) 0%, rgba(248, 249, 250, 0.85) 100%);
+  border-color: rgba(122, 79, 0, 0.18);
+}
+
+.phase-score-card.phase-research {
+  background: linear-gradient(135deg, rgba(219, 234, 254, 0.56) 0%, rgba(248, 249, 250, 0.85) 100%);
+  border-color: rgba(8, 66, 152, 0.14);
+}
+
+.phase-score-card.phase-ideation {
+  background: linear-gradient(135deg, rgba(237, 231, 255, 0.7) 0%, rgba(248, 249, 250, 0.85) 100%);
+  border-color: rgba(76, 42, 133, 0.14);
+}
+
+.phase-key-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 0.75rem;
+}
+
+.phase-key-card {
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  border-radius: 14px;
+  background: rgba(248, 249, 250, 0.82);
+  padding: 0.85rem;
+}
+
+.phase-key-card p {
+  margin: 0.65rem 0 0;
+  color: #555;
+  font-size: 0.8rem;
+  line-height: 1.45;
+}
+
+.phase-key-topline {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: center;
+}
+
+.phase-key-topline strong {
+  font-size: 1.35rem;
+  line-height: 1;
+  color: #2d4a2d;
+}
+
+.business-card {
+  min-height: 100%;
+}
+
+.business-card .card-body.d-flex {
+  gap: 0;
+  margin-top: 0;
+  padding-top: 2rem;
+  border-top: 0;
+}
+
+.business-card-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: flex-start;
+  margin-bottom: 0.35rem;
+}
+
+.business-card .card-title {
+  flex: 1;
+  line-height: 1.2;
+}
+
+.business-badges {
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.business-section {
+  border-top: 1px solid rgba(0, 0, 0, 0.055);
+  padding-top: 0.9rem;
+}
+
+.business-toggle {
+  background: rgba(255, 255, 255, 0.55);
+}
+
+.updates-panel,
+.lessons-panel {
+  border: 1px solid rgba(0, 0, 0, 0.065);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.72);
+  padding: 1rem;
+  position: relative;
+  z-index: 1;
+}
+
+.update-item {
+  position: relative;
+  padding-left: 1.1rem;
+  padding-bottom: 1rem;
+  border-left: 1px solid rgba(45, 74, 45, 0.18);
+}
+
+.update-item:last-child {
+  padding-bottom: 0;
+}
+
+.update-item::before {
+  content: "";
+  position: absolute;
+  left: -5px;
+  top: 0.25rem;
+  width: 9px;
+  height: 9px;
+  border-radius: 999px;
+  background: #8fbc8f;
+  box-shadow: 0 0 0 3px rgba(143, 188, 143, 0.16);
+}
+
+.update-item time {
+  display: block;
+  color: #6c757d;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  margin-bottom: 0.25rem;
+}
+
+.update-item p {
+  color: #333;
+  font-size: 0.89rem;
+  line-height: 1.55;
+  margin: 0;
+}
+
+.lessons-panel ul {
+  list-style: none;
+}
+
+.business-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: auto;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+  position: relative;
+  z-index: 2;
+}
+
+@media (max-width: 575px) {
+  .phase-board {
+    padding: 1rem;
+  }
+
+  .phase-board-header,
+  .business-card-header {
+    flex-direction: column;
+  }
+
+  .business-badges {
+    justify-content: flex-start;
   }
 }

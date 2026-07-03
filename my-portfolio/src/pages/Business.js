@@ -2,13 +2,27 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { FaGlobe, FaInstagram, FaYoutube, FaLinkedin, FaTiktok } from 'react-icons/fa';
 import './Business.css';
-//Status: active, paused, stealth, attempted
+
+const statusDefinitions = {
+	active: 'Actively launched and running, seeking clients, or serving users.',
+	'pre-launch': 'Completed the earlier phases, but a blocker is preventing the next step.',
+	research: 'Looking into market need and how the product can be optimized for users.',
+	ideation: 'Working through the idea and turning it into something concrete.',
+	attempted: 'Tried to get it off the ground, but ultimately failed.',
+};
+
+const frozenDefinition = 'Frozen means the venture is paused in its current phase instead of moving forward right now.';
+
 const businesses = [
 	{
 		name: 'Sigfig AI Security Services',
-		status: 'active',
+		status: 'pre-launch',
+		frozen: true,
 		note: 'AI-powered tailgating detection for gyms. Preventing revenue loss and improving security with 24/7 monitoring.',
-		links: [{ url: 'https://sigfigsecurity.com', icon: <FaGlobe />, internal: true },{ url: 'https://www.linkedin.com/company/sigfig-ai/', icon: <FaLinkedin /> },
+		links: [
+			{ url: '/projects#sigfig-prototype', icon: <FaGlobe />, internal: true, label: 'View Prototype' },
+			{ url: 'https://sigfigsecurity.com', icon: <FaGlobe /> },
+			{ url: 'https://www.linkedin.com/company/sigfig-ai/', icon: <FaLinkedin /> },
 			{ url: 'https://www.instagram.com/sigfigsecurity/', icon: <FaInstagram /> },
 		],
 		updates: [
@@ -19,12 +33,17 @@ const businesses = [
 			{ date: '2026-02-15', text: 'Made first Slide Deck and more market research.' },
 			{ date: '2026-02-26', text: 'Got first real landing page up with registered domain!' },
 			{ date: '2026-04-03', text: 'Got first yes in a cold call to join the waitlist.' },
+			{ date: '2026-05-29', text: 'Talked to an experienced entrepreneur about the business and he explained how there may not be strong product-market fit. Based on my cold calls, people were interested, but ultimately not able to make the leap.' },
+			{ date: '2026-05-31', text: 'Did a 3-day sprint with my co-founder to finalize the MVP. Glad to report we have a working prototype built around ESP32 microcontrollers, C++, breadboarded circuitry, soldered hardware, IoT networking, server communication, and enclosure/design work in Autodesk Tinkercad and Fusion 360.' },
+			{ date: '2026-06-06', text: 'First time in a real film studio. Filmed a commercial and investor pitch video explaining the product and our prototype. We went overtime, but it was our first time and we were figuring a lot out as we went. Murphy\'s law came into full effect when our prototype stopped working because the internet was not connecting. On the drive back, we found out a key recording was lost, so we had to re-record later on in our own time. It was still a super fun experience despite the stress.' },
+			{ date: '2026-06-21', text: 'Applied to an accelerator. The continuation of this business is dependent on this accelerator and its funding.' },
 		],
 	},
 	{
-		name: 'Reelranked (formerly Brainrot App)',
-		status: 'active',
-		note: 'B2C app to help people track and reduce their "brainrot" ',
+		name: 'Unnamed Short Form Content Addiction Therapy App',
+		alias: 'Reelranked / Brainrot App',
+		status: 'research',
+		note: 'B2C app to help people track and reduce short-form content addiction.',
 		links: [
 			{ url: 'https://reelranked.com', icon: <FaGlobe /> },
 			{ url: 'https://brainrotapp.lol', icon: <FaGlobe /> },
@@ -45,12 +64,14 @@ const businesses = [
 			{ date: '2026-02-25', text: 'Talked to a friend and reviewed goolgle policies to pivot to a health first application rather than a social app. The name must be changed. Unsure what to change it to. Might make this a social app as well as the base tech will remain' },
 			{ date: '2026-03-02', text: 'Paused work on the app.' },
 			{ date: '2026-04-03', text: 'Started looking into it again. Still figuring out Play Store compliance and technical feasibility due to strict tracking laws.' },
+			{ date: '2026-06-25', text: 'Name changed again. Now it is an unnamed short-form content addiction therapy app. I am planning a research study to back this. If it goes well, it might launch as a standalone app. I really care about this problem because I and many others close to me have faced it. More to come soon. This is now in the research phase and I will be working on it in the coming months.' },
 		],
 		
 	},
 	{
 		name: 'Civil Engineering Software',
-		status: 'paused',
+		status: 'research',
+		frozen: true,
 		note: 'Software solutions for civil engineers, focusing on improving efficiency and accuracy in research.',
 		links: [
 		],
@@ -58,10 +79,11 @@ const businesses = [
 			{ date: '2025-02-24', text: 'Talked to my roomate who is in civil engineering and he mentioned some inefficiencies in current tools used in the field.' },
 			{ date: '2025-02-26', text: 'Began research on what/how to build to solve the issues' },
 			{ date: '2026-03-20', text: 'Put on pause to devote time to other things.' },
+			{ date: '2026-04-30', text: 'Got way too busy with SigFig and building the prototype, so this will have to go on freeze. This was still in the research phase beforehand and still needs market validation.' },
 		],
 	},
 	{ name: 'GoatedGames',
-	  status: 'active',
+	  status: 'attempted',
 	  note: 'Small indie game studio focused on creating unique and engaging gaming experiences. Our mission is to bring innovative gameplay to Mobile and browser platforms, with a focus on community-driven development and player feedback.',
 	  links: [{ url: 'https://goatedgames.ca', icon: <FaGlobe /> },{ url: 'https://www.instagram.com/goatedgames.ig/', icon: <FaInstagram /> },],
 	  updates: [
@@ -70,11 +92,13 @@ const businesses = [
 		{ date: '2026-02-17', text: 'Registered business in Ontario, applied for D&B DUNS number for the Google and Apple Play Store so we can post apps.' },
 		{ date: '2026-02-20', text: 'Finished and began testing advertisment philanthropy app.' },
 	],
+	  lessons: ['We had little interest in the actual product and mostly thought it would be cool to build.', 'Both of us were super busy, so we could not put in enough effort to keep it afloat.'],
 
 	},
 	{
 		name: 'Ai-Psych-Marketing tool',
-		status: 'paused',
+		status: 'research',
+		frozen: true,
 		note: 'Trying to bridge the gap between psychology and marketing using AI. Really combining many of my interests together.',
 		updates: [
 			{ date: '2025-09-20', text: 'Got the idea after trying to find a thesis project that combined my interests in psychology and marketing.' },
@@ -118,7 +142,8 @@ const businesses = [
 	},
 	{
 		name: 'AI content sponsorship platform',
-		status: 'paused',
+		status: 'research',
+		frozen: true,
 		note: 'Connecting content creators with sponsors using an AI-powered platform that matches creators with relevant brands based on their content and audience demographics, streamlining the sponsorship process and increasing revenue opportunities for creators while helping brands reach their target audience more effectively.',
 		updates: [
 			{ date: '2025-09-01', text: 'Came up with the idea after seeing how much content creators struggled to find sponsorships and how much time it took.' },
@@ -135,6 +160,26 @@ const businesses = [
 			{ date: '2025-05-10', text: 'After market research, found it was too saturated to be scalable with so many people offering similar services' }
 		],
 		lessons: ['Market saturation kills margins', 'A working proof of concept doesn\'t guarantee scalability', 'Look for defensible competitive advantages'],
+		links: [],
+	},
+	{
+		name: 'Unnamed Communication App',
+		status: 'research',
+		note: 'Communication software idea based on a problem a friend was facing in his career.',
+		updates: [
+			{ date: '2026-06-24', text: 'A good friend called me and mentioned a problem he was facing in his career. I looked it over and we started talking about potential solutions. We kind of spiraled out of control and ended up with a huge app.' },
+			{ date: '2026-06-28', text: 'Sat down and started real research on this. Worked backward and cut down the product to its key functionality. Now it is in validation, trying to figure out if this would actually benefit the initial customer base. Reaching out to customers so we can use their feedback to narrow down the idea.' },
+		],
+		links: [],
+	},
+	{
+		name: 'LLM Encryptor App',
+		status: 'ideation',
+		frozen: true,
+		note: 'Privacy tool for protecting personal information before sharing it with LLMs.',
+		updates: [
+			{ date: '2026-05-28', text: 'Got the idea while looking at my own life and seeing how much personal info I feed into LLMs without thinking. I looked up research papers into potential solutions and found one, but have not gotten the chance to implement it yet. Still in rough ideation, but closer to research because of the work already done. Frozen for now.' },
+		],
 		links: [],
 	},
 	
@@ -202,109 +247,127 @@ const businesses = [
 	},
 ];
 
+const formatStatus = (status) => status
+	.split('-')
+	.map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+	.join(' ');
+
+const getSortedUpdates = (updates = []) => [...updates].sort((a, b) => a.date.localeCompare(b.date));
+
+const statusOrder = {
+	active: 0,
+	'pre-launch': 1,
+	research: 2,
+	ideation: 3,
+	attempted: 4,
+};
+
+const getBusinessSortValue = (business) => {
+	const status = business.status.toLowerCase();
+
+	if (status === 'attempted') {
+		return 200 + statusOrder.attempted;
+	}
+
+	return (business.frozen ? 100 : 0) + (statusOrder[status] ?? 99);
+};
+
 function StatusBadge({ status }) {
 	const base = status.toLowerCase();
-	const variant =
-		base.includes('active') ? 'success' :
-		base.includes('paused') ? 'warning' :
-		base.includes('stealth') ? 'info' :
-		base.includes('attempted') ? 'dark' :
-		'secondary';//Ternary operator to determine the badge color based on status
 
 	return (
-		<span className={`status-badge status-${variant}`} title={status}>
-			{status}
+		<span className={`status-badge status-${base}`} title={statusDefinitions[base]}>
+			{formatStatus(status)}
+		</span>
+	);
+}
+
+function FrozenBadge() {
+	return (
+		<span className="status-badge status-frozen" title={frozenDefinition}>
+			Frozen
 		</span>
 	);
 }
 
 /* ---------- PAGE ---------- */
 export default function Businesses() {
+	const phaseCounts = Object.keys(statusDefinitions).map((status) => ({
+		status,
+		count: businesses.filter((business) => business.status.toLowerCase() === status).length,
+	}));
+	const orderedBusinesses = [...businesses].sort((a, b) => getBusinessSortValue(a) - getBusinessSortValue(b));
+
 	return (
-		<div className="container py-5">
-			<div className="mb-5">
-				<h1 className="fw-bold mb-2 text-center" style={{ fontSize: '2.5rem', letterSpacing: '-0.5px' }}>Businesses & Ventures</h1>
-				<p className="text-center text-muted" style={{ fontSize: '1.1rem', maxWidth: '600px', margin: '0 auto' }}>
+		<div className="container py-5 business-page">
+			<div className="business-hero mb-4">
+				<h1 className="fw-bold mb-2 text-center">Businesses & Ventures</h1>
+				<p className="text-center text-muted">
 					A portfolio of entrepreneurial ventures, experiments, and lessons learned
 				</p>
 			</div>
 
-			{/* Scoreboard & Stats */}
-			{(() => {
-				const normalized = businesses.map((b) => {
-					const status = (b.status || '').toLowerCase();
-					const inProgress = status.includes('active') || status.includes('in progress');
-					const failure = status.includes('attempted');
-					const paused = status.includes('paused');
-					const stealth = status.includes('stealth');
-					return { ...b, inProgress, failure, paused, stealth };
-				});
-
-				const inProgressCount = normalized.filter((x) => x.inProgress).length;
-				const failureCount = normalized.filter((x) => x.failure).length;
-				const pausedCount = normalized.filter((x) => x.paused && !x.failure).length;
-
-				return (
-					<>
-						<div className="row g-4 align-items-stretch mb-4">
-							{/* Sports-style Scoreboard */}
-							<div className="col-md-4">
-								<div className="card h-100 text-center shadow-sm bg-success bg-opacity-10">
-									<div className="card-body py-4">
-										<h6 className="text-uppercase text-muted mb-2">In Progress</h6>
-										<div className="display-3 fw-bold text-success">{inProgressCount}</div>
-										<small className="text-muted">Live development & active projects</small>
-									</div>
-								</div>
-							</div>
-							<div className="col-md-4">
-								<div className="card h-100 text-center shadow-sm bg-warning bg-opacity-10">
-									<div className="card-body py-4">
-										<h6 className="text-uppercase text-muted mb-2">Paused</h6>
-										<div className="display-3 fw-bold text-warning">{pausedCount}</div>
-										<small className="text-muted">Ventures currently on hold</small>
-									</div>
-								</div>
-							</div>
-							<div className="col-md-4">
-								<div className="card h-100 text-center shadow-sm bg-light">
-									<div className="card-body py-4">
-										<h6 className="text-uppercase text-muted mb-2">Attempted</h6>
-										<div className="display-3 fw-bold text-danger">{failureCount}</div>
-										<small className="text-muted">Learning experiences</small>
-									</div>
-								</div>
+			<section className="phase-board mb-4" aria-label="Business phase key">
+				<div className="phase-board-header">
+					<div>
+						<h2>Phase Key</h2>
+						<p>Current stage for each idea, plus whether it is frozen.</p>
+					</div>
+				</div>
+				<div className="phase-scoreboard row g-3 mb-3">
+					{phaseCounts.map(({ status, count }) => (
+						<div key={status} className="col-6 col-md">
+							<div className={`phase-score-card phase-${status}`}>
+								<h6>{formatStatus(status)}</h6>
+								<div>{count}</div>
+								<small>{statusDefinitions[status]}</small>
 							</div>
 						</div>
-
-
-					</>
-				);
-			})()}
+					))}
+				</div>
+				<div className="phase-key-grid">
+					{phaseCounts.map(({ status }) => (
+						<div key={status} className={`phase-key-card phase-${status}`}>
+							<div className="phase-key-topline">
+								<StatusBadge status={status} />
+							</div>
+							<p>{statusDefinitions[status]}</p>
+						</div>
+					))}
+					<div className="phase-key-card phase-frozen">
+						<div className="phase-key-topline">
+							<FrozenBadge />
+						</div>
+						<p>{frozenDefinition}</p>
+					</div>
+				</div>
+			</section>
 
 			<div className="row g-4">
-			{businesses.map((b, i) => (
+			{orderedBusinesses.map((b, i) => (
 				<div key={i} className="col-sm-6 col-lg-4">
-					<div className={`card h-100 card-${b.status.toLowerCase()}`}>
+					<div className={`business-card card h-100 card-${b.status.toLowerCase()}${b.frozen ? ' card-frozen' : ''}`}>
 						<div className="card-body d-flex flex-column">
-								{/* Title & status */}
-								<h5 className="card-title mb-2">
-									{b.name}{' '}
+							<div className="business-card-header">
+								<h5 className="card-title mb-0">{b.name}</h5>
+								<div className="business-badges">
 									<StatusBadge status={b.status} />
-								</h5>
+									{b.frozen && <FrozenBadge />}
+								</div>
+							</div>
 
 								{/* Alias */}
 								{b.alias && (
-									<small className="text-muted">AKA “{b.alias}”</small>
+									<small className="text-muted">AKA "{b.alias}"</small>
 								)}
 
 								{/* Note */}
 								<p className="card-text flex-grow-1 mt-2">{b.note}</p>
 							{/* Updates Section */}
 							{b.updates && b.updates.length > 0 && (
-								<div className="mt-3 mb-2">
+								<div className="business-section mt-3 mb-2">
 									<button
-										className="btn btn-sm btn-outline-secondary w-100"
+										className="btn btn-sm btn-outline-secondary w-100 business-toggle"
 										type="button"
 										data-bs-toggle="collapse"
 										data-bs-target={`#updates-${i}`}
@@ -314,11 +377,11 @@ export default function Businesses() {
 										Updates ({b.updates.length})
 									</button>
 									<div className="collapse mt-2" id={`updates-${i}`}>
-										<div className="card card-body py-2 px-3 bg-light">
-											{b.updates.map((u, k) => (
-												<div key={k} className="mb-2">
-													<small className="text-muted d-block">{u.date}</small>
-													<small className="text-dark">{u.text}</small>
+										<div className="updates-panel">
+											{getSortedUpdates(b.updates).map((u, k) => (
+												<div key={`${u.date}-${k}`} className="update-item">
+													<time dateTime={u.date}>{u.date}</time>
+													<p>{u.text}</p>
 												</div>
 											))}
 										</div>
@@ -328,9 +391,9 @@ export default function Businesses() {
 
 							{/* Lessons Section */}
 							{b.lessons && b.lessons.length > 0 && (
-								<div className="mt-3 mb-2">
+								<div className="business-section mt-3 mb-2">
 									<button
-										className="btn btn-sm btn-outline-warning w-100"
+										className="btn btn-sm btn-outline-warning w-100 business-toggle"
 										type="button"
 										data-bs-toggle="collapse"
 										data-bs-target={`#lessons-${i}`}
@@ -340,7 +403,7 @@ export default function Businesses() {
 										Key Lessons ({b.lessons.length})
 									</button>
 									<div className="collapse mt-2" id={`lessons-${i}`}>
-										<div className="card card-body py-2 px-3 bg-light">
+										<div className="lessons-panel">
 											<ul className="mb-0 ps-3">
 												{b.lessons.map((lesson, k) => (
 													<li key={k} className="small text-dark mb-1">{lesson}</li>
@@ -352,8 +415,8 @@ export default function Businesses() {
 							)}
 
 								{/* Links */}
-								{b.links.length > 0 && (
-									<div className="d-flex flex-wrap gap-2 mt-3">
+								{(b.links || []).length > 0 && (
+									<div className="business-links">
 										{b.links.map((l, k) => 
 											l.internal ? (
 												<Link
@@ -363,7 +426,7 @@ export default function Businesses() {
 													style={{ gap: '0.5rem' }}
 												>
 													{l.icon}
-													View Details
+													{l.label || 'View Details'}
 												</Link>
 											) : (
 												<a
@@ -375,7 +438,7 @@ export default function Businesses() {
 													style={{ gap: '0.5rem' }}
 												>
 													{l.icon}
-													Visit
+													{l.label || 'Visit'}
 												</a>
 											)
 										)}

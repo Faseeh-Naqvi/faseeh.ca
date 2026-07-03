@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Container,
   Row,
@@ -19,6 +19,32 @@ import "./Projects.css";
 /* DATA – ADD/EDIT PROJECTS HERE                                       */
 /* ------------------------------------------------------------------ */
 const projects = [
+  {
+    id: "sigfig-prototype",
+    title: "SigFig AI Security Prototype",
+    description: "Built the working MVP for an AI-powered gym tailgating detection system using ESP32 microcontrollers, C++, breadboarded circuitry, IoT networking, a server-backed prototype flow, and custom enclosure work modeled in Autodesk Tinkercad and Fusion 360.",
+    media: [
+      { type: "video", src: "https://www.youtube.com/embed/tco_yt_PbRY" },
+      { type: "video", src: "https://www.youtube.com/embed/QrpSGGf7Z_U" },
+      { type: "video", src: "https://www.youtube.com/embed/NAzmcUssg1g" },
+      { type: "image", src: "/images/projects/sigfig/sigfig1.png" },
+      { type: "image", src: "/images/projects/sigfig/sigfig2.png" },
+    ],
+    skills: [
+      "Soldering",
+      "C++",
+      "ESP32 Microcontrollers",
+      "Breadboard",
+      "Circuit Design",
+      "3D Design",
+      "Autodesk Tinkercad",
+      "Autodesk Fusion 360",
+      "Internet of Things (IoT)",
+      "Servers",
+    ],
+    link: "https://www.youtube.com/watch?v=QrpSGGf7Z_U",
+    featured: true,
+  },
   {
     id: "qr",
     title: "Flyer Canada Tracking & Analytics",
@@ -124,6 +150,12 @@ const projects = [
 /* PRESENTATION COMPONENTS                                             */
 /* ------------------------------------------------------------------ */
 
+const getYouTubeId = (url) => {
+  const embedMatch = url.match(/youtube\.com\/embed\/([^?&]+)/);
+  const watchMatch = url.match(/[?&]v=([^?&]+)/);
+  return embedMatch?.[1] || watchMatch?.[1] || null;
+};
+
 // iMessage-style overlapping thumbnail gallery
 const MediaGallery = ({ media, onImageClick }) => {
   const handleThumbnailClick = (index) => {
@@ -132,22 +164,20 @@ const MediaGallery = ({ media, onImageClick }) => {
 
   const createThumbnail = (item, index) => {
     if (item.type === "video") {
-      // For videos, we'll show a play icon over a placeholder
+      const youTubeId = getYouTubeId(item.src);
+      const thumbnail = youTubeId ? `https://img.youtube.com/vi/${youTubeId}/hqdefault.jpg` : null;
+
       return (
         <div
           key={index}
           className="media-thumbnail video-thumbnail"
           onClick={() => handleThumbnailClick(index)}
-          style={{
-            background: `linear-gradient(45deg, var(--bs-primary), var(--bs-secondary))`,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            fontSize: '2rem',
-            color: 'white'
-          }}
         >
-          📹
+          {thumbnail ? (
+            <img src={thumbnail} alt={`Project video ${index + 1}`} />
+          ) : (
+            <span>Video</span>
+          )}
         </div>
       );
     }
@@ -263,7 +293,7 @@ const ProjectCard = ({ project }) => {
 
   return (
     <>
-      <Card className="project-card h-100">
+      <Card id={project.id} className="project-card h-100">
         <MediaGallery 
           media={project.media} 
           onImageClick={handleImageClick}
@@ -275,6 +305,15 @@ const ProjectCard = ({ project }) => {
           <Card.Text className="card-text mb-3" style={{ minHeight: "3rem" }}>
             {project.description}
           </Card.Text>
+          {project.skills && project.skills.length > 0 && (
+            <div className="project-skills mb-3">
+              {project.skills.map((skill) => (
+                <span key={skill} className="project-skill">
+                  {skill}
+                </span>
+              ))}
+            </div>
+          )}
           <div className="mt-auto d-flex gap-2 flex-wrap">
             {project.link && (
               <Button
@@ -317,6 +356,17 @@ const ProjectCard = ({ project }) => {
 /* ------------------------------------------------------------------ */
 const ProjectsPage = () => {
   const featuredProjects = projects.filter((p) => p.featured);
+
+  useEffect(() => {
+    if (!window.location.hash) return;
+
+    window.setTimeout(() => {
+      document.querySelector(window.location.hash)?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }, 0);
+  }, []);
 
   return (
     <div className="projects-section">
