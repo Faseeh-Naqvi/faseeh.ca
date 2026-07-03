@@ -49,3 +49,48 @@
   background-color: rgba(45,74,45,0.6);
   border-radius: 50%;
 }
+
+.about-book-shelf {
+  border-top: 1px solid rgba(45,74,45,0.12);
+  padding-top: 1.5rem;
+}
+
+.about-book-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+}
+
+.about-book-card {
+  background: #f5faf5;
+  border: 1px solid rgba(45,74,45,0.1);
+  border-radius: 18px;
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  overflow: hidden;
+}
+
+.about-book-card img {
+  background: #dbeadb;
+  height: 210px;
+  object-fit: cover;
+  width: 100%;
+}
+
+.about-book-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 0.85rem;
+}
+
+.about-book-meta strong {
+  color: var(--bs-dark);
+  line-height: 1.2;
+}
+
+.about-book-meta span {
+  color: #6c7f6c;
+  font-size: 0.9rem;
+}
