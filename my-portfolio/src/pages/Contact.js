@@ -25,9 +25,7 @@ export default function Contact() {
           <FaLinkedin />
           Message me on LinkedIn
         </a>
-        <p className="contact-note">
-          LinkedIn does not offer a reliable public embed for personal-profile messaging, so this opens my profile directly.
-        </p>
+        
       </div>
     </div>
   );
