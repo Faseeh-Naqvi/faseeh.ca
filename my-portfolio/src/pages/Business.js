@@ -37,6 +37,8 @@ const businesses = [
 			{ date: '2026-05-31', text: 'Did a 3-day sprint with my co-founder to finalize the MVP. Glad to report we have a working prototype built around ESP32 microcontrollers, C++, breadboarded circuitry, soldered hardware, IoT networking, server communication, and enclosure/design work in Autodesk Tinkercad and Fusion 360.' },
 			{ date: '2026-06-06', text: 'First time in a real film studio. Filmed a commercial and investor pitch video explaining the product and our prototype. We went overtime, but it was our first time and we were figuring a lot out as we went. Murphy\'s law came into full effect when our prototype stopped working because the internet was not connecting. On the drive back, we found out a key recording was lost, so we had to re-record later on in our own time. It was still a super fun experience despite the stress.' },
 			{ date: '2026-06-21', text: 'Applied to an accelerator. The continuation of this business is dependent on this accelerator and its funding.' },
+			{ date: '2026-07-16', text: 'Western Uni accelerator interview. We prepped for a few days. It was quite stressful beforehand, but the interview was easier than we thought.' },
+			{ date: '2026-07-24', text: 'Working on a Claude artifact dashboard to automate outreach.' },
 		],
 	},
 	{
@@ -163,13 +165,37 @@ const businesses = [
 		links: [],
 	},
 	{
-		name: 'Unnamed Communication App',
+		name: 'Loop',
 		status: 'research',
-		note: 'Communication software idea based on a problem a friend was facing in his career.',
+		note: 'App focused on open and closed loops — helping people track unfinished commitments and actually close them.',
 		updates: [
 			{ date: '2026-06-24', text: 'A good friend called me and mentioned a problem he was facing in his career. I looked it over and we started talking about potential solutions. We kind of spiraled out of control and ended up with a huge app.' },
 			{ date: '2026-06-28', text: 'Sat down and started real research on this. Worked backward and cut down the product to its key functionality. Now it is in validation, trying to figure out if this would actually benefit the initial customer base. Reaching out to customers so we can use their feedback to narrow down the idea.' },
+			{ date: '2026-07-17', text: 'Talked to a friend and realized similar things already exist as internal tools. Debated the idea with Claude and landed on the fact that this is too broad. It looks cool, but other companies have tried the whole "communication network graph" angle and failed. I need to differentiate and actually reduce friction somewhere.' },
+			{ date: '2026-07-20', text: 'Pivoted to a tighter version called Loop, prioritizing open and closed loops. Asked around and got negative responses from friends and mentors. I disagree though — based on market research, there are many competitors doing similar but different things. I need to ideate on this enough to make it better and more useful.' },
 		],
+		links: [],
+	},
+	{
+		name: 'AI Personal Coach',
+		status: 'attempted',
+		note: 'AI coach that calls and texts you, holds memory, reminds you of goals, and tries to convince you to follow through — including spam-calling to wake you up like a friend.',
+		updates: [
+			{ date: '2026-07-10', text: 'Came up with an AI personal coach that physically calls and texts you. You can call or text it as much as you want. It holds memory, reminds you of things through call and text, is specifically geared toward helping you achieve your goals, and tries to convince you to do them. It can even spam call you to wake you up like a friend. Boardy is similar, but I think this is different enough.' },
+			{ date: '2026-07-22', text: 'Did some market research and asked around. This did not seem useful. Letting it go.' },
+		],
+		lessons: ['An accountability product whose core feature is friction is a product people pay to escape.'],
+		links: [],
+	},
+	{
+		name: 'Roblox Economy Tycoon',
+		status: 'attempted',
+		note: 'Roblox game with a Neopets-style points and mini-stocks economy, player-run firms, tycoon gameplay, a public rankings site, and a Bloomberg-style terminal with fake global news.',
+		updates: [
+			{ date: '2025-03-12', text: 'Had the idea for a Roblox economy game. At minimum, duplicate the Neopets points system with their mini stocks. Maybe let players make their own firms, tie in multiple tycoons, and list their stock on the market once they reach a certain stage. External website to confirm rankings. Maybe a way for top players to make real money. A more educational kids version. A Bloomberg terminal equivalent with fake global news and politics. Have the game do the math so players actually fulfill buy and sell orders, with a bot baseline so people can always play.' },
+			{ date: '2025-04-18', text: 'Stopped working on this due to the complexity and time commitment of making an actually good Roblox game. I do not see a ROI for this yet.' },
+		],
+		lessons: ['Scope and production quality for games can kill ROI before you even start', 'Ambitious multi-system game ideas need a much smaller first slice'],
 		links: [],
 	},
 	{
