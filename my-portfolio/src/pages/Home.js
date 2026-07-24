@@ -9,7 +9,7 @@ const letterboxdUrl = 'https://letterboxd.com/fazeeh/';
 const favoriteFilms = [
   {
     title: "It's Such a Beautiful Day",
-    poster: '/images/its-such-a-beautiful-day.png',
+    poster: '/images/its-such-a-beautiful-day.jpg',
   },
   {
     title: 'The Godfather Part II',
