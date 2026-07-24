@@ -1,10 +1,11 @@
 /* Home hero section customizations */
 .home-hero {
-  min-height: calc(100vh - 76px);
-  background: linear-gradient(180deg, #f0f7f0 60%, #eaf2ea 100%);
+  background:
+    radial-gradient(circle at 78% 28%, rgba(143, 188, 143, 0.2), transparent 24rem),
+    linear-gradient(180deg, #f0f7f0 60%, #eaf2ea 100%);
   display: flex;
   align-items: center;
-  padding: 5rem 0;
+  padding: clamp(2.5rem, 5vw, 4.5rem) 0;
 }
 
 .home-profile-img img {
@@ -113,6 +114,38 @@
 .home-resume-link:hover {
   color: #2d5b36;
   text-decoration: underline;
+}
+
+.home-scroll-cue {
+  align-items: center;
+  color: #557355;
+  display: inline-flex;
+  flex-direction: column;
+  font-size: 0.72rem;
+  font-weight: 800;
+  gap: 0.35rem;
+  letter-spacing: 0.08em;
+  margin-top: 1.5rem;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.home-scroll-cue svg {
+  animation: scrollCue 1.8s ease-in-out infinite;
+  font-size: 1.1rem;
+}
+
+.home-scroll-cue:hover {
+  color: #2d5b36;
+}
+
+@keyframes scrollCue {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(0.4rem);
+  }
 }
 
 .home-profile-card {
@@ -358,8 +391,7 @@
 
 @media (max-width: 991px) {
   .home-hero {
-    padding: 4rem 0;
-    min-height: auto;
+    padding: 3rem 0;
   }
 
   .home-title {
@@ -372,6 +404,11 @@
   }
 
   .home-cta-row {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .home-scroll-cue {
     margin-left: auto;
     margin-right: auto;
   }
@@ -391,7 +428,7 @@
 
 @media (max-width: 767px) {
   .home-hero {
-    padding: 3rem 0;
+    padding: 2.25rem 0 2.75rem;
   }
 
   .film-grid {
@@ -438,6 +475,12 @@
   .book-cover {
     height: 280px;
     width: 184px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-scroll-cue svg {
+    animation: none;
   }
 }
 
