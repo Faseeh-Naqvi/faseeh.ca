@@ -14,11 +14,7 @@ export const currentlyReading = [
     author: 'Sun Tzu',
     isbn: '9781599869773',
   },
-  {
-    title: 'Fahrenheit 451',
-    author: 'Ray Bradbury',
-    isbn: '9781451673319',
-  },
+  
 ];
 
 export const wantToRead = [
@@ -54,6 +50,11 @@ export const readAndTalkAbout = [
     title: 'The Alchemist',
     author: 'Paulo Coelho',
     isbn: '9780061122415',
+  },
+  {
+    title: 'Fahrenheit 451',
+    author: 'Ray Bradbury',
+    isbn: '9781451673319',
   },
   {
     title: 'Life of Pi',
