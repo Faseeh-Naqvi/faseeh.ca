@@ -119,20 +119,22 @@
 .home-scroll-cue {
   align-items: center;
   color: #557355;
-  display: inline-flex;
+  display: flex;
   flex-direction: column;
-  font-size: 0.72rem;
+  font-size: 0.9rem;
   font-weight: 800;
-  gap: 0.35rem;
-  letter-spacing: 0.08em;
-  margin-top: 1.5rem;
+  gap: 0.55rem;
+  letter-spacing: 0.1em;
+  margin: 3rem auto 0;
+  padding: 0.5rem 1rem;
   text-decoration: none;
   text-transform: uppercase;
+  width: max-content;
 }
 
 .home-scroll-cue svg {
   animation: scrollCue 1.8s ease-in-out infinite;
-  font-size: 1.1rem;
+  font-size: 1.55rem;
 }
 
 .home-scroll-cue:hover {
