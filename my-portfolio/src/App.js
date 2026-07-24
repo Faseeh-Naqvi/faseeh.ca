@@ -62,12 +62,8 @@ function App() {
       <header className="site-header">
         <nav className="navbar navbar-expand-lg" aria-label="Primary navigation">
           <div className="container">
-            <NavLink className="navbar-brand" to="/" aria-label="Syed Naqvi, home">
-              <span className="brand-mark" aria-hidden="true">SN</span>
-              <span className="brand-copy">
-                <span className="brand-name">Syed Naqvi</span>
-                <span className="brand-role">Builder &amp; developer</span>
-              </span>
+            <NavLink className="navbar-brand" to="/">
+              Home
             </NavLink>
             <button
               className="navbar-toggler"
@@ -78,7 +74,12 @@ function App() {
               aria-expanded="false"
               aria-label="Toggle navigation"
             >
-              <span className="navbar-toggler-icon" />
+              <span className="menu-label">Menu</span>
+              <span className="menu-icon" aria-hidden="true">
+                <span />
+                <span />
+                <span />
+              </span>
             </button>
             <div className="collapse navbar-collapse" id="navMenu">
               <ul className="navbar-nav ms-auto align-items-lg-center">

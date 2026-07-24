@@ -14,46 +14,23 @@
   padding: 0.6rem 0;
 }
 
-.navbar .navbar-brand {
+.site-header .navbar > .container {
   align-items: center;
-  display: inline-flex !important;
-  gap: 0.7rem;
-  padding: 0;
-  text-decoration: none;
-}
-
-.brand-mark {
-  align-items: center;
-  background: #f0f7f0;
-  border-radius: 12px;
-  color: #355b3b;
-  display: inline-flex;
-  font-size: 0.83rem;
-  font-weight: 900;
-  height: 42px;
-  justify-content: center;
-  letter-spacing: 0.04em;
-  width: 42px;
-}
-
-.brand-copy {
   display: flex;
-  flex-direction: column;
-  line-height: 1.1;
+  justify-content: space-between;
+  margin: 0 auto;
+  max-width: 1200px;
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+  width: 100%;
 }
 
-.brand-name {
-  font-size: 1.02rem;
-  font-weight: 800;
-}
-
-.brand-role {
-  color: rgba(240, 247, 240, 0.72);
-  font-size: 0.7rem;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  margin-top: 0.25rem;
-  text-transform: uppercase;
+.navbar .navbar-brand {
+  border-radius: 999px;
+  font-size: 1rem !important;
+  font-weight: 800 !important;
+  padding: 0.55rem 0.8rem;
+  text-decoration: none;
 }
 
 .navbar .navbar-brand,
@@ -115,29 +92,39 @@
 }
 
 .navbar .navbar-toggler {
+  align-items: center;
+  color: #f0f7f0;
+  display: flex !important;
+  gap: 0.6rem;
   border: 1px solid rgba(255, 255, 255, 0.32) !important;
   border-radius: 12px;
-  padding: 0.5rem 0.65rem;
+  font-size: 0.85rem;
+  font-weight: 800;
+  line-height: 1;
+  padding: 0.65rem 0.75rem;
 }
 
 .navbar .navbar-toggler:focus {
   box-shadow: 0 0 0 0.2rem rgba(240, 247, 240, 0.22);
 }
 
-.navbar .navbar-toggler-icon {
-  background-image: none;
-  position: relative;
+.menu-label {
+  display: inline-block;
 }
 
-.navbar .navbar-toggler-icon:after {
-  content: '';
-  display: block;
-  width: 1.5em;
-  height: 0.2em;
-  background: var(--bs-primary);
+.menu-icon {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 18px;
+}
+
+.menu-icon span {
+  background: #f0f7f0;
   border-radius: 2px;
-  margin: 0.3em 0;
-  box-shadow: 0 0.4em 0 0 var(--bs-primary), 0 0.8em 0 0 var(--bs-primary);
+  display: block;
+  height: 2px;
+  width: 100%;
 }
 
 @media (max-width: 991px) {
@@ -158,9 +145,9 @@
   }
 }
 
-@media (max-width: 380px) {
-  .brand-role {
-    display: none;
+@media (min-width: 992px) {
+  .navbar .navbar-toggler {
+    display: none !important;
   }
 }
 
