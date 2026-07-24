@@ -94,3 +94,42 @@
   color: #6c7f6c;
   font-size: 0.9rem;
 }
+
+@media (max-width: 991px) {
+  .scrapbook-carousel {
+    overflow: hidden;
+  }
+
+  .scrapbook-carousel .carousel-inner {
+    overflow: hidden;
+  }
+
+  .scrapbook-carousel .carousel-item {
+    width: min(70vw, 240px);
+    margin: 0 -40px;
+  }
+
+  .scrapbook-img {
+    max-height: 220px;
+    width: auto;
+  }
+}
+
+@media (max-width: 575px) {
+  .scrapbook-carousel .carousel-item {
+    width: min(78vw, 220px);
+    margin: 0;
+  }
+
+  .scrapbook-carousel .carousel-item:not(.active) {
+    display: none !important;
+  }
+
+  .about-book-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .about-book-card img {
+    height: 180px;
+  }
+}

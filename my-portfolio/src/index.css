@@ -21,8 +21,20 @@
 }
 .navbar-nav {
   display: flex !important;
-  flex-direction: row !important;
-  gap: 0.5rem !important;
+  flex-direction: column !important;
+  gap: 0.25rem !important;
+  width: 100%;
+  padding: 0.75rem 0 1rem;
+}
+
+@media (min-width: 992px) {
+  .navbar-nav {
+    flex-direction: row !important;
+    align-items: center;
+    gap: 0.5rem !important;
+    width: auto;
+    padding: 0;
+  }
 }
 .navbar .nav-link.active,
 .navbar .nav-link:focus,
@@ -48,6 +60,10 @@
   margin: 0.3em 0;
   box-shadow: 0 0.4em 0 0 var(--bs-primary), 0 0.8em 0 0 var(--bs-primary);
 }
+html {
+  overflow-x: hidden;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -55,6 +71,53 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  max-width: 100vw;
+}
+
+img,
+video,
+iframe,
+svg {
+  max-width: 100%;
+  height: auto;
+}
+
+.container,
+.container-fluid {
+  max-width: 100%;
+}
+
+.card,
+.card-body,
+.home-panel,
+.journey-card {
+  min-width: 0;
+}
+
+.card-title,
+h1, h2, h3, h4, h5, h6 {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+@media (max-width: 575px) {
+  .container.py-5 {
+    padding-top: 2rem !important;
+    padding-bottom: 2rem !important;
+  }
+
+  .card .card-body {
+    padding: 1rem;
+  }
+
+  .card .card-body ul {
+    padding-left: 1.1rem;
+  }
+
+  .card .card-body li {
+    font-size: 0.92rem;
+  }
 }
 
 code {

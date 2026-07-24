@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { Routes, Route, NavLink, useLocation } from 'react-router-dom';
+import Collapse from 'bootstrap/js/dist/collapse';
 
 import Home       from './pages/Home';
 import About      from './pages/About';
@@ -30,9 +31,18 @@ function LinkedInRedirect() {
 function App() {
   const location = useLocation();
   const isStandalonePage = location.pathname === '/sigfig-ai';
+
   useEffect(() => {
     // eslint-disable-next-line no-console
     console.log('[App] Render path:', location.pathname);
+  }, [location.pathname]);
+
+  useEffect(() => {
+    const menu = document.getElementById('navMenu');
+    if (!menu || !menu.classList.contains('show')) return;
+
+    const instance = Collapse.getInstance(menu) || new Collapse(menu, { toggle: false });
+    instance.hide();
   }, [location.pathname]);
 
   return (
@@ -43,18 +53,24 @@ function App() {
         <nav className="navbar navbar-expand-lg">
           <div className="container">
             <NavLink className="navbar-brand fw-bold" to="/">Syed Naqvi</NavLink>
-            <button className="navbar-toggler" type="button"
-                    data-bs-toggle="collapse" data-bs-target="#navMenu" aria-expanded="true">
+            <button
+              className="navbar-toggler"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#navMenu"
+              aria-controls="navMenu"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
+            >
               <span className="navbar-toggler-icon"/>
             </button>
-            <div className="collapse navbar-collapse show" id="navMenu">
+            <div className="collapse navbar-collapse" id="navMenu">
               <ul className="navbar-nav ms-auto">
                 {['About','Projects','Experience','Education','Businesses','Contact'].map(page => (
                   <li className="nav-item" key={page}>
                     <NavLink
-                      className="nav-link"
+                      className={({ isActive }) => `nav-link${isActive ? ' active' : ''}`}
                       to={`/${page.toLowerCase()}`}
-                      activeClassName="active"
                     >
                       {page}
                     </NavLink>

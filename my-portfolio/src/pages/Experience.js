@@ -96,17 +96,18 @@ export default function Experience() {
         {experience.map((exp, idx) => (
           <div key={idx} className="col-12 col-lg-6">
             <div className="card  h-100 shadow-sm">
-              <div className="row  g-0 align-items-start">
+              <div className="row g-0 align-items-start">
                 {/* Logo */}
-                <div className="col-4 bg-success col-sm-3 rounded text-center">
+                <div className="col-12 col-sm-3 bg-success rounded text-center">
                   <img
                     src={process.env.PUBLIC_URL + exp.logo}
                     alt={`${exp.company} logo`}
                     className="img-fluid p-3"
+                    style={{ maxHeight: 120, objectFit: 'contain' }}
                   />
                 </div>
                 {/* Details */}
-                <div className="col-8 col-sm-9">
+                <div className="col-12 col-sm-9">
                   <div className="card-body">
                     <h5 className="card-title">
                       {exp.role} @ {exp.company}

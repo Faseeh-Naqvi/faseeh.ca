@@ -4,6 +4,8 @@
    align-items: center;
    display: flex;
    min-height: calc(100vh - 64px);
+   padding-left: 1rem;
+   padding-right: 1rem;
 }
 
 .contact-card {

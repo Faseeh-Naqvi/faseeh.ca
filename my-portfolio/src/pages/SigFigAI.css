@@ -2407,3 +2407,36 @@
   from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }
 }
+
+@media (max-width: 768px) {
+  .sigfig-ai {
+    overflow-x: hidden;
+  }
+
+  .hero-title,
+  .section-title,
+  .pricing-title {
+    font-size: clamp(1.8rem, 8vw, 2.6rem) !important;
+    line-height: 1.15 !important;
+  }
+
+  .hero-subtitle,
+  .section-subtitle {
+    font-size: clamp(1rem, 4vw, 1.2rem) !important;
+  }
+
+  .hero-buttons,
+  .research-actions,
+  .cta-buttons {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .hero-buttons a,
+  .hero-buttons button,
+  .research-btn,
+  .cta-buttons a,
+  .cta-buttons button {
+    width: 100%;
+  }
+}

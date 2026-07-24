@@ -58,15 +58,16 @@ export default function Education() {
             <div className="card h-100 shadow-sm">
               <div className="row g-0 align-items-start">
                 {/* Logo */}
-                <div className="col-4 col-sm-3 bg-success rounded justify-content-start d-flex">
+                <div className="col-12 col-sm-3 bg-success rounded justify-content-center d-flex">
                   <img
                     src={process.env.PUBLIC_URL + ed.logo}
                     alt={`${ed.institution} logo`}
                     className="img-fluid p-3"
+                    style={{ maxHeight: 120, objectFit: 'contain' }}
                   />
                 </div>
                 {/* Details */}
-                <div className="col-8 col-sm-9">
+                <div className="col-12 col-sm-9">
                   <div className="card-body">
                     <h5 className="card-title">{ed.program}</h5>
                     <h6 className="text-muted mb-2">

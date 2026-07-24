@@ -284,27 +284,32 @@
 }
 
 @media (max-width: 767px) {
-  .media-thumbnail {
-    width: 200px;
-    height: 200px;
+  .media-thumbnail,
+  .media-thumbnail:nth-child(1),
+  .media-thumbnail:nth-child(2),
+  .media-thumbnail:nth-child(3),
+  .media-thumbnail:nth-child(4),
+  .media-thumbnail:nth-child(5) {
+    width: min(42vw, 160px);
+    height: min(42vw, 160px);
+    transform: none;
+    opacity: 1;
   }
-  
-  .media-thumbnail:nth-child(2) {
-    width: 170px;
-    height: 170px;
-  }
-  
-  .media-thumbnail:nth-child(3) {
-    width: 140px;
-    height: 140px;
-  }
-  
+
   .imessage-gallery {
-    height: 380px;
+    height: auto;
+    min-height: 280px;
+    padding: 1.25rem 1rem;
+    gap: 0.75rem;
+    justify-content: center;
+  }
+
+  .media-thumbnail:hover {
+    transform: scale(1.05) !important;
   }
   
   .project-card .card-body {
-    padding: 1.5rem;
+    padding: 1.25rem;
   }
   
   .project-card .card-title {
@@ -313,5 +318,31 @@
   
   .project-card .card-text {
     font-size: 0.95rem;
+  }
+
+  .project-card .btn {
+    width: 100%;
+    margin-right: 0;
+  }
+
+  .project-modal .carousel-item img,
+  .project-modal .carousel-item iframe {
+    height: 50vh;
+  }
+}
+
+@media (max-width: 480px) {
+  .imessage-gallery {
+    min-height: 220px;
+  }
+
+  .media-thumbnail,
+  .media-thumbnail:nth-child(1),
+  .media-thumbnail:nth-child(2),
+  .media-thumbnail:nth-child(3),
+  .media-thumbnail:nth-child(4),
+  .media-thumbnail:nth-child(5) {
+    width: min(40vw, 140px);
+    height: min(40vw, 140px);
   }
 }
