@@ -173,17 +173,17 @@
 }
 
 /* Collapse transitions */
-.collapse {
+.business-page .collapse {
   transition: all 0.3s ease;
 }
 
-.collapse:not(.show) {
+.business-page .collapse:not(.show) {
   opacity: 0;
   visibility: hidden;
   max-height: 0;
 }
 
-.collapse.show {
+.business-page .collapse.show {
   opacity: 1;
   visibility: visible;
   max-height: none;

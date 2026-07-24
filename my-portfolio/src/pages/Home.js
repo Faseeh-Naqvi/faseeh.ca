@@ -92,11 +92,6 @@ export default function Home() {
                   Download resume
                 </a>
               </div>
-
-              <a className="home-scroll-cue" href="#reading" aria-label="Scroll to reading section">
-                <span>Keep exploring</span>
-                <FaChevronDown aria-hidden="true" />
-              </a>
             </div>
 
             <div className="col-lg-5">
@@ -121,6 +116,10 @@ export default function Home() {
               </div>
             </div>
           </div>
+          <a className="home-scroll-cue" href="#reading" aria-label="Scroll to reading section">
+            <span>Explore more</span>
+            <FaChevronDown aria-hidden="true" />
+          </a>
         </div>
       </section>
 
