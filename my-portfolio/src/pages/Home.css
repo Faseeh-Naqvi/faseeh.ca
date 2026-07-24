@@ -1,6 +1,6 @@
 /* Home hero section customizations */
 .home-hero {
-  min-height: calc(100vh - 64px);
+  min-height: calc(100vh - 76px);
   background: linear-gradient(180deg, #f0f7f0 60%, #eaf2ea 100%);
   display: flex;
   align-items: center;
@@ -41,6 +41,32 @@
   justify-content: center;
   min-height: 58px;
   white-space: normal;
+}
+
+.home-impact-link {
+  align-items: center;
+  color: var(--bs-dark);
+  display: inline-flex;
+  font-size: 1rem;
+  font-weight: 800;
+  gap: 0.4rem;
+  min-height: 58px;
+  padding: 0.75rem 0.35rem;
+  text-decoration: none;
+}
+
+.home-impact-link span {
+  transition: transform 160ms ease;
+}
+
+.home-impact-link:hover {
+  color: #2d5b36;
+  text-decoration: underline;
+  text-underline-offset: 0.25rem;
+}
+
+.home-impact-link:hover span {
+  transform: translateX(0.2rem);
 }
 
 .home-kicker {
@@ -351,8 +377,7 @@
   }
 
   .home-cta-row .btn {
-    flex: 1 1 220px;
-    width: 100%;
+    flex: 0 1 auto;
   }
 
   .home-panel {
@@ -417,7 +442,9 @@
 }
 
 @media (max-width: 480px) {
-  .home-cta-row .btn {
+  .home-cta-row .btn,
+  .home-impact-link {
+    justify-content: center;
     width: 100%;
   }
 

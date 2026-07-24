@@ -48,7 +48,7 @@ export default function Home() {
                 Syed Faseeh Hayder Naqvi
               </h1>
               <p className="lead home-lead mb-4">
-                I am building, testing, and documenting my attempts at businesses in public. Follow along with my journey, check out my logs, and see what I am learning from each venture.
+                I build, test, and document businesses in public—sharing the decisions, results, and lessons behind each venture.
               </p>
 
               <div className="mb-4">
@@ -57,15 +57,15 @@ export default function Home() {
                 </span>
               </div>
 
-              <div className="home-cta-row d-flex flex-column flex-sm-row flex-wrap gap-3 align-items-center align-items-lg-start mb-4">
+              <div className="home-cta-row d-flex flex-column flex-sm-row flex-wrap gap-3 align-items-stretch align-items-sm-center align-items-lg-start mb-4">
                 <Link to="/businesses" className="btn btn-lg btn-theme rounded-pill px-5 py-3 fs-5">
-                  Follow the business logs
+                  Read the business logs
                 </Link>
                 <Link to="/projects" className="btn btn-lg btn-theme-outline rounded-pill px-5 py-3 fs-5">
-                  See some of my other projects
+                  Explore my projects
                 </Link>
-                <Link to="/experience" className="btn btn-lg btn-theme-outline rounded-pill px-5 py-3 fs-5">
-                  See where I have left an impact
+                <Link to="/experience" className="home-impact-link">
+                  View my experience <span aria-hidden="true">→</span>
                 </Link>
               </div>
 
