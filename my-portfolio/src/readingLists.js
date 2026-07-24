@@ -1,5 +1,10 @@
 export const currentlyReading = [
   {
+    title: 'Les Misérables',
+    author: 'Victor Hugo',
+    isbn: '9780451419439',
+  },
+  {
     title: 'Psycho-Cybernetics',
     author: 'Dr. Maxwell Maltz',
     isbn: '9780399176135',

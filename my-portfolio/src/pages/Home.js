@@ -1,7 +1,7 @@
 import React from 'react';
 import { FaGithub, FaLinkedin, FaStar } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
-import { getBookCoverUrl, readAndTalkAbout } from '../readingLists';
+import { currentlyReading, getBookCoverUrl, readAndTalkAbout } from '../readingLists';
 import './Home.css';
 
 const letterboxdUrl = 'https://letterboxd.com/fazeeh/';
@@ -35,6 +35,7 @@ const latestReview = {
 
 export default function Home() {
   const featuredBooks = readAndTalkAbout.slice(0, 6);
+  const currentBook = currentlyReading[0];
 
   return (
     <>
@@ -123,9 +124,9 @@ export default function Home() {
           <div className="d-flex flex-column flex-lg-row justify-content-between align-items-lg-end gap-3 mb-4">
             <div>
               <span className="home-kicker">Reading list</span>
-              <h2 className="fw-bold mb-2">Books I am excited to talk about</h2>
+              <h2 className="fw-bold mb-2">What I am reading</h2>
               <p className="mb-0">
-                Flip through the covers, then check the full reading corner for what I am reading now.
+                Currently in progress on the left, favorites worth talking about on the right.
               </p>
             </div>
             <Link to="/about" className="btn btn-theme-outline rounded-pill px-4">
@@ -133,48 +134,76 @@ export default function Home() {
             </Link>
           </div>
 
-          <div
-            id="homeBookCarousel"
-            className="carousel slide book-cover-carousel"
-            data-bs-ride="carousel"
-          >
-            <div className="carousel-inner">
-              {featuredBooks.map((book, index) => (
-                <div className={`carousel-item ${index === 0 ? 'active' : ''}`} key={book.title}>
-                  <div className="book-cover-slide">
-                    <div className="book-cover-frame">
-                      <img
-                        src={getBookCoverUrl(book.isbn)}
-                        alt={`${book.title} book cover`}
-                        className="book-cover"
-                      />
-                    </div>
-                    <div className="book-cover-caption">
-                      <h3>{book.title}</h3>
-                      <p>{book.author}</p>
-                    </div>
+          <div className="row g-4 align-items-stretch home-reading-row">
+            <div className="col-lg-5">
+              <div className="home-reading-column">
+                <span className="home-kicker">Currently reading</span>
+                <h3 className="home-reading-heading">In my hands right now</h3>
+                <div className="book-cover-slide book-cover-slide-static">
+                  <div className="book-cover-frame">
+                    <img
+                      src={getBookCoverUrl(currentBook.isbn)}
+                      alt={`${currentBook.title} book cover`}
+                      className="book-cover"
+                    />
+                  </div>
+                  <div className="book-cover-caption">
+                    <h3>{currentBook.title}</h3>
+                    <p>{currentBook.author}</p>
                   </div>
                 </div>
-              ))}
+              </div>
             </div>
-            <button
-              className="carousel-control-prev"
-              type="button"
-              data-bs-target="#homeBookCarousel"
-              data-bs-slide="prev"
-            >
-              <span className="carousel-control-prev-icon" aria-hidden="true" />
-              <span className="visually-hidden">Previous book</span>
-            </button>
-            <button
-              className="carousel-control-next"
-              type="button"
-              data-bs-target="#homeBookCarousel"
-              data-bs-slide="next"
-            >
-              <span className="carousel-control-next-icon" aria-hidden="true" />
-              <span className="visually-hidden">Next book</span>
-            </button>
+
+            <div className="col-lg-7">
+              <div className="home-reading-column">
+                <span className="home-kicker">Favorites</span>
+                <h3 className="home-reading-heading">Books I am excited to talk about</h3>
+                <div
+                  id="homeBookCarousel"
+                  className="carousel slide book-cover-carousel"
+                  data-bs-ride="carousel"
+                >
+                  <div className="carousel-inner">
+                    {featuredBooks.map((book, index) => (
+                      <div className={`carousel-item ${index === 0 ? 'active' : ''}`} key={book.title}>
+                        <div className="book-cover-slide">
+                          <div className="book-cover-frame">
+                            <img
+                              src={getBookCoverUrl(book.isbn)}
+                              alt={`${book.title} book cover`}
+                              className="book-cover"
+                            />
+                          </div>
+                          <div className="book-cover-caption">
+                            <h3>{book.title}</h3>
+                            <p>{book.author}</p>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                  <button
+                    className="carousel-control-prev"
+                    type="button"
+                    data-bs-target="#homeBookCarousel"
+                    data-bs-slide="prev"
+                  >
+                    <span className="carousel-control-prev-icon" aria-hidden="true" />
+                    <span className="visually-hidden">Previous book</span>
+                  </button>
+                  <button
+                    className="carousel-control-next"
+                    type="button"
+                    data-bs-target="#homeBookCarousel"
+                    data-bs-slide="next"
+                  >
+                    <span className="carousel-control-next-icon" aria-hidden="true" />
+                    <span className="visually-hidden">Next book</span>
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
