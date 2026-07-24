@@ -58,6 +58,11 @@
 }
 
 @media (min-width: 992px) {
+  .site-header .navbar-collapse {
+    display: flex !important;
+    flex-basis: auto;
+  }
+
   .navbar-nav {
     flex-direction: row !important;
     align-items: center;
