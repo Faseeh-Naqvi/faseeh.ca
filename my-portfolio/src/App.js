@@ -30,7 +30,6 @@ function LinkedInRedirect() {
 
 function App() {
   const location = useLocation();
-  const isStandalonePage = location.pathname === '/sigfig-ai';
 
   useEffect(() => {
     // eslint-disable-next-line no-console
@@ -45,14 +44,31 @@ function App() {
     instance.hide();
   }, [location.pathname]);
 
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+  }, [location.pathname]);
+
+  const navItems = [
+    { label: 'About', to: '/about' },
+    { label: 'Businesses', to: '/businesses' },
+    { label: 'Projects', to: '/projects' },
+    { label: 'Experience', to: '/experience' },
+    { label: 'Education', to: '/education' },
+  ];
+
   return (
     <>
       <RouteLogger />
-      {/* Only show navbar for non-standalone pages */}
-      {!isStandalonePage && (
-        <nav className="navbar navbar-expand-lg">
+      <header className="site-header">
+        <nav className="navbar navbar-expand-lg" aria-label="Primary navigation">
           <div className="container">
-            <NavLink className="navbar-brand fw-bold" to="/">Syed Naqvi</NavLink>
+            <NavLink className="navbar-brand" to="/" aria-label="Syed Naqvi, home">
+              <span className="brand-mark" aria-hidden="true">SN</span>
+              <span className="brand-copy">
+                <span className="brand-name">Syed Naqvi</span>
+                <span className="brand-role">Builder &amp; developer</span>
+              </span>
+            </NavLink>
             <button
               className="navbar-toggler"
               type="button"
@@ -62,25 +78,33 @@ function App() {
               aria-expanded="false"
               aria-label="Toggle navigation"
             >
-              <span className="navbar-toggler-icon"/>
+              <span className="navbar-toggler-icon" />
             </button>
             <div className="collapse navbar-collapse" id="navMenu">
-              <ul className="navbar-nav ms-auto">
-                {['About','Projects','Experience','Education','Businesses','Contact'].map(page => (
-                  <li className="nav-item" key={page}>
+              <ul className="navbar-nav ms-auto align-items-lg-center">
+                {navItems.map(({ label, to }) => (
+                  <li className="nav-item" key={to}>
                     <NavLink
                       className={({ isActive }) => `nav-link${isActive ? ' active' : ''}`}
-                      to={`/${page.toLowerCase()}`}
+                      to={to}
                     >
-                      {page}
+                      {label}
                     </NavLink>
                   </li>
                 ))}
+                <li className="nav-item nav-contact-item">
+                  <NavLink
+                    className={({ isActive }) => `nav-link nav-contact${isActive ? ' active' : ''}`}
+                    to="/contact"
+                  >
+                    Contact
+                  </NavLink>
+                </li>
               </ul>
             </div>
           </div>
         </nav>
-      )}
+      </header>
 
       <Routes>
         <Route path="/" element={<Home/>}/>
