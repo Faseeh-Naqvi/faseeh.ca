@@ -1,5 +1,5 @@
 import React from 'react';
-import { FaGithub, FaLinkedin, FaStar } from 'react-icons/fa';
+import { FaChevronDown, FaGithub, FaLinkedin, FaStar } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { currentlyReading, getBookCoverUrl, readAndTalkAbout } from '../readingLists';
 import './Home.css';
@@ -92,6 +92,11 @@ export default function Home() {
                   Download resume
                 </a>
               </div>
+
+              <a className="home-scroll-cue" href="#reading" aria-label="Scroll to reading section">
+                <span>Keep exploring</span>
+                <FaChevronDown aria-hidden="true" />
+              </a>
             </div>
 
             <div className="col-lg-5">
@@ -119,7 +124,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="home-section home-section-alt">
+      <section className="home-section home-section-alt" id="reading">
         <div className="container">
           <div className="d-flex flex-column flex-lg-row justify-content-between align-items-lg-end gap-3 mb-4">
             <div>
