@@ -107,7 +107,7 @@ export default function Home() {
                   <p className="small text-uppercase fw-bold mb-1">Latest focus</p>
                   <h2 className="h4 fw-bold mb-2">Building businesses and sharing the receipts.</h2>
                   <p className="mb-3">
-                    My business page tracks ideas, phase changes, failures, and lessons learned so the site feels like a real journey, not just a highlight reel.
+                    My business page tracks ideas, phase changes, failures, and lessons learned.
                   </p>
                   <Link to="/businesses" className="btn btn-sm btn-theme rounded-pill px-4">
                     Read the logs
