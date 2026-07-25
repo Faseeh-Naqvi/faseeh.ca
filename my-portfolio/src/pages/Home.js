@@ -43,12 +43,12 @@ export default function Home() {
         <div className="container">
           <div className="row align-items-center g-5">
             <div className="col-lg-7 text-center text-lg-start">
-              <span className="home-kicker">Welcome to my website!</span>
+              <span className="home-kicker">Hello!</span>
               <h1 className="display-2 fw-bold mb-3 home-title" style={{ color: 'var(--bs-dark)' }}>
                 Syed Faseeh Hayder Naqvi
               </h1>
               <p className="lead home-lead mb-4">
-                I build, test, and document businesses in public—sharing the decisions, results, and lessons behind each venture.
+                I build, test, and document businesses. Sharing the decisions, results, and lessons behind each venture along the way. It is like an art peice for me.
               </p>
 
               <div className="mb-4">
