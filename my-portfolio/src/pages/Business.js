@@ -16,8 +16,7 @@ const frozenDefinition = 'Frozen means the venture is paused in its current phas
 const businesses = [
 	{
 		name: 'Sigfig AI Security Services',
-		status: 'pre-launch',
-		frozen: true,
+		status: 'active',
 		note: 'AI-powered tailgating detection for gyms. Preventing revenue loss and improving security with 24/7 monitoring.',
 		links: [
 			{ url: '/projects#sigfig-prototype', icon: <FaGlobe />, internal: true, label: 'View Prototype' },
@@ -39,6 +38,9 @@ const businesses = [
 			{ date: '2026-06-21', text: 'Applied to an accelerator. The continuation of this business is dependent on this accelerator and its funding.' },
 			{ date: '2026-07-16', text: 'Western Uni accelerator interview. We prepped for a few days. It was quite stressful beforehand, but the interview was easier than we thought.' },
 			{ date: '2026-07-24', text: 'Working on a Claude artifact dashboard to automate outreach.' },
+			{ date: '2026-07-24', text: 'Found out that one of our key targets, Vive Fitness, has a GymMaster system already. It is concerning that companies that do access control are offering the same solution as us. It is much less friction than us. Although I do believe our system is more robust and targeted to revenue recovery, not to mention we are access control system agnostic. GymMaster tailgating would only work well with a GymMaster system installed already, increasing the switching cost. One big concern is that they are cheaper than us at the moment. To be fair, we were kind of shooting in the dark with our pricing. We need to adjust accordingly. They are at (~$56 CAD) $40 USD a month with (~$560 CAD) $400 USD one time cost. Our shot in the dark is 150-300 CAD monthly and 800-1500 CAD one time. We need to drastically lower or adjust features in a way that it makes up for the money.' },
+			{ date: '2026-07-31', text: 'Got the official acceptance.' },
+			{ date: '2026-08-05', text: 'Officially accepted the offer to join. This is now unfrozen and active. Trying to get clients. Might reach out to that old potential who dropped out and offer it for free for learning. Trust is big and I fear I may have lost his. I must do more robust research on pricing before putting a price. And also offer for free always when starting out. The knowledge is much more valuable than any money I could earn at the start. Knowledge compounds.' },
 		],
 	},
 	{
@@ -67,6 +69,7 @@ const businesses = [
 			{ date: '2026-03-02', text: 'Paused work on the app.' },
 			{ date: '2026-04-03', text: 'Started looking into it again. Still figuring out Play Store compliance and technical feasibility due to strict tracking laws.' },
 			{ date: '2026-06-25', text: 'Name changed again. Now it is an unnamed short-form content addiction therapy app. I am planning a research study to back this. If it goes well, it might launch as a standalone app. I really care about this problem because I and many others close to me have faced it. More to come soon. This is now in the research phase and I will be working on it in the coming months.' },
+			{ date: '2026-08-05', text: 'I used a new LLM council skill over the past few days on this idea and I have landed on something I think could be useful. Right now, I am working on reaching out to people in the space, doctors, counsellors, coaches, etc... to see if this tool would be useful for them with their patients.' },
 		],
 		
 	},
@@ -167,19 +170,21 @@ const businesses = [
 	{
 		name: 'Loop',
 		status: 'research',
-		note: 'App focused on open and closed loops — helping people track unfinished commitments and actually close them.',
+		frozen: true,
+		note: 'App focused on open and closed loops; helping people track unfinished commitments and actually close them.',
 		updates: [
 			{ date: '2026-06-24', text: 'A good friend called me and mentioned a problem he was facing in his career. I looked it over and we started talking about potential solutions. We kind of spiraled out of control and ended up with a huge app.' },
 			{ date: '2026-06-28', text: 'Sat down and started real research on this. Worked backward and cut down the product to its key functionality. Now it is in validation, trying to figure out if this would actually benefit the initial customer base. Reaching out to customers so we can use their feedback to narrow down the idea.' },
 			{ date: '2026-07-17', text: 'Talked to a friend and realized similar things already exist as internal tools. Debated the idea with Claude and landed on the fact that this is too broad. It looks cool, but other companies have tried the whole "communication network graph" angle and failed. I need to differentiate and actually reduce friction somewhere.' },
-			{ date: '2026-07-20', text: 'Pivoted to a tighter version called Loop, prioritizing open and closed loops. Asked around and got negative responses from friends and mentors. I disagree though — based on market research, there are many competitors doing similar but different things. I need to ideate on this enough to make it better and more useful.' },
+			{ date: '2026-07-20', text: 'Pivoted to a tighter version called Loop, prioritizing open and closed loops. Asked around and got negative responses from friends and mentors. I disagree though. Based on market research, there are many competitors doing similar but different things. I need to ideate on this enough to make it better and more useful.' },
+			{ date: '2026-08-05', text: 'Freezing. I need to wait for a pivoting idea to come to me. I have talked to people in industry and debated over it and it seems that this might not be as big of a problem as I thought it was. This will be super tricky to get off ground and I suspect the market education cost will be too much. I need to figure out how to lower the activation potential while differentiating from similar competitors in the space, like Kai.' },
 		],
 		links: [],
 	},
 	{
 		name: 'AI Personal Coach',
 		status: 'attempted',
-		note: 'AI coach that calls and texts you, holds memory, reminds you of goals, and tries to convince you to follow through — including spam-calling to wake you up like a friend.',
+		note: 'AI coach that calls and texts you, holds memory, reminds you of goals, and tries to convince you to follow through. It can even spam-call you to wake you up like a friend.',
 		updates: [
 			{ date: '2026-07-10', text: 'Came up with an AI personal coach that physically calls and texts you. You can call or text it as much as you want. It holds memory, reminds you of things through call and text, is specifically geared toward helping you achieve your goals, and tries to convince you to do them. It can even spam call you to wake you up like a friend. Boardy is similar, but I think this is different enough.' },
 			{ date: '2026-07-22', text: 'Did some market research and asked around. This did not seem useful. Letting it go.' },
