@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FaGlobe, FaInstagram, FaYoutube, FaLinkedin, FaTiktok } from 'react-icons/fa';
 import './Business.css';
@@ -17,9 +17,11 @@ const businesses = [
 	{
 		name: 'Sigfig AI Security Services',
 		status: 'active',
+		featured: true,
 		note: 'AI-powered tailgating detection for gyms. Preventing revenue loss and improving security with 24/7 monitoring.',
 		links: [
-			{ url: '/projects#sigfig-prototype', icon: <FaGlobe />, internal: true, label: 'View Prototype' },
+			{ url: 'https://www.sigfigsecurity.com/dashboard?mode=demo', icon: <FaGlobe />, label: 'View demo' },
+			{ url: '/projects#sigfig-prototype', icon: <FaGlobe />, internal: true, label: '(old v1 prototype)', quiet: true },
 			{ url: 'https://sigfigsecurity.com', icon: <FaGlobe /> },
 			{ url: 'https://www.linkedin.com/company/sigfig-ai/', icon: <FaLinkedin /> },
 			{ url: 'https://www.instagram.com/sigfigsecurity/', icon: <FaInstagram /> },
@@ -41,12 +43,21 @@ const businesses = [
 			{ date: '2026-07-24', text: 'Found out that one of our key targets, Vive Fitness, has a GymMaster system already. It is concerning that companies that do access control are offering the same solution as us. It is much less friction than us. Although I do believe our system is more robust and targeted to revenue recovery, not to mention we are access control system agnostic. GymMaster tailgating would only work well with a GymMaster system installed already, increasing the switching cost. One big concern is that they are cheaper than us at the moment. To be fair, we were kind of shooting in the dark with our pricing. We need to adjust accordingly. They are at (~$56 CAD) $40 USD a month with (~$560 CAD) $400 USD one time cost. Our shot in the dark is 150-300 CAD monthly and 800-1500 CAD one time. We need to drastically lower or adjust features in a way that it makes up for the money.' },
 			{ date: '2026-07-31', text: 'Got the official acceptance.' },
 			{ date: '2026-08-05', text: 'Officially accepted the offer to join. This is now unfrozen and active. Trying to get clients. Might reach out to that old potential who dropped out and offer it for free for learning. Trust is big and I fear I may have lost his. I must do more robust research on pricing before putting a price. And also offer for free always when starting out. The knowledge is much more valuable than any money I could earn at the start. Knowledge compounds.' },
+			{ date: '2026-09-29', text: 'Sat down and did a bunch of cold calls. I somehow climbed the corporate ladder at a franchise in Michigan. It started with the front desk, then she passed me to her manager. As soon as he picked up, he said, "Stop calling me. I don\'t want to buy anything." I don\'t fully know how, but I played it off and kept him interested by mentioning that we are doing it for free. He passed us to a higher manager, who then gave us the CEO\'s email. The CEO replied once. When we tried to book a meeting, he ghosted us.' },
+			{ date: '2026-10-01', text: 'Got our first accelerator cheque a bit ago. I put all of it into a Wise business account after a friend recommended it. Wise closed the account, and now the money is stuck. I can\'t submit a ticket because the account is banned, so I have to call. Their phone lines are only open on the weekend, so that is when I have to call. About $3k is stuck in there right now.' },
+			{ date: '2026-10-02', text: 'Finalized our first pilot. They messaged a "yes" on July 28, but we only got the actual plan down today. Set up a virtual meeting with him for the coming Tuesday.' },
+			{ date: '2026-10-06', text: 'Had two meetings booked today. One in Montreal, and one in Georgina, Ontario.' },
+			{ date: '2026-10-09', text: 'The Georgina location started ghosting us, so we no longer have contact with them. I also reached out to Hamilton again, and they ghosted as well.' },
+			{ date: '2026-10-16', text: 'Went in and did our first install in Montreal. It was scary, because we only got the contract signed the day before. We had sent a waitlist agreement much earlier, but it never got signed.' },
+			{ date: '2026-10-19', text: 'Got introduced to our mentor. He is very cool and energetic, and I am expecting great things from this relationship.' },
+			{ date: '2026-10-30', text: 'Getting slowly used to the meetings. There are a lot of them. I am trying to talk to as many people as possible. We had an intro with a potential champion, so hopefully that goes well. I am also considering bringing on a fourth co-founder in electrical engineering. He was my roommate, and he has good manufacturing experience. He might be a strong addition to the team, and he fits where I want the company to go. Our hardware costs are too high, and this would help.' },
 		],
 	},
 	{
 		name: 'Unnamed Short Form Content Addiction Therapy App',
 		alias: 'Reelranked / Brainrot App',
 		status: 'research',
+		frozen: true,
 		note: 'B2C app to help people track and reduce short-form content addiction.',
 		links: [
 			{ url: 'https://reelranked.com', icon: <FaGlobe /> },
@@ -70,6 +81,7 @@ const businesses = [
 			{ date: '2026-04-03', text: 'Started looking into it again. Still figuring out Play Store compliance and technical feasibility due to strict tracking laws.' },
 			{ date: '2026-06-25', text: 'Name changed again. Now it is an unnamed short-form content addiction therapy app. I am planning a research study to back this. If it goes well, it might launch as a standalone app. I really care about this problem because I and many others close to me have faced it. More to come soon. This is now in the research phase and I will be working on it in the coming months.' },
 			{ date: '2026-08-05', text: 'I used a new LLM council skill over the past few days on this idea and I have landed on something I think could be useful. Right now, I am working on reaching out to people in the space, doctors, counsellors, coaches, etc... to see if this tool would be useful for them with their patients.' },
+			{ date: '2026-11-01', text: 'Freezing this. I am focusing on getting Sigfig off the ground.' },
 		],
 		
 	},
@@ -279,33 +291,159 @@ const businesses = [
 ];
 
 const formatStatus = (status) => status
+	.toLowerCase()
 	.split('-')
 	.map((word) => word.charAt(0).toUpperCase() + word.slice(1))
 	.join(' ');
 
-const getSortedUpdates = (updates = []) => [...updates].sort((a, b) => a.date.localeCompare(b.date));
+const newestFirst = (updates = []) => [...updates].sort((a, b) => b.date.localeCompare(a.date));
 
-const statusOrder = {
-	active: 0,
-	'pre-launch': 1,
-	research: 2,
-	ideation: 3,
-	attempted: 4,
+const slugify = (name) => name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+
+const parseIso = (iso) => {
+	const [year, month, day] = iso.split('-').map(Number);
+	return new Date(year, month - 1, day);
 };
 
-const getBusinessSortValue = (business) => {
-	const status = business.status.toLowerCase();
+const formatFull = (iso) => parseIso(iso).toLocaleDateString('en-US', {
+	month: 'short',
+	day: 'numeric',
+	year: 'numeric',
+});
 
-	if (status === 'attempted') {
-		return 200 + statusOrder.attempted;
+const formatMonth = (key) => {
+	const [year, month] = key.split('-').map(Number);
+	return new Date(year, month - 1, 1).toLocaleDateString('en-US', {
+		month: 'long',
+		year: 'numeric',
+	});
+};
+
+const daysAgo = (iso) => {
+	const today = new Date();
+	const start = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+	return Math.round((start - parseIso(iso)) / 86400000);
+};
+
+const relativeLabel = (iso) => {
+	const days = daysAgo(iso);
+	if (days < 0 || days > 45) return null;
+	if (days === 0) return 'today';
+	if (days === 1) return 'yesterday';
+	if (days < 14) return `${days} days ago`;
+	const weeks = Math.round(days / 7);
+	return weeks === 1 ? '1 week ago' : `${weeks} weeks ago`;
+};
+
+const excerpt = (text, max = 180) => {
+	const clean = text.replace(/\s+/g, ' ').trim();
+	if (clean.length <= max) return clean;
+	const sliced = clean.slice(0, max);
+	const lastSpace = sliced.lastIndexOf(' ');
+	const cut = lastSpace > 100 ? sliced.slice(0, lastSpace) : sliced;
+	return `${cut.trim()}…`;
+};
+
+const updatesSpan = (updates = []) => {
+	if (!updates.length) return null;
+	const dates = updates.map((update) => update.date).sort();
+	const count = updates.length;
+	return `${count} update${count === 1 ? '' : 's'}, from ${formatMonth(dates[0].slice(0, 7))} to ${formatMonth(dates[dates.length - 1].slice(0, 7))}. Newest first.`;
+};
+
+const newestUpdate = (items) => items
+	.flatMap((business) => business.updates || [])
+	.sort((a, b) => b.date.localeCompare(a.date))[0];
+
+const linkLabel = (link) => {
+	if (link.label) return link.label;
+	const url = link.url || '';
+	if (url.includes('linkedin.com')) return 'LinkedIn';
+	if (url.includes('instagram.com')) return 'Instagram';
+	if (url.includes('tiktok.com')) return 'TikTok';
+	if (url.includes('youtube.com')) return 'YouTube';
+	try {
+		return new URL(url).hostname.replace(/^www\./, '');
+	} catch {
+		return 'Website';
 	}
+};
 
-	return (business.frozen ? 100 : 0) + (statusOrder[status] ?? 99);
+const laneOf = (business) => {
+	if (business.status.toLowerCase() === 'attempted') return 'tried';
+	if (business.frozen) return 'ice';
+	return 'motion';
+};
+
+const lanes = [
+	{ id: 'all', label: 'All' },
+	{ id: 'motion', label: 'Still moving' },
+	{ id: 'ice', label: 'On ice' },
+	{ id: 'tried', label: 'Tried' },
+];
+
+const laneTitle = {
+	motion: 'Still moving',
+	ice: 'On ice',
+	tried: 'What I tried',
+};
+
+const laneCopy = {
+	ice: 'Paused where they are.',
+	tried: 'They stopped. The useful part is the lesson at the end.',
+};
+
+const groupByMonth = (entries) => {
+	const groups = [];
+	entries.forEach((entry) => {
+		const key = entry.date.slice(0, 7);
+		const last = groups[groups.length - 1];
+		if (!last || last.key !== key) {
+			groups.push({ key, label: formatMonth(key), entries: [entry] });
+		} else {
+			last.entries.push(entry);
+		}
+	});
+	return groups;
+};
+
+const splitByRecentMonths = (sorted, monthsToKeep) => {
+	const keys = [];
+	sorted.forEach((entry) => {
+		const key = entry.date.slice(0, 7);
+		if (!keys.includes(key)) keys.push(key);
+	});
+	if (keys.length <= monthsToKeep) return { recent: sorted, earlier: [] };
+	const keep = new Set(keys.slice(0, monthsToKeep));
+	return {
+		recent: sorted.filter((entry) => keep.has(entry.date.slice(0, 7))),
+		earlier: sorted.filter((entry) => !keep.has(entry.date.slice(0, 7))),
+	};
+};
+
+const venturePreview = (business) => {
+	const latest = newestFirst(business.updates)[0];
+	if (latest) {
+		return { kicker: formatFull(latest.date), text: excerpt(latest.text) };
+	}
+	if (business.lessons?.[0]) {
+		return { kicker: 'Lesson', text: excerpt(business.lessons[0]) };
+	}
+	return null;
+};
+
+const readLabel = (business, open) => {
+	if (open) return 'Close';
+	const notes = business.updates?.length || 0;
+	const lessons = business.lessons?.length || 0;
+	if (notes) return `Read ${notes} update${notes === 1 ? '' : 's'}`;
+	if (lessons === 1) return 'Read lesson';
+	if (lessons) return `Read ${lessons} lessons`;
+	return 'Read';
 };
 
 function StatusBadge({ status }) {
 	const base = status.toLowerCase();
-
 	return (
 		<span className={`status-badge status-${base}`} title={statusDefinitions[base]}>
 			{formatStatus(status)}
@@ -321,165 +459,384 @@ function FrozenBadge() {
 	);
 }
 
-/* ---------- PAGE ---------- */
-export default function Businesses() {
-	const phaseCounts = Object.keys(statusDefinitions).map((status) => ({
-		status,
-		count: businesses.filter((business) => business.status.toLowerCase() === status).length,
-	}));
-	const orderedBusinesses = [...businesses].sort((a, b) => getBusinessSortValue(a) - getBusinessSortValue(b));
+function VentureLinks({ links = [] }) {
+	if (!links.length) return null;
 
 	return (
-		<div className="container py-5 business-page">
-			<div className="business-hero mb-4">
-				<h1 className="fw-bold mb-2 text-center">Businesses & Ventures</h1>
-				<p className="text-center text-muted">
-					A portfolio of entrepreneurial ventures, experiments, and lessons learned
-				</p>
-			</div>
+		<div className="log-links">
+			{links.map((link) => {
+				const label = linkLabel(link);
+				const content = (
+					<>
+						<span className="log-link-icon" aria-hidden="true">{link.icon}</span>
+						{label}
+					</>
+				);
 
-			<section className="phase-board mb-4" aria-label="Business phase key">
-				<div className="phase-board-header">
-					<div>
-						<h2>Phase Key</h2>
-						<p>Current stage for each idea, plus whether it is frozen.</p>
-					</div>
-				</div>
-				<div className="phase-scoreboard row g-3 mb-3">
-					{phaseCounts.map(({ status, count }) => (
-						<div key={status} className="col-6 col-md">
-							<div className={`phase-score-card phase-${status}`}>
-								<h6>{formatStatus(status)}</h6>
-								<div>{count}</div>
-								<small>{statusDefinitions[status]}</small>
-							</div>
-						</div>
-					))}
-				</div>
-				<div className="phase-key-grid">
-					{phaseCounts.map(({ status }) => (
-						<div key={status} className={`phase-key-card phase-${status}`}>
-							<div className="phase-key-topline">
-								<StatusBadge status={status} />
-							</div>
-							<p>{statusDefinitions[status]}</p>
-						</div>
-					))}
-					<div className="phase-key-card phase-frozen">
-						<div className="phase-key-topline">
-							<FrozenBadge />
-						</div>
-						<p>{frozenDefinition}</p>
-					</div>
-				</div>
-			</section>
+				const className = link.quiet ? 'log-link log-link-quiet' : 'log-link';
 
-			<div className="row g-4">
-			{orderedBusinesses.map((b, i) => (
-				<div key={i} className="col-sm-6 col-lg-4">
-					<div className={`business-card card h-100 card-${b.status.toLowerCase()}${b.frozen ? ' card-frozen' : ''}`}>
-						<div className="card-body d-flex flex-column">
-							<div className="business-card-header">
-								<h5 className="card-title mb-0">{b.name}</h5>
-								<div className="business-badges">
-									<StatusBadge status={b.status} />
-									{b.frozen && <FrozenBadge />}
-								</div>
-							</div>
+				if (link.internal) {
+					return (
+						<Link key={link.url} to={link.url} className={className}>
+							{content}
+						</Link>
+					);
+				}
 
-								{/* Alias */}
-								{b.alias && (
-									<small className="text-muted">AKA "{b.alias}"</small>
-								)}
+				return (
+					<a
+						key={link.url}
+						href={link.url}
+						className="log-link"
+						target="_blank"
+						rel="noopener noreferrer"
+						aria-label={`${label} (opens in a new tab)`}
+					>
+						{content}
+					</a>
+				);
+			})}
+		</div>
+	);
+}
 
-								{/* Note */}
-								<p className="card-text flex-grow-1 mt-2">{b.note}</p>
-							{/* Updates Section */}
-							{b.updates && b.updates.length > 0 && (
-								<div className="business-section mt-3 mb-2">
-									<button
-										className="btn btn-sm btn-outline-secondary w-100 business-toggle"
-										type="button"
-										data-bs-toggle="collapse"
-										data-bs-target={`#updates-${i}`}
-										aria-expanded="false"
-										aria-controls={`updates-${i}`}
-									>
-										Updates ({b.updates.length})
-									</button>
-									<div className="collapse mt-2" id={`updates-${i}`}>
-										<div className="updates-panel">
-											{getSortedUpdates(b.updates).map((u, k) => (
-												<div key={`${u.date}-${k}`} className="update-item">
-													<time dateTime={u.date}>{u.date}</time>
-													<p>{u.text}</p>
-												</div>
-											))}
-										</div>
-									</div>
-								</div>
-							)}
+function LogEntry({ entry, isLatest }) {
+	const relative = relativeLabel(entry.date);
 
-							{/* Lessons Section */}
-							{b.lessons && b.lessons.length > 0 && (
-								<div className="business-section mt-3 mb-2">
-									<button
-										className="btn btn-sm btn-outline-warning w-100 business-toggle"
-										type="button"
-										data-bs-toggle="collapse"
-										data-bs-target={`#lessons-${i}`}
-										aria-expanded="false"
-										aria-controls={`lessons-${i}`}
-									>
-										Key Lessons ({b.lessons.length})
-									</button>
-									<div className="collapse mt-2" id={`lessons-${i}`}>
-										<div className="lessons-panel">
-											<ul className="mb-0 ps-3">
-												{b.lessons.map((lesson, k) => (
-													<li key={k} className="small text-dark mb-1">{lesson}</li>
-												))}
-											</ul>
-										</div>
-									</div>
-								</div>
-							)}
+	return (
+		<li className={isLatest ? 'log-entry is-latest' : 'log-entry'}>
+			<p className="log-when">
+				<time dateTime={entry.date}>{formatFull(entry.date)}</time>
+				{relative && <span className="log-relative">{relative}</span>}
+				{isLatest && <span className="log-latest-tag">Latest</span>}
+			</p>
+			<p className="log-body">{entry.text}</p>
+		</li>
+	);
+}
 
-								{/* Links */}
-								{(b.links || []).length > 0 && (
-									<div className="business-links">
-										{b.links.map((l, k) => 
-											l.internal ? (
-												<Link
-													key={k}
-													to={l.url}
-													className="btn btn-outline-primary btn-sm d-inline-flex align-items-center justify-content-center"
-													style={{ gap: '0.5rem' }}
-												>
-													{l.icon}
-													{l.label || 'View Details'}
-												</Link>
-											) : (
-												<a
-													key={k}
-													href={l.url}
-													className="btn btn-outline-primary btn-sm d-inline-flex align-items-center justify-content-center"
-													target="_blank"
-													rel="noopener noreferrer"
-													style={{ gap: '0.5rem' }}
-												>
-													{l.icon}
-													{l.label || 'Visit'}
-												</a>
-											)
-										)}
-									</div>
-								)}
-							</div>
-						</div>
-					</div>
+function MonthGroups({ entries, latest }) {
+	return groupByMonth(entries).map((group) => (
+		<section key={group.key} className="log-month-group">
+			<p className="log-month">{group.label}</p>
+			<ol className="log-entries">
+				{group.entries.map((entry, index) => (
+					<LogEntry
+						key={`${group.key}-${index}`}
+						entry={entry}
+						isLatest={entry === latest}
+					/>
 				))}
+			</ol>
+		</section>
+	));
+}
+
+function UpdateLog({ updates, recentMonths = 0 }) {
+	const [showEarlier, setShowEarlier] = useState(false);
+	const sorted = newestFirst(updates);
+	if (!sorted.length) return null;
+
+	const { recent, earlier } = recentMonths
+		? splitByRecentMonths(sorted, recentMonths)
+		: { recent: sorted, earlier: [] };
+	const latest = sorted[0];
+
+	return (
+		<div className="update-log">
+			<MonthGroups entries={recent} latest={latest} />
+			{earlier.length > 0 && (
+				<>
+					<button
+						type="button"
+						className="log-earlier"
+						aria-expanded={showEarlier}
+						onClick={() => setShowEarlier((open) => !open)}
+					>
+						{showEarlier ? 'Hide earlier updates' : `Show ${earlier.length} earlier updates`}
+					</button>
+					{showEarlier && <MonthGroups entries={earlier} latest={latest} />}
+				</>
+			)}
+		</div>
+	);
+}
+
+function Lessons({ lessons = [] }) {
+	if (!lessons.length) return null;
+
+	return (
+		<aside className="log-lessons">
+			<p className="log-lessons-title">What I took from it</p>
+			<ul>
+				{lessons.map((lesson) => (
+					<li key={lesson}>{lesson}</li>
+				))}
+			</ul>
+		</aside>
+	);
+}
+
+function VentureRow({ business, open, onToggle }) {
+	const slug = slugify(business.name);
+	const panelId = `${slug}-log`;
+	const notes = business.updates?.length || 0;
+	const lessonCount = business.lessons?.length || 0;
+	const canOpen = notes + lessonCount > 0;
+	const preview = venturePreview(business);
+
+	const stateClass = `status-${business.status.toLowerCase()}${business.frozen ? ' is-frozen' : ''}`;
+
+	return (
+		<article className={`venture ${stateClass}${open ? ' is-open' : ''}`} id={slug}>
+			<div className="venture-top">
+				<div className="venture-heading">
+					<h3>{business.name}</h3>
+					<div className="log-badges">
+						<StatusBadge status={business.status} />
+						{business.frozen && <FrozenBadge />}
+					</div>
+				</div>
+				{canOpen && (
+					<button
+						type="button"
+						className="venture-toggle"
+						aria-expanded={open}
+						aria-controls={panelId}
+						onClick={onToggle}
+					>
+						{readLabel(business, open)}
+					</button>
+				)}
 			</div>
+			{business.alias && <p className="venture-alias">Also called {business.alias}</p>}
+			<p className="venture-note">{business.note}</p>
+			{preview && !open && (
+				<p className="venture-preview">
+					<span>{preview.kicker}</span>
+					{preview.text}
+				</p>
+			)}
+			<VentureLinks links={business.links} />
+			{open && (
+				<div className="log-panel" id={panelId}>
+					<UpdateLog updates={business.updates} />
+					<Lessons lessons={business.lessons} />
+					{notes > 4 && (
+						<button type="button" className="log-earlier" onClick={onToggle}>
+							Close
+						</button>
+					)}
+				</div>
+			)}
+		</article>
+	);
+}
+
+export default function Businesses() {
+	const [lane, setLane] = useState('all');
+	const [openSlug, setOpenSlug] = useState(null);
+	const featured = businesses.find((business) => business.featured);
+	const phaseSummary = ['active', 'pre-launch', 'research', 'ideation', 'attempted']
+		.map((status) => {
+			const matching = businesses.filter((business) => business.status.toLowerCase() === status);
+			return {
+				status,
+				count: matching.length,
+				frozenCount: matching.filter((business) => business.frozen).length,
+				label: status === 'attempted' ? 'Failures' : formatStatus(status),
+			};
+		})
+		.filter((item) => item.count > 0);
+	const frozenTotal = businesses.filter((business) => business.frozen).length;
+	const showLane = (nextLane) => {
+		setLane(nextLane);
+		setOpenSlug(null);
+		const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+		document.getElementById('other-ventures')?.scrollIntoView({
+			behavior: reduceMotion ? 'auto' : 'smooth',
+			block: 'start',
+		});
+	};
+	const archive = businesses.filter((business) => business !== featured);
+	const newest = newestUpdate(businesses);
+	const counts = lanes
+		.map((item) => ({
+			...item,
+			count: item.id === 'all'
+				? archive.length
+				: archive.filter((business) => laneOf(business) === item.id).length,
+		}))
+		.filter((item) => item.id === 'all' || item.count > 0);
+	const visibleGroups = ['motion', 'ice', 'tried'].filter((id) => lane === 'all' || lane === id);
+
+	return (
+		<div className="container py-5">
+			<main className="business-log">
+				<header className="log-hero">
+					<figure className="summary-chart" aria-label={`Summary of ventures by phase, including ${frozenTotal} frozen`}>
+						<div className="summary-bar" aria-hidden="true">
+							{phaseSummary.map((item) => {
+								const liveCount = item.count - item.frozenCount;
+								return (
+									<span key={item.status} className="summary-segment-wrap" style={{ flexGrow: item.count }}>
+										{liveCount > 0 && (
+											<span className={`summary-segment summary-${item.status}`} style={{ flexGrow: liveCount }} />
+										)}
+										{item.frozenCount > 0 && (
+											<span className={`summary-segment summary-${item.status} is-frozen`} style={{ flexGrow: item.frozenCount }} />
+										)}
+									</span>
+								);
+							})}
+						</div>
+						<ul className="summary-legend">
+							{phaseSummary.map((item) => {
+								const body = (
+									<>
+										<span className={`summary-swatch summary-${item.status}`} aria-hidden="true" />
+										<span className="summary-count">{item.count}</span>
+										<span className="summary-label">{item.label}</span>
+									</>
+								);
+								return (
+									<li key={item.status} className={`summary-stat summary-${item.status}`}>
+										{item.status === 'attempted' ? (
+											<button
+												type="button"
+												className="summary-hit"
+												title={statusDefinitions.attempted}
+												onClick={() => showLane('tried')}
+											>
+												{body}
+											</button>
+										) : (
+											<span className="summary-hit" title={statusDefinitions[item.status]}>
+												{body}
+											</span>
+										)}
+									</li>
+								);
+							})}
+							{frozenTotal > 0 && (
+								<li className="summary-stat summary-frozen">
+									<button
+										type="button"
+										className="summary-hit"
+										title={frozenDefinition}
+										onClick={() => showLane('ice')}
+									>
+										<span className="summary-swatch summary-frozen" aria-hidden="true" />
+										<span className="summary-count">{frozenTotal}</span>
+										<span className="summary-label">Frozen</span>
+									</button>
+								</li>
+							)}
+						</ul>
+					</figure>
+					<p className="log-kicker">Business log</p>
+					<h1>Businesses</h1>
+					<p className="log-intro">
+						A log of what I am building, what I paused, and what I tried.
+						{newest && (
+							<>
+								{' '}
+								The current company is open below, newest update first. Last update {formatFull(newest.date)}.
+							</>
+						)}
+					</p>
+					<a className="log-jump" href="#other-ventures">The rest of the log</a>
+				</header>
+
+				{featured && (
+					<article className={`log-feature status-${featured.status.toLowerCase()}${featured.frozen ? ' is-frozen' : ''}`} id={slugify(featured.name)} aria-labelledby="current-company">
+						<p className="log-kicker">Right now</p>
+						<div className="log-feature-head">
+							<h2 id="current-company">{featured.name}</h2>
+							<div className="log-badges">
+								<StatusBadge status={featured.status} />
+								{featured.frozen && <FrozenBadge />}
+							</div>
+						</div>
+						<p className="log-dek">{featured.note}</p>
+						{updatesSpan(featured.updates) && <p className="log-span">{updatesSpan(featured.updates)}</p>}
+						<VentureLinks links={featured.links} />
+						<UpdateLog updates={featured.updates} recentMonths={2} />
+						<Lessons lessons={featured.lessons} />
+					</article>
+				)}
+
+				<section className="log-archive" id="other-ventures" aria-labelledby="other-ventures-title">
+					<div className="log-archive-head">
+						<h2 id="other-ventures-title">The rest of the log</h2>
+						<p>The current company stays above. Open anything else when you want to read it.</p>
+					</div>
+					<div className="log-filter" aria-label="Filter the rest of the log">
+						{counts.map((item) => (
+							<button
+								key={item.id}
+								type="button"
+								aria-pressed={lane === item.id}
+								onClick={() => {
+									setLane(item.id);
+									setOpenSlug(null);
+								}}
+							>
+								{item.label}
+								<span>{item.count}</span>
+							</button>
+						))}
+					</div>
+
+					{visibleGroups.map((id) => {
+						const items = archive.filter((business) => laneOf(business) === id);
+						if (!items.length) return null;
+
+						return (
+							<div key={id} className={`log-group log-group-${id}`}>
+								<p className="log-group-label">
+									{laneTitle[id]}
+									<span className="log-group-count">{items.length}</span>
+								</p>
+								{laneCopy[id] && <p className="log-group-copy">{laneCopy[id]}</p>}
+								<div className="venture-list">
+									{items.map((business) => {
+										const slug = slugify(business.name);
+										return (
+											<VentureRow
+												key={business.name}
+												business={business}
+												open={openSlug === slug}
+												onToggle={() => setOpenSlug((current) => (current === slug ? null : slug))}
+											/>
+										);
+									})}
+								</div>
+							</div>
+						);
+					})}
+
+					{featured && (
+						<a className="log-back" href={`#${slugify(featured.name)}`}>Back to the current company</a>
+					)}
+				</section>
+
+				<details className="log-legend">
+					<summary>What the labels mean</summary>
+					<dl>
+						{Object.entries(statusDefinitions).map(([status, text]) => (
+							<div key={status}>
+								<dt><StatusBadge status={status} /></dt>
+								<dd>{text}</dd>
+							</div>
+						))}
+						<div>
+							<dt><FrozenBadge /></dt>
+							<dd>{frozenDefinition}</dd>
+						</div>
+					</dl>
+				</details>
+			</main>
 		</div>
 	);
 }
